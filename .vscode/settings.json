@@ -1,4 +1,13 @@
 {
+    "dotnet.defaultSolution": "CMGT__Jeems.sln",
+    "dotnet.dotnetPath": "C:/Program Files/dotnet/dotnet.exe",
+    "dotrush.msbuildProperties": {
+        "DefineConstants": "UNITY_EDITOR"
+    },
+    "dotrush.roslyn.projectOrSolutionFiles": [
+        "C:/Users/jorri/OneDrive/Documenten/GitHub/CMGT__Jeems/CMGT__Jeems.sln"
+    ],
+    "dotrush.roslyn.restoreProjectsBeforeLoading": false,
     "files.exclude": {
         "**/.DS_Store": true,
         "**/.git": true,
@@ -55,17 +64,5 @@
         "UserSettings/": true,
         "temp/": true,
         "Temp/": true
-    },
-    "files.associations": {
-        "*.asset": "yaml",
-        "*.meta": "yaml",
-        "*.prefab": "yaml",
-        "*.unity": "yaml",
-    },
-    "explorer.fileNesting.enabled": true,
-    "explorer.fileNesting.patterns": {
-        "*.sln": "*.csproj",
-        "*.slnx": "*.csproj"
-    },
-    "dotnet.defaultSolution": "CMGT_Eemsdelta.slnx"
+    }
 }
