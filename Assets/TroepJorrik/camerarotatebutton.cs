@@ -11,6 +11,10 @@ public class camerarotatebutton : MonoBehaviour
     [Tooltip("Duration in seconds for one 90-degree rotation")]
     private float rotateDuration = 0.5f;
 
+    [SerializeField]
+    [Tooltip("Easing curve for the rotation progress (x=time 0..1, y=progress 0..1). Default is EaseInOut.")]
+    private AnimationCurve easeCurve = null;
+
     private Coroutine rotateCoroutine;
 
     // Public method to call from a UI Button OnClick
@@ -80,11 +84,23 @@ public class camerarotatebutton : MonoBehaviour
 
         float elapsed = 0f;
 
+        // Ensure we have a usable easing curve
+        if (easeCurve == null)
+            easeCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+
+        // If duration is zero or negative, jump immediately
+        if (rotateDuration <= 0f)
+        {
+            t.rotation = Quaternion.Euler(startEuler.x, endY, startEuler.z);
+            yield break;
+        }
+
         while (elapsed < rotateDuration)
         {
             elapsed += Time.deltaTime;
             float frac = Mathf.Clamp01(elapsed / rotateDuration);
-            float y = Mathf.LerpAngle(startY, endY, frac);
+            float eased = easeCurve.Evaluate(frac);
+            float y = Mathf.LerpAngle(startY, endY, eased);
             t.rotation = Quaternion.Euler(startEuler.x, y, startEuler.z);
             yield return null;
         }
