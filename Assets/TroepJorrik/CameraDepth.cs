@@ -33,8 +33,10 @@ public class CameraDepth : MonoBehaviour
     [SerializeField]
     private Camera targetCamera = null;
 
-    private Vector3 initialPosition;
-    private Vector3 velocity = Vector3.zero;
+    private Vector3 initialLocalPosition;
+    private Vector3 initialWorldPosition;
+    private Vector3 velocityWorld = Vector3.zero;
+    private Vector3 velocityLocal = Vector3.zero;
 
     [SerializeField]
     [Tooltip("Apply offsets to world position instead of localPosition. Useful if the camera is parented to another transform.")]
@@ -45,8 +47,9 @@ public class CameraDepth : MonoBehaviour
         if (targetCamera == null)
             targetCamera = Camera.main;
 
-        // Store the starting local position so offsets are applied relative to it
-        initialPosition = transform.localPosition;
+        // Store the starting local and world positions so offsets are applied relative to them
+        initialLocalPosition = transform.localPosition;
+        initialWorldPosition = transform.position;
     }
 
     void LateUpdate()
@@ -77,14 +80,26 @@ public class CameraDepth : MonoBehaviour
         float inputX = normalized.x * sensitivity * axisMultiplier.x * (invertX ? -1f : 1f);
         float inputY = normalized.y * sensitivity * axisMultiplier.y * (invertY ? -1f : 1f);
 
-        // Compute target position relative to the initial one
-        Vector3 targetPos = initialPosition + new Vector3(inputX * maxOffset.x, inputY * maxOffset.y, 0f);
+        // Compute offset in camera space (so movement follows screen axes even if camera rotated)
+        Vector3 camRight = targetCamera.transform.right;
+        Vector3 camUp = targetCamera.transform.up;
+        Vector3 offsetWorld = camRight * (inputX * maxOffset.x) + camUp * (inputY * maxOffset.y);
 
-        // Smoothly move camera
+        // Compute target world position relative to the initial world position
+        Vector3 targetWorldPos = initialWorldPosition + offsetWorld;
+
+        // Smoothly move camera either in world or local coordinates
         if (useWorldPosition)
-            transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, targetWorldPos, ref velocityWorld, smoothTime);
+        }
         else
-            transform.localPosition = Vector3.SmoothDamp(transform.localPosition, targetPos, ref velocity, smoothTime);
+        {
+            // Convert desired world position to local position relative to parent
+            Transform parent = transform.parent;
+            Vector3 targetLocalPos = (parent != null) ? parent.InverseTransformPoint(targetWorldPos) : targetWorldPos;
+            transform.localPosition = Vector3.SmoothDamp(transform.localPosition, targetLocalPos, ref velocityLocal, smoothTime);
+        }
     }
 
     // Public setters so other scripts or UI can tweak the behaviour at runtime if desired
