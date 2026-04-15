@@ -1632,7 +1632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81b807111380dd34989320df78c3a071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuizManager
-  dailyQuestionLimit: 3
+  dailyQuestionLimit: 5
   uiSlots:
   - {fileID: 1672111705}
   - {fileID: 407176001}
