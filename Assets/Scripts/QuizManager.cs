@@ -7,28 +7,45 @@ using UnityEngine;
 [System.Serializable]
 public class AnswerOption
 {
+    [Tooltip("The text to display for this answer.")]
     public string answerText; 
+    [Tooltip("Is this the correct answer?")]
     public bool isCorrect;    
 }
 
 [System.Serializable]
 public class QuizQuestion
 {
+    [Header("General Setup")]
+    [Tooltip("What kind of question should be shown to the user?")]
     public QuestionType questionType; 
+    
+    [Tooltip("Short category or title for the question.")]
     public string title;              
+    
+    [Tooltip("The actual question prompt.")]
     [TextArea(2, 5)] public string questionText; 
     
+    [Space(10)]
     [Header("Multiple Choice Settings")]
+    [Tooltip("Set up multiple choices here. (Only used if questionType is MultipleChoice)")]
     public AnswerOption[] multipleChoiceOptions; 
 
+    [Space(10)]
     [Header("True/False Settings")]
+    [Tooltip("Check this if the correct answer is True. Leave unchecked for False.")]
     public bool correctTrueFalseAnswer; 
 
+    [Space(10)]
     [Header("Checkmark Task Settings")]
+    [Tooltip("The text label displayed next to the checkmark task.")]
     public string checkmarkLabel = "I have completed this task"; 
+    [Tooltip("Does the checkmark need to be checked to be considered correct?")]
     public bool correctCheckmarkState = true; 
 
+    [Space(10)]
     [Header("Feedback")]
+    [Tooltip("Text shown to the user when they get this question wrong.")]
     [TextArea(2, 4)]
     public string explanationWhenWrong = "Incorrect. Please review the material and try again tomorrow.";
 
@@ -50,33 +67,41 @@ public class QuizDataWrapper
 
 public class QuizManager : MonoBehaviour
 {
-    [Header("Settings")]
-    public int dailyQuestionLimit = 5; 
+    [Header("Daily Settings")]
+    [Tooltip("How many questions should the player answer per day?")]
+    [Range(1, 100)] public int dailyQuestionLimit = 5; 
 
-    [Header("References")]
+    [Space(10)]
+    [Header("UI References")]
+    [Tooltip("Drag the Question UI instances from the scene here.")]
     public QuestionUIController[] uiSlots; 
 
-    // --- NEW: STATIC STREAK DISPLAY ---
-    [Header("Gamification (Main Screen)")]
-    [Tooltip("Drag your static Top-Left Streak Text here")]
-    public TMPro.TMP_Text mainStreakDisplay;
-    // ----------------------------------
-
-    [Header("End of Day UI")]
+    [Tooltip("The panel to display when all daily questions are completed.")]
     public GameObject endOfDayPanel; 
 
-    [Header("Difficulty 1: Very Easy")] public List<QuizQuestion> level1_VeryEasy = new List<QuizQuestion>();
-    [Header("Difficulty 2: Easy")]      public List<QuizQuestion> level2_Easy = new List<QuizQuestion>();
-    [Header("Difficulty 3: Medium")]    public List<QuizQuestion> level3_Medium = new List<QuizQuestion>();
-    [Header("Difficulty 4: Hard")]      public List<QuizQuestion> level4_Hard = new List<QuizQuestion>();
-    [Header("Difficulty 5: Very Hard")] public List<QuizQuestion> level5_VeryHard = new List<QuizQuestion>();
+    [Header("Gamification")]
+    [Tooltip("Drag your static Top-Left Streak Text here to show gamification progress.")]
+    public TMPro.TMP_Text mainStreakDisplay;
+
+    [Space(10)]
+    [Header("Question Library (Pulls daily questions from here)")]
+    [Tooltip("Difficulty 1: Very Easy")]
+    public List<QuizQuestion> level1_VeryEasy = new List<QuizQuestion>();
+    [Tooltip("Difficulty 2: Easy")]      
+    public List<QuizQuestion> level2_Easy = new List<QuizQuestion>();
+    [Tooltip("Difficulty 3: Medium")]    
+    public List<QuizQuestion> level3_Medium = new List<QuizQuestion>();
+    [Tooltip("Difficulty 4: Hard")]      
+    public List<QuizQuestion> level4_Hard = new List<QuizQuestion>();
+    [Tooltip("Difficulty 5: Very Hard")] 
+    public List<QuizQuestion> level5_VeryHard = new List<QuizQuestion>();
 
     private List<QuizQuestion> todayQuestions = new List<QuizQuestion>(); 
     private string savePath; 
 
     void Awake()
     {
-        savePath = Path.Combine(Application.persistentDataPath, "quiz_data.json");
+        GetSavePath();
         LoadData();
     }
 
@@ -85,6 +110,7 @@ public class QuizManager : MonoBehaviour
         InitializeDailyQuiz();
     }
 
+    // Keep the original method to ensure reference handling guarantees!
     private List<QuizQuestion> GetAllQuestions()
     {
         List<QuizQuestion> combined = new List<QuizQuestion>();
@@ -111,7 +137,6 @@ public class QuizManager : MonoBehaviour
             LoadCurrentDailyProgress(today);
         }
 
-        // Just show the current streak on screen when the game loads (don't add to it yet!)
         UpdateStreakUI();
         RefreshUISlots(); 
     }
@@ -161,8 +186,6 @@ public class QuizManager : MonoBehaviour
         if (todayQuestions.Count == 0) GenerateDailyList(todayString);
     }
 
-
-    // --- THE MAGIC HAPPENS HERE ---
     private void RefreshUISlots()
     {
         var activeQuestions = todayQuestions.Where(q => !q.isCompleted).ToList();
@@ -173,18 +196,16 @@ public class QuizManager : MonoBehaviour
             string today = DateTime.Now.ToString("yyyy-MM-dd");
             string lastStreakDate = PlayerPrefs.GetString("LastStreakDate", "");
 
-            // Have they already gotten a point for today? If not, give it to them!
             if (today != lastStreakDate)
             {
                 int currentStreak = PlayerPrefs.GetInt("TotalDaysPlayed", 0);
-                currentStreak++; // ADD THE POINT!
+                currentStreak++;
                 PlayerPrefs.SetInt("TotalDaysPlayed", currentStreak);
-                PlayerPrefs.SetString("LastStreakDate", today); // Stamp the date so they don't get 2 points
+                PlayerPrefs.SetString("LastStreakDate", today); 
                 
-                UpdateStreakUI(); // Refresh the static text in the corner to show the new number!
+                UpdateStreakUI(); 
             }
 
-            // Show the End Screen and hide the questions
             if (endOfDayPanel != null) endOfDayPanel.SetActive(true);
             foreach (var slot in uiSlots) slot.gameObject.SetActive(false);
             return; 
@@ -293,14 +314,15 @@ public class QuizManager : MonoBehaviour
             level3 = this.level3_Medium, level4 = this.level4_Hard, level5 = this.level5_VeryHard
         };
         string json = JsonUtility.ToJson(wrapper, true);
-        File.WriteAllText(savePath, json);
+        File.WriteAllText(GetSavePath(), json);
     }
 
     private void LoadData()
     {
-        if (File.Exists(savePath))
+        string path = GetSavePath();
+        if (File.Exists(path))
         {
-            string json = File.ReadAllText(savePath);
+            string json = File.ReadAllText(path);
             QuizDataWrapper wrapper = JsonUtility.FromJson<QuizDataWrapper>(json);
             if (wrapper != null)
             {
@@ -312,15 +334,24 @@ public class QuizManager : MonoBehaviour
             }
         }
     }
+    
+    // Safer Getter that accommodates Editor time execution for Context Menu buttons!
+    private string GetSavePath() {
+        if(string.IsNullOrEmpty(savePath)) {
+            savePath = Path.Combine(Application.persistentDataPath, "quiz_data.json");
+        }
+        return savePath;
+    }
 
     [ContextMenu("1. Reset All Progress (Back to Start)")]
     private void ClearSaveData()
     {
         PlayerPrefs.DeleteKey("LastPlayedDate");
-        PlayerPrefs.DeleteKey("LastStreakDate"); // Clear the streak tracker
+        PlayerPrefs.DeleteKey("LastStreakDate"); 
         PlayerPrefs.DeleteKey("TotalDaysPlayed"); 
         
-        string path = Path.Combine(Application.persistentDataPath, "quiz_data.json");
+        // Critical FIX: Guarantee savePath is bound even when the application hasn't Awoken yet (Edit mode).
+        string path = GetSavePath(); 
         if (File.Exists(path)) File.Delete(path);
         
         foreach (var q in GetAllQuestions())
@@ -330,7 +361,7 @@ public class QuizManager : MonoBehaviour
             q.assignedDate = ""; 
         }
         
-        UpdateStreakUI(); // Instantly update the text to show 0
+        UpdateStreakUI(); 
         Debug.Log("Progress and Streak Reset!");
     }
 
@@ -339,13 +370,8 @@ public class QuizManager : MonoBehaviour
     {
         string fakeYesterday = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
         
-        // Rewind the question generator
         PlayerPrefs.SetString("LastPlayedDate", fakeYesterday);
-        
-        // --- THE FIX ---
-        // We must also rewind the streak blocker so it allows a point "tomorrow"
         PlayerPrefs.SetString("LastStreakDate", fakeYesterday); 
-        // ---------------
         
         Debug.Log("<b>Time travel successful!</b> The game now fully thinks you last played yesterday.");
     }

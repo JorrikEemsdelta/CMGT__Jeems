@@ -1637,8 +1637,8 @@ MonoBehaviour:
   - {fileID: 1672111705}
   - {fileID: 407176001}
   - {fileID: 725743858}
-  endOfDayPanel: {fileID: 1455653364}
   mainStreakDisplay: {fileID: 1597782674}
+  endOfDayPanel: {fileID: 1455653364}
   level1_VeryEasy:
   - questionType: 0
     title: Level 1 - MC
@@ -1646,16 +1646,14 @@ MonoBehaviour:
     multipleChoiceOptions:
     - answerText: Wrong
       isCorrect: 0
-    - answerText: Right!
-      isCorrect: 1
     - answerText: Right Answer!
       isCorrect: 1
-    - answerText: 4!
+    - answerText: Right Answer!
       isCorrect: 1
     correctTrueFalseAnswer: 0
     checkmarkLabel: I have completed this task
     correctCheckmarkState: 1
-    explanationWhenWrong: Huge skill issue
+    explanationWhenWrong: Incorrect. Please review the material and try again tomorrow.
     isCompleted: 0
     isFailed: 0
     assignedDate: 
@@ -1666,7 +1664,7 @@ MonoBehaviour:
     correctTrueFalseAnswer: 1
     checkmarkLabel: I have completed this task
     correctCheckmarkState: 1
-    explanationWhenWrong: Hz klik je op false
+    explanationWhenWrong: Incorrect. Please review the material and try again tomorrow.
     isCompleted: 0
     isFailed: 0
     assignedDate: 
