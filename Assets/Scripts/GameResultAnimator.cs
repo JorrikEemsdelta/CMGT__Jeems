@@ -36,14 +36,4 @@ public class GameResultAnimator : MonoBehaviour
         animator.SetInteger("FailIndex", randomAnimation);
         animator.SetTrigger("PlayFail");
     }
-
-    // NEW: Forces the animator back to the Idle state
-    public void ReturnToIdle()
-    {
-        animator.ResetTrigger("PlayVictory");
-        animator.ResetTrigger("PlayFail");
-        
-        // Note: Make sure your idle animation state is named exactly "Idle" in the Animator window!
-        animator.Play("Idle"); 
-    }
 }

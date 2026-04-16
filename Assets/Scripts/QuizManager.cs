@@ -221,10 +221,10 @@ public class QuizManager : MonoBehaviour
         }
 
         // --- NEW CODE: Force character back to Idle when a new question loads ---
-        if (resultAnimator != null)
-        {
-            resultAnimator.ReturnToIdle();
-        }
+       // if (resultAnimator != null)
+      //  {
+          //  resultAnimator.ReturnToIdle();
+       // }
         // ------------------------------------------------------------------------
 
         // 2. Normal Setup
