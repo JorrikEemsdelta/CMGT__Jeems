@@ -1,24 +1,37 @@
 using System.Collections;
 using UnityEngine;
 
-public class camerarotatebutton : MonoBehaviour
+public class CameraRotateButton : MonoBehaviour
 {
     [SerializeField]
-    [Tooltip("Target camera to rotate. If null, Camera.main will be used.")]
-    private Camera targetCamera = null;
+    private Camera targetCamera;
 
     [SerializeField]
-    [Tooltip("Duration in seconds for one 90-degree rotation")]
-    private float rotateDuration = 0.5f;
+    private float rotateDuration = 0.8f; // slightly longer = smoother
 
     [SerializeField]
-    [Tooltip("Easing curve for the rotation progress (x=time 0..1, y=progress 0..1). Default is EaseInOut.")]
-    private AnimationCurve easeCurve = null;
+    private AnimationCurve easeCurve;
 
     private Coroutine rotateCoroutine;
 
-    // Public method to call from a UI Button OnClick
-    public void RotateCamera90Y()
+    private void Start()
+    {
+        
+        if (easeCurve == null)
+            easeCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+    }
+
+    public void RotateCamera90Right()
+    {
+        StartRotation(90f);
+    }
+
+    public void RotateCamera90Left()
+    {
+        StartRotation(-90f);
+    }
+
+    private void StartRotation(float angle)
     {
         if (targetCamera == null)
             targetCamera = Camera.main;
@@ -26,87 +39,38 @@ public class camerarotatebutton : MonoBehaviour
         if (targetCamera == null)
             return;
 
-        Debug.Log($"camerarotatebutton.RotateCamera90Y called on '{gameObject.name}' targetCamera='{targetCamera.name}'");
-
-        // If a rotation is already in progress, stop it so we start from the current rotation
+        // Stop current rotation cleanly
         if (rotateCoroutine != null)
             StopCoroutine(rotateCoroutine);
 
-        rotateCoroutine = StartCoroutine(RotateYCoroutine(90f));
+        rotateCoroutine = StartCoroutine(RotateCoroutine(angle));
     }
 
-    // Public method to rotate 90 degrees to the left (counter-clockwise)
-    public void RotateCamera90YLeft()
-    {
-        if (targetCamera == null)
-            targetCamera = Camera.main;
-
-        if (targetCamera == null)
-            return;
-
-        Debug.Log($"camerarotatebutton.RotateCamera90YLeft called on '{gameObject.name}' targetCamera='{targetCamera.name}'");
-
-        if (rotateCoroutine != null)
-            StopCoroutine(rotateCoroutine);
-
-        rotateCoroutine = StartCoroutine(RotateYCoroutine(-90f));
-    }
-
-    // Convenience explicit right rotation method
-    public void RotateCamera90YRight()
-    {
-        RotateCamera90Y();
-    }
-
-    // Helper for testing: immediately rotate 90 degrees around world Y. Call from inspector to verify wiring.
-    public void RotateImmediate90Y()
-    {
-        if (targetCamera == null)
-            targetCamera = Camera.main;
-
-        if (targetCamera == null)
-        {
-            Debug.LogWarning("RotateImmediate90Y: no target camera");
-            return;
-        }
-
-        targetCamera.transform.Rotate(0f, 90f, 0f, Space.World);
-        Debug.Log("RotateImmediate90Y performed");
-    }
-
-    private IEnumerator RotateYCoroutine(float deltaY)
+    private IEnumerator RotateCoroutine(float deltaY)
     {
         Transform t = targetCamera.transform;
 
-        Vector3 startEuler = t.eulerAngles;
-        float startY = startEuler.y;
-        float endY = startY + deltaY;
+        Quaternion startRot = t.rotation;
+        Quaternion endRot = startRot * Quaternion.Euler(0f, deltaY, 0f);
 
         float elapsed = 0f;
-
-        // Ensure we have a usable easing curve
-        if (easeCurve == null)
-            easeCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
-
-        // If duration is zero or negative, jump immediately
-        if (rotateDuration <= 0f)
-        {
-            t.rotation = Quaternion.Euler(startEuler.x, endY, startEuler.z);
-            yield break;
-        }
 
         while (elapsed < rotateDuration)
         {
             elapsed += Time.deltaTime;
-            float frac = Mathf.Clamp01(elapsed / rotateDuration);
-            float eased = easeCurve.Evaluate(frac);
-            float y = Mathf.LerpAngle(startY, endY, eased);
-            t.rotation = Quaternion.Euler(startEuler.x, y, startEuler.z);
+            float t01 = Mathf.Clamp01(elapsed / rotateDuration);
+
+            float eased = easeCurve.Evaluate(t01);
+
+            // Smooth rotation
+            t.rotation = Quaternion.Slerp(startRot, endRot, eased);
+
             yield return null;
         }
 
-        // Ensure final rotation is exact
-        t.rotation = Quaternion.Euler(startEuler.x, endY, startEuler.z);
+        // Snap exactly to final rotation (prevents drift)
+        t.rotation = endRot;
+
         rotateCoroutine = null;
     }
 }
