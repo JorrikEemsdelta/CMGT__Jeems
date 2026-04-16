@@ -79,6 +79,12 @@ public class QuizManager : MonoBehaviour
     [Tooltip("The panel to display when all daily questions are completed.")]
     public GameObject endOfDayPanel; 
 
+    [Space(10)]
+    [Header("Animation References")]
+    [Tooltip("Drag your GameResultAnimator object here to trigger win/fail animations.")]
+    public GameResultAnimator resultAnimator;
+
+    [Space(10)]
     [Header("Gamification")]
     [Tooltip("Drag your static Top-Left Streak Text here to show gamification progress.")]
     public TMPro.TMP_Text mainStreakDisplay;
@@ -110,7 +116,6 @@ public class QuizManager : MonoBehaviour
         InitializeDailyQuiz();
     }
 
-    // Keep the original method to ensure reference handling guarantees!
     private List<QuizQuestion> GetAllQuestions()
     {
         List<QuizQuestion> combined = new List<QuizQuestion>();
@@ -215,6 +220,13 @@ public class QuizManager : MonoBehaviour
             if (endOfDayPanel != null) endOfDayPanel.SetActive(false);
         }
 
+        // --- NEW CODE: Force character back to Idle when a new question loads ---
+        if (resultAnimator != null)
+        {
+            resultAnimator.ReturnToIdle();
+        }
+        // ------------------------------------------------------------------------
+
         // 2. Normal Setup
         for (int i = 0; i < uiSlots.Length; i++)
         {
@@ -292,12 +304,26 @@ public class QuizManager : MonoBehaviour
         {
             q.isFailed = false; 
             SaveData();
+
+            // Trigger Victory Animation
+            if (resultAnimator != null)
+            {
+                resultAnimator.TriggerRandomVictory();
+            }
+
             Invoke(nameof(RefreshUISlots), 1.5f); 
         }
         else 
         {
             q.isFailed = true; 
             SaveData();
+
+            // Trigger Fail Animation
+            if (resultAnimator != null)
+            {
+                resultAnimator.TriggerRandomFail();
+            }
+
             uiSlots[slotIndex].ShowExplanation(q.explanationWhenWrong, () => 
             {
                 uiSlots[slotIndex].HideExplanation();
@@ -335,7 +361,6 @@ public class QuizManager : MonoBehaviour
         }
     }
     
-    // Safer Getter that accommodates Editor time execution for Context Menu buttons!
     private string GetSavePath() {
         if(string.IsNullOrEmpty(savePath)) {
             savePath = Path.Combine(Application.persistentDataPath, "quiz_data.json");
@@ -350,7 +375,6 @@ public class QuizManager : MonoBehaviour
         PlayerPrefs.DeleteKey("LastStreakDate"); 
         PlayerPrefs.DeleteKey("TotalDaysPlayed"); 
         
-        // Critical FIX: Guarantee savePath is bound even when the application hasn't Awoken yet (Edit mode).
         string path = GetSavePath(); 
         if (File.Exists(path)) File.Delete(path);
         
