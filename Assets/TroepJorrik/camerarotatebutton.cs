@@ -31,6 +31,11 @@ public class CameraRotateButton : MonoBehaviour
         StartRotation(-90f);
     }
 
+    public void RotateCamera180()
+    {
+        StartRotation(-180f);
+    }
+
     private void StartRotation(float angle)
     {
         if (targetCamera == null)

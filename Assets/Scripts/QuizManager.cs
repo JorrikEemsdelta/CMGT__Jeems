@@ -20,7 +20,7 @@ public class QuizQuestion
     [Tooltip("What kind of question should be shown to the user?")]
     public QuestionType questionType; 
     
-    [Tooltip("Short category or title for the question.")]
+    [Tooltip("Short category or title for the question. MUST BE UNIQUE for saving progress!")]
     public string title;              
     
     [Tooltip("The actual question prompt.")]
@@ -48,6 +48,10 @@ public class QuizQuestion
     [Tooltip("Text shown to the user when they get this question wrong.")]
     [TextArea(2, 4)]
     public string explanationWhenWrong = "Incorrect. Please review the material and try again tomorrow.";
+
+    [Tooltip("Text shown to the user when they get this question RIGHT.")]
+    [TextArea(2, 4)]
+    public string explanationWhenRight = "Correct! Great job.";
 
     [HideInInspector] public bool isCompleted = false; 
     [HideInInspector] public bool isFailed = false;    
@@ -82,7 +86,7 @@ public class QuizManager : MonoBehaviour
     [Space(10)]
     [Header("Animation References")]
     [Tooltip("Drag your GameResultAnimator object here to trigger win/fail animations.")]
-    public GameResultAnimator resultAnimator;
+    public CharacterActionManager resultAnimator;
 
     [Space(10)]
     [Header("Gamification")]
@@ -90,30 +94,38 @@ public class QuizManager : MonoBehaviour
     public TMPro.TMP_Text mainStreakDisplay;
 
     [Space(10)]
-    [Header("Question Library (Pulls daily questions from here)")]
-    [Tooltip("Difficulty 1: Very Easy")]
+    [Header("Question Library (Populated from JSON)")]
+    [Tooltip("Questions will be overwritten by the JSON file at runtime.")]
     public List<QuizQuestion> level1_VeryEasy = new List<QuizQuestion>();
-    [Tooltip("Difficulty 2: Easy")]      
     public List<QuizQuestion> level2_Easy = new List<QuizQuestion>();
-    [Tooltip("Difficulty 3: Medium")]    
     public List<QuizQuestion> level3_Medium = new List<QuizQuestion>();
-    [Tooltip("Difficulty 4: Hard")]      
     public List<QuizQuestion> level4_Hard = new List<QuizQuestion>();
-    [Tooltip("Difficulty 5: Very Hard")] 
     public List<QuizQuestion> level5_VeryHard = new List<QuizQuestion>();
 
     private List<QuizQuestion> todayQuestions = new List<QuizQuestion>(); 
     private string savePath; 
+    private string clientJsonPath;
 
     void Awake()
     {
-        GetSavePath();
+        GetPaths();
         LoadData();
     }
 
     void Start()
     {
         InitializeDailyQuiz();
+    }
+
+    private void GetPaths() 
+    {
+        if(string.IsNullOrEmpty(savePath)) {
+            savePath = Path.Combine(Application.persistentDataPath, "quiz_save_data.json");
+        }
+        
+        if(string.IsNullOrEmpty(clientJsonPath)) {
+            clientJsonPath = Path.Combine(Application.streamingAssetsPath, "client_questions.json");
+        }
     }
 
     private List<QuizQuestion> GetAllQuestions()
@@ -181,7 +193,7 @@ public class QuizManager : MonoBehaviour
             todayQuestions.AddRange(newQuestions); 
         }
 
-        SaveData(); 
+        SavePlayerProgress(); 
     }
 
     private void LoadCurrentDailyProgress(string todayString)
@@ -195,7 +207,6 @@ public class QuizManager : MonoBehaviour
     {
         var activeQuestions = todayQuestions.Where(q => !q.isCompleted).ToList();
         
-        // 1. Are they completely done with today's work?
         if (activeQuestions.Count == 0) 
         {
             string today = DateTime.Now.ToString("yyyy-MM-dd");
@@ -220,14 +231,6 @@ public class QuizManager : MonoBehaviour
             if (endOfDayPanel != null) endOfDayPanel.SetActive(false);
         }
 
-        // --- NEW CODE: Force character back to Idle when a new question loads ---
-       // if (resultAnimator != null)
-      //  {
-          //  resultAnimator.ReturnToIdle();
-       // }
-        // ------------------------------------------------------------------------
-
-        // 2. Normal Setup
         for (int i = 0; i < uiSlots.Length; i++)
         {
             if (i < activeQuestions.Count)
@@ -303,27 +306,25 @@ public class QuizManager : MonoBehaviour
         if (isCorrect) 
         {
             q.isFailed = false; 
-            SaveData();
+            SavePlayerProgress();
 
-            // Trigger Victory Animation
-            if (resultAnimator != null)
+            if (resultAnimator != null) resultAnimator.TriggerRandomVictory();
+
+            // --- NEW: Show Explanation for Right Answer ---
+            uiSlots[slotIndex].ShowRightExplanation(q.explanationWhenRight, () => 
             {
-                resultAnimator.TriggerRandomVictory();
-            }
-
-            Invoke(nameof(RefreshUISlots), 1.5f); 
+                uiSlots[slotIndex].HideRightExplanation();
+                RefreshUISlots(); 
+            });
         }
         else 
         {
             q.isFailed = true; 
-            SaveData();
+            SavePlayerProgress();
 
-            // Trigger Fail Animation
-            if (resultAnimator != null)
-            {
-                resultAnimator.TriggerRandomFail();
-            }
+            if (resultAnimator != null) resultAnimator.TriggerRandomFail();
 
+            // Existing: Show Explanation for Wrong Answer
             uiSlots[slotIndex].ShowExplanation(q.explanationWhenWrong, () => 
             {
                 uiSlots[slotIndex].HideExplanation();
@@ -332,7 +333,59 @@ public class QuizManager : MonoBehaviour
         }
     }
 
-    private void SaveData()
+    private void LoadData()
+    {
+        if (File.Exists(clientJsonPath))
+        {
+            string masterJson = File.ReadAllText(clientJsonPath);
+            QuizDataWrapper wrapper = JsonUtility.FromJson<QuizDataWrapper>(masterJson);
+            if (wrapper != null)
+            {
+                level1_VeryEasy = wrapper.level1 ?? new List<QuizQuestion>();
+                level2_Easy = wrapper.level2 ?? new List<QuizQuestion>();
+                level3_Medium = wrapper.level3 ?? new List<QuizQuestion>();
+                level4_Hard = wrapper.level4 ?? new List<QuizQuestion>();
+                level5_VeryHard = wrapper.level5 ?? new List<QuizQuestion>();
+            }
+        }
+        else
+        {
+            SaveMasterTemplate();
+        }
+
+        if (File.Exists(savePath))
+        {
+            string saveJson = File.ReadAllText(savePath);
+            QuizDataWrapper saveWrapper = JsonUtility.FromJson<QuizDataWrapper>(saveJson);
+            
+            if (saveWrapper != null)
+            {
+                ApplySaveState(level1_VeryEasy, saveWrapper.level1);
+                ApplySaveState(level2_Easy, saveWrapper.level2);
+                ApplySaveState(level3_Medium, saveWrapper.level3);
+                ApplySaveState(level4_Hard, saveWrapper.level4);
+                ApplySaveState(level5_VeryHard, saveWrapper.level5);
+            }
+        }
+    }
+
+    private void ApplySaveState(List<QuizQuestion> masterList, List<QuizQuestion> saveList)
+    {
+        if (masterList == null || saveList == null) return;
+
+        foreach (var savedQ in saveList)
+        {
+            var masterQ = masterList.FirstOrDefault(q => q.title == savedQ.title);
+            if (masterQ != null)
+            {
+                masterQ.isCompleted = savedQ.isCompleted;
+                masterQ.isFailed = savedQ.isFailed;
+                masterQ.assignedDate = savedQ.assignedDate;
+            }
+        }
+    }
+
+    private void SavePlayerProgress()
     {
         QuizDataWrapper wrapper = new QuizDataWrapper 
         { 
@@ -340,32 +393,22 @@ public class QuizManager : MonoBehaviour
             level3 = this.level3_Medium, level4 = this.level4_Hard, level5 = this.level5_VeryHard
         };
         string json = JsonUtility.ToJson(wrapper, true);
-        File.WriteAllText(GetSavePath(), json);
+        File.WriteAllText(savePath, json);
     }
 
-    private void LoadData()
+    private void SaveMasterTemplate()
     {
-        string path = GetSavePath();
-        if (File.Exists(path))
-        {
-            string json = File.ReadAllText(path);
-            QuizDataWrapper wrapper = JsonUtility.FromJson<QuizDataWrapper>(json);
-            if (wrapper != null)
-            {
-                if (wrapper.level1 != null && wrapper.level1.Count > 0) level1_VeryEasy = wrapper.level1;
-                if (wrapper.level2 != null && wrapper.level2.Count > 0) level2_Easy = wrapper.level2;
-                if (wrapper.level3 != null && wrapper.level3.Count > 0) level3_Medium = wrapper.level3;
-                if (wrapper.level4 != null && wrapper.level4.Count > 0) level4_Hard = wrapper.level4;
-                if (wrapper.level5 != null && wrapper.level5.Count > 0) level5_VeryHard = wrapper.level5;
-            }
-        }
-    }
-    
-    private string GetSavePath() {
-        if(string.IsNullOrEmpty(savePath)) {
-            savePath = Path.Combine(Application.persistentDataPath, "quiz_data.json");
-        }
-        return savePath;
+        string dir = Path.GetDirectoryName(clientJsonPath);
+        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+
+        QuizDataWrapper wrapper = new QuizDataWrapper 
+        { 
+            level1 = this.level1_VeryEasy, level2 = this.level2_Easy,
+            level3 = this.level3_Medium, level4 = this.level4_Hard, level5 = this.level5_VeryHard
+        };
+        
+        string json = JsonUtility.ToJson(wrapper, true); 
+        File.WriteAllText(clientJsonPath, json);
     }
 
     [ContextMenu("1. Reset All Progress (Back to Start)")]
@@ -375,8 +418,8 @@ public class QuizManager : MonoBehaviour
         PlayerPrefs.DeleteKey("LastStreakDate"); 
         PlayerPrefs.DeleteKey("TotalDaysPlayed"); 
         
-        string path = GetSavePath(); 
-        if (File.Exists(path)) File.Delete(path);
+        GetPaths();
+        if (File.Exists(savePath)) File.Delete(savePath);
         
         foreach (var q in GetAllQuestions())
         {
