@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking; // <--- REQUIRED FOR WEBGL FILE READING
 
 [System.Serializable]
 public class AnswerOption
@@ -17,39 +19,28 @@ public class AnswerOption
 public class QuizQuestion
 {
     [Header("General Setup")]
-    [Tooltip("What kind of question should be shown to the user?")]
     public QuestionType questionType; 
-    
-    [Tooltip("Short category or title for the question. MUST BE UNIQUE for saving progress!")]
     public string title;              
-    
-    [Tooltip("The actual question prompt.")]
     [TextArea(2, 5)] public string questionText; 
     
     [Space(10)]
     [Header("Multiple Choice Settings")]
-    [Tooltip("Set up multiple choices here. (Only used if questionType is MultipleChoice)")]
     public AnswerOption[] multipleChoiceOptions; 
 
     [Space(10)]
     [Header("True/False Settings")]
-    [Tooltip("Check this if the correct answer is True. Leave unchecked for False.")]
     public bool correctTrueFalseAnswer; 
 
     [Space(10)]
     [Header("Checkmark Task Settings")]
-    [Tooltip("The text label displayed next to the checkmark task.")]
     public string checkmarkLabel = "I have completed this task"; 
-    [Tooltip("Does the checkmark need to be checked to be considered correct?")]
     public bool correctCheckmarkState = true; 
 
     [Space(10)]
     [Header("Feedback")]
-    [Tooltip("Text shown to the user when they get this question wrong.")]
     [TextArea(2, 4)]
     public string explanationWhenWrong = "Incorrect. Please review the material and try again tomorrow.";
 
-    [Tooltip("Text shown to the user when they get this question RIGHT.")]
     [TextArea(2, 4)]
     public string explanationWhenRight = "Correct! Great job.";
 
@@ -72,30 +63,23 @@ public class QuizDataWrapper
 public class QuizManager : MonoBehaviour
 {
     [Header("Daily Settings")]
-    [Tooltip("How many questions should the player answer per day?")]
     [Range(1, 100)] public int dailyQuestionLimit = 5; 
 
     [Space(10)]
     [Header("UI References")]
-    [Tooltip("Drag the Question UI instances from the scene here.")]
     public QuestionUIController[] uiSlots; 
-
-    [Tooltip("The panel to display when all daily questions are completed.")]
     public GameObject endOfDayPanel; 
 
     [Space(10)]
     [Header("Animation References")]
-    [Tooltip("Drag your GameResultAnimator object here to trigger win/fail animations.")]
-    public CharacterActionManager resultAnimator;
+    public CharacterActionManager resultAnimator; // Re-linked to your new unified script
 
     [Space(10)]
     [Header("Gamification")]
-    [Tooltip("Drag your static Top-Left Streak Text here to show gamification progress.")]
     public TMPro.TMP_Text mainStreakDisplay;
 
     [Space(10)]
     [Header("Question Library (Populated from JSON)")]
-    [Tooltip("Questions will be overwritten by the JSON file at runtime.")]
     public List<QuizQuestion> level1_VeryEasy = new List<QuizQuestion>();
     public List<QuizQuestion> level2_Easy = new List<QuizQuestion>();
     public List<QuizQuestion> level3_Medium = new List<QuizQuestion>();
@@ -103,29 +87,133 @@ public class QuizManager : MonoBehaviour
     public List<QuizQuestion> level5_VeryHard = new List<QuizQuestion>();
 
     private List<QuizQuestion> todayQuestions = new List<QuizQuestion>(); 
-    private string savePath; 
-    private string clientJsonPath;
-
-    void Awake()
-    {
-        GetPaths();
-        LoadData();
-    }
 
     void Start()
     {
+        // For WebGL, we MUST start with a Coroutine so the game can "wait" for the web request to download the JSON
+        StartCoroutine(LoadDataAndInitializeRoutine());
+    }
+
+    // --- NEW WEBGL-SAFE LOADING ROUTINE ---
+    private IEnumerator LoadDataAndInitializeRoutine()
+    {
+        string clientJsonPath = Path.Combine(Application.streamingAssetsPath, "client_questions.json");
+        string masterJson = "";
+
+        // 1. Fetch the Master JSON from StreamingAssets (Works for WebGL and Editor)
+        if (clientJsonPath.Contains("://") || clientJsonPath.Contains(":///"))
+        {
+            // If it's a URL (WebGL or Android), use UnityWebRequest to download it
+            using (UnityWebRequest www = UnityWebRequest.Get(clientJsonPath))
+            {
+                yield return www.SendWebRequest();
+
+                if (www.result == UnityWebRequest.Result.Success)
+                {
+                    masterJson = www.downloadHandler.text;
+                }
+                else
+                {
+                    Debug.LogError("WebGL File Error: Could not find client_questions.json in StreamingAssets. " + www.error);
+                }
+            }
+        }
+        else
+        {
+            // If it's a local PC/Editor build, use standard File IO
+#if !UNITY_WEBGL
+            if (File.Exists(clientJsonPath))
+            {
+                masterJson = File.ReadAllText(clientJsonPath);
+            }
+            else
+            {
+                Debug.LogWarning("Client JSON not found! Generating a template...");
+                SaveMasterTemplate(clientJsonPath);
+            }
+#endif
+        }
+
+        // Apply Master JSON to lists
+        if (!string.IsNullOrEmpty(masterJson))
+        {
+            QuizDataWrapper wrapper = JsonUtility.FromJson<QuizDataWrapper>(masterJson);
+            if (wrapper != null)
+            {
+                level1_VeryEasy = wrapper.level1 ?? new List<QuizQuestion>();
+                level2_Easy = wrapper.level2 ?? new List<QuizQuestion>();
+                level3_Medium = wrapper.level3 ?? new List<QuizQuestion>();
+                level4_Hard = wrapper.level4 ?? new List<QuizQuestion>();
+                level5_VeryHard = wrapper.level5 ?? new List<QuizQuestion>();
+            }
+        }
+
+        // 2. Load the Player's Save Data directly from the Browser's Local Storage (PlayerPrefs)
+        string saveJson = PlayerPrefs.GetString("PlayerQuizSave", "");
+        if (!string.IsNullOrEmpty(saveJson))
+        {
+            QuizDataWrapper saveWrapper = JsonUtility.FromJson<QuizDataWrapper>(saveJson);
+            if (saveWrapper != null)
+            {
+                ApplySaveState(level1_VeryEasy, saveWrapper.level1);
+                ApplySaveState(level2_Easy, saveWrapper.level2);
+                ApplySaveState(level3_Medium, saveWrapper.level3);
+                ApplySaveState(level4_Hard, saveWrapper.level4);
+                ApplySaveState(level5_VeryHard, saveWrapper.level5);
+            }
+        }
+
+        // 3. Now that data is fully loaded, build the UI!
         InitializeDailyQuiz();
     }
 
-    private void GetPaths() 
+    private void ApplySaveState(List<QuizQuestion> masterList, List<QuizQuestion> saveList)
     {
-        if(string.IsNullOrEmpty(savePath)) {
-            savePath = Path.Combine(Application.persistentDataPath, "quiz_save_data.json");
+        if (masterList == null || saveList == null) return;
+
+        foreach (var savedQ in saveList)
+        {
+            var masterQ = masterList.FirstOrDefault(q => q.title == savedQ.title);
+            if (masterQ != null)
+            {
+                masterQ.isCompleted = savedQ.isCompleted;
+                masterQ.isFailed = savedQ.isFailed;
+                masterQ.assignedDate = savedQ.assignedDate;
+            }
         }
+    }
+
+    // --- NEW WEBGL-SAFE SAVING ---
+    private void SavePlayerProgress()
+    {
+        QuizDataWrapper wrapper = new QuizDataWrapper 
+        { 
+            level1 = this.level1_VeryEasy, level2 = this.level2_Easy,
+            level3 = this.level3_Medium, level4 = this.level4_Hard, level5 = this.level5_VeryHard
+        };
         
-        if(string.IsNullOrEmpty(clientJsonPath)) {
-            clientJsonPath = Path.Combine(Application.streamingAssetsPath, "client_questions.json");
-        }
+        string json = JsonUtility.ToJson(wrapper, true);
+        
+        // Instead of writing to a file, we save the JSON string directly into the browser cache
+        PlayerPrefs.SetString("PlayerQuizSave", json);
+        PlayerPrefs.Save();
+    }
+
+    private void SaveMasterTemplate(string path)
+    {
+#if !UNITY_WEBGL
+        string dir = Path.GetDirectoryName(path);
+        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+
+        QuizDataWrapper wrapper = new QuizDataWrapper 
+        { 
+            level1 = this.level1_VeryEasy, level2 = this.level2_Easy,
+            level3 = this.level3_Medium, level4 = this.level4_Hard, level5 = this.level5_VeryHard
+        };
+        
+        string json = JsonUtility.ToJson(wrapper, true); 
+        File.WriteAllText(path, json);
+#endif
     }
 
     private List<QuizQuestion> GetAllQuestions()
@@ -310,7 +398,6 @@ public class QuizManager : MonoBehaviour
 
             if (resultAnimator != null) resultAnimator.TriggerRandomVictory();
 
-            // --- NEW: Show Explanation for Right Answer ---
             uiSlots[slotIndex].ShowRightExplanation(q.explanationWhenRight, () => 
             {
                 uiSlots[slotIndex].HideRightExplanation();
@@ -324,7 +411,6 @@ public class QuizManager : MonoBehaviour
 
             if (resultAnimator != null) resultAnimator.TriggerRandomFail();
 
-            // Existing: Show Explanation for Wrong Answer
             uiSlots[slotIndex].ShowExplanation(q.explanationWhenWrong, () => 
             {
                 uiSlots[slotIndex].HideExplanation();
@@ -333,93 +419,13 @@ public class QuizManager : MonoBehaviour
         }
     }
 
-    private void LoadData()
-    {
-        if (File.Exists(clientJsonPath))
-        {
-            string masterJson = File.ReadAllText(clientJsonPath);
-            QuizDataWrapper wrapper = JsonUtility.FromJson<QuizDataWrapper>(masterJson);
-            if (wrapper != null)
-            {
-                level1_VeryEasy = wrapper.level1 ?? new List<QuizQuestion>();
-                level2_Easy = wrapper.level2 ?? new List<QuizQuestion>();
-                level3_Medium = wrapper.level3 ?? new List<QuizQuestion>();
-                level4_Hard = wrapper.level4 ?? new List<QuizQuestion>();
-                level5_VeryHard = wrapper.level5 ?? new List<QuizQuestion>();
-            }
-        }
-        else
-        {
-            SaveMasterTemplate();
-        }
-
-        if (File.Exists(savePath))
-        {
-            string saveJson = File.ReadAllText(savePath);
-            QuizDataWrapper saveWrapper = JsonUtility.FromJson<QuizDataWrapper>(saveJson);
-            
-            if (saveWrapper != null)
-            {
-                ApplySaveState(level1_VeryEasy, saveWrapper.level1);
-                ApplySaveState(level2_Easy, saveWrapper.level2);
-                ApplySaveState(level3_Medium, saveWrapper.level3);
-                ApplySaveState(level4_Hard, saveWrapper.level4);
-                ApplySaveState(level5_VeryHard, saveWrapper.level5);
-            }
-        }
-    }
-
-    private void ApplySaveState(List<QuizQuestion> masterList, List<QuizQuestion> saveList)
-    {
-        if (masterList == null || saveList == null) return;
-
-        foreach (var savedQ in saveList)
-        {
-            var masterQ = masterList.FirstOrDefault(q => q.title == savedQ.title);
-            if (masterQ != null)
-            {
-                masterQ.isCompleted = savedQ.isCompleted;
-                masterQ.isFailed = savedQ.isFailed;
-                masterQ.assignedDate = savedQ.assignedDate;
-            }
-        }
-    }
-
-    private void SavePlayerProgress()
-    {
-        QuizDataWrapper wrapper = new QuizDataWrapper 
-        { 
-            level1 = this.level1_VeryEasy, level2 = this.level2_Easy,
-            level3 = this.level3_Medium, level4 = this.level4_Hard, level5 = this.level5_VeryHard
-        };
-        string json = JsonUtility.ToJson(wrapper, true);
-        File.WriteAllText(savePath, json);
-    }
-
-    private void SaveMasterTemplate()
-    {
-        string dir = Path.GetDirectoryName(clientJsonPath);
-        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-
-        QuizDataWrapper wrapper = new QuizDataWrapper 
-        { 
-            level1 = this.level1_VeryEasy, level2 = this.level2_Easy,
-            level3 = this.level3_Medium, level4 = this.level4_Hard, level5 = this.level5_VeryHard
-        };
-        
-        string json = JsonUtility.ToJson(wrapper, true); 
-        File.WriteAllText(clientJsonPath, json);
-    }
-
     [ContextMenu("1. Reset All Progress (Back to Start)")]
     private void ClearSaveData()
     {
         PlayerPrefs.DeleteKey("LastPlayedDate");
         PlayerPrefs.DeleteKey("LastStreakDate"); 
         PlayerPrefs.DeleteKey("TotalDaysPlayed"); 
-        
-        GetPaths();
-        if (File.Exists(savePath)) File.Delete(savePath);
+        PlayerPrefs.DeleteKey("PlayerQuizSave"); // Clear the new web-safe save
         
         foreach (var q in GetAllQuestions())
         {
