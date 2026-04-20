@@ -20,6 +20,18 @@ public class CharacterActionManager : MonoBehaviour
     public Animator animator;
 
     [Space(10)]
+    [Header("Face Emotions")]
+    [Tooltip("Drag the specific body part/mesh that holds the face material here.")]
+    public SkinnedMeshRenderer faceRenderer;
+    [Tooltip("If the face is combined with the body, which material slot is the face? (Usually 0, 1, or 2)")]
+    public int faceMaterialIndex = 0;
+    
+    [Space(5)]
+    public Material normalFaceMaterial;
+    public Material sadFaceMaterial;
+    public Material happyFaceMaterial; // Optional!
+
+    [Space(10)]
     [Header("Idle Randomizer Settings")]
     public float minIdleTime = 5f;
     public float maxIdleTime = 15f;
@@ -35,8 +47,8 @@ public class CharacterActionManager : MonoBehaviour
     [Header("Route Setup")]
     public WalkRoute[] availableRoutes;
 
-    // --- NEW: This specific variable tracks the active walking route so we can kill it instantly ---
     private Coroutine currentRouteCoroutine; 
+    private Coroutine faceResetCoroutine; // Tracks the face emotion
 
     void Awake()
     {
@@ -48,7 +60,6 @@ public class CharacterActionManager : MonoBehaviour
     {
         if (animator == null) return; 
 
-        // --- PREVENT INTERRUPTION: Do not trigger random idles if walking ---
         if (animator.GetBool("isWalking")) 
         {
             ResetTimer();
@@ -72,14 +83,47 @@ public class CharacterActionManager : MonoBehaviour
     }
 
     // ==========================================
+    // DYNAMIC EMOTION LOGIC
+    // ==========================================
+
+    private void ChangeFaceMaterialInstantly(Material newFace)
+    {
+        if (faceRenderer == null || newFace == null) return;
+
+        Material[] mats = faceRenderer.materials;
+        if (faceMaterialIndex >= 0 && faceMaterialIndex < mats.Length)
+        {
+            mats[faceMaterialIndex] = newFace;
+            faceRenderer.materials = mats;
+        }
+    }
+
+    private IEnumerator EmotionTiedToAnimationRoutine(Material emotionFace)
+    {
+        // 1. Apply the sad/happy face instantly
+        ChangeFaceMaterialInstantly(emotionFace);
+
+        // 2. Wait two frames to give the Animator time to receive the trigger and start moving out of Idle
+        yield return null;
+        yield return null;
+
+        // 3. Keep waiting as long as the Animator is transitioning, OR is currently playing the Fail/Win animation
+        while (animator.IsInTransition(0) || !animator.GetCurrentAnimatorStateInfo(0).IsName(idleStateName))
+        {
+            yield return null;
+        }
+
+        // 4. The exact moment we return to the Idle state, reset the face!
+        ChangeFaceMaterialInstantly(normalFaceMaterial);
+    }
+
+    // ==========================================
     // QUIZ RESULTS (Win / Fail)
     // ==========================================
 
     public void TriggerRandomVictory()
     {
         if (animator == null) return; 
-
-        // --- PREVENT INTERRUPTION: Ignore victory command if currently walking ---
         if (animator.GetBool("isWalking")) return;
 
         animator.ResetTrigger("PlayFail");
@@ -88,13 +132,18 @@ public class CharacterActionManager : MonoBehaviour
         int randomAnimation = Random.Range(0, 3);
         animator.SetInteger("VictoryIndex", randomAnimation);
         animator.SetTrigger("PlayVictory");
+
+        // --- Trigger dynamic happy face ---
+        if (happyFaceMaterial != null) 
+        {
+            if (faceResetCoroutine != null) StopCoroutine(faceResetCoroutine);
+            faceResetCoroutine = StartCoroutine(EmotionTiedToAnimationRoutine(happyFaceMaterial));
+        }
     }
 
     public void TriggerRandomFail()
     {
         if (animator == null) return;
-
-        // --- PREVENT INTERRUPTION: Ignore fail command if currently walking ---
         if (animator.GetBool("isWalking")) return;
 
         animator.ResetTrigger("PlayVictory");
@@ -103,6 +152,13 @@ public class CharacterActionManager : MonoBehaviour
         int randomAnimation = Random.Range(0, 3);
         animator.SetInteger("FailIndex", randomAnimation);
         animator.SetTrigger("PlayFail");
+
+        // --- Trigger dynamic sad face ---
+        if (sadFaceMaterial != null) 
+        {
+            if (faceResetCoroutine != null) StopCoroutine(faceResetCoroutine);
+            faceResetCoroutine = StartCoroutine(EmotionTiedToAnimationRoutine(sadFaceMaterial));
+        }
     }
 
     // ==========================================
@@ -134,13 +190,15 @@ public class CharacterActionManager : MonoBehaviour
     {
         if (routeIndex < 0 || routeIndex >= availableRoutes.Length) return;
 
-        // --- INSTANT CANCEL: If a route is currently playing, kill it immediately ---
         if (currentRouteCoroutine != null)
         {
             StopCoroutine(currentRouteCoroutine);
         }
 
-        // Start the new route and save it to our tracker variable
+        // Return face to normal instantly if they suddenly start walking
+        if (faceResetCoroutine != null) StopCoroutine(faceResetCoroutine);
+        ChangeFaceMaterialInstantly(normalFaceMaterial);
+
         currentRouteCoroutine = StartCoroutine(FollowRouteRoutine(availableRoutes[routeIndex]));
     }
 
@@ -193,10 +251,7 @@ public class CharacterActionManager : MonoBehaviour
             transform.rotation = flatFinalRotation;
         }
 
-        // Route finished successfully! Turn off walking status.
         if (animator != null) animator.SetBool("isWalking", false);
-        
-        // Clear the active tracker
         currentRouteCoroutine = null;
     }
 }

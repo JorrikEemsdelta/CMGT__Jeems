@@ -5655,6 +5655,7 @@ Transform:
   m_Children:
   - {fileID: 2058400218}
   - {fileID: 745740372}
+  - {fileID: 1993336762}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &198631469
@@ -8517,6 +8518,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291355100}
   m_CullTransparentMesh: 1
+--- !u!1 &295807235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 295807236}
+  m_Layer: 0
+  m_Name: 'Point 3 '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &295807236
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295807235}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 297.8, y: 504.99, z: 1186.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1993336762}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &302049248
 GameObject:
   m_ObjectHideFlags: 0
@@ -12460,6 +12492,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1130124989}
+        m_TargetAssemblyTypeName: CharacterActionManager, Assembly-CSharp
+        m_MethodName: StartWalkingRoute
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -18377,6 +18421,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 665535615}
   m_Mesh: {fileID: -4586450928409021222, guid: 85df9faeef4d79341ba5772dd7a6ac28, type: 3}
+--- !u!137 &667565773 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -4982190770181128591, guid: f210fb7daa65abe4db46c2cff8a50ab5, type: 3}
+  m_PrefabInstance: {fileID: 1123355674}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &668497464
 GameObject:
   m_ObjectHideFlags: 0
@@ -22478,6 +22527,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1130124989}
+        m_TargetAssemblyTypeName: CharacterActionManager, Assembly-CSharp
+        m_MethodName: StartWalkingRoute
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &777517370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24647,6 +24708,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 852387675}
   m_CullTransparentMesh: 1
+--- !u!1 &856317152
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 856317153}
+  m_Layer: 0
+  m_Name: Point 3 start
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &856317153
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856317152}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 362.2, y: 504.99, z: 1117.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1993336762}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &857224384
 GameObject:
   m_ObjectHideFlags: 0
@@ -30987,7 +31079,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 798ae6bdbc9420241ba16f8cf48f0389, type: 2}
     - target: {fileID: 919132149155446097, guid: f210fb7daa65abe4db46c2cff8a50ab5, type: 3}
       propertyPath: m_Name
-      value: Jeems daily questions
+      value: Jeems
       objectReference: {fileID: 0}
     - target: {fileID: 2934403351929339141, guid: f210fb7daa65abe4db46c2cff8a50ab5, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -31258,6 +31350,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterActionManager
   animator: {fileID: 0}
+  faceRenderer: {fileID: 667565773}
+  faceMaterialIndex: 0
+  normalFaceMaterial: {fileID: 2100000, guid: 45d60fb505bee9a42ad4124f756e332c, type: 2}
+  sadFaceMaterial: {fileID: 2100000, guid: 55e3ad60e981f3642806b93b8b1e76f8, type: 2}
+  happyFaceMaterial: {fileID: 2100000, guid: 45d60fb505bee9a42ad4124f756e332c, type: 2}
   minIdleTime: 5
   maxIdleTime: 15
   idleStateName: Idle
@@ -31283,6 +31380,16 @@ MonoBehaviour:
     waypoints:
     - {fileID: 1031880304}
     - {fileID: 1629139771}
+    faceFinalWaypointDirection: 1
+  - routeName: To warderobe
+    waypoints:
+    - {fileID: 295807236}
+    - {fileID: 1582574767}
+    faceFinalWaypointDirection: 1
+  - routeName: Warderobe to main menu
+    waypoints:
+    - {fileID: 295807236}
+    - {fileID: 856317153}
     faceFinalWaypointDirection: 1
 --- !u!114 &1130124991
 MonoBehaviour:
@@ -32845,7 +32952,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.69999886, y: -0.1000084, z: -0.1000084, w: 0.6999988}
   m_LocalPosition: {x: -1.4902563, y: -0.0009989975, z: 27.435602}
-  m_LocalScale: {x: 32.40297, y: 31.743979, z: 3.2402973}
+  m_LocalScale: {x: 40, y: 40, z: 3.2402973}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1248071590}
@@ -43119,6 +43226,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2058400218}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1582574766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1582574767}
+  m_Layer: 0
+  m_Name: Point 3  end
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1582574767
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582574766}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 312.2, y: 503.9, z: 1272}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1993336762}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1595931310
 GameObject:
   m_ObjectHideFlags: 0
@@ -55240,6 +55378,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1991385237}
   m_Mesh: {fileID: -4586450928409021222, guid: 85df9faeef4d79341ba5772dd7a6ac28, type: 3}
+--- !u!1 &1993336761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1993336762}
+  m_Layer: 0
+  m_Name: Route warderobe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1993336762
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993336761}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 856317153}
+  - {fileID: 295807236}
+  - {fileID: 1582574767}
+  m_Father: {fileID: 197317141}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1996354903
 GameObject:
   m_ObjectHideFlags: 0
@@ -56506,7 +56678,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -1.47, y: -0.0028341545, z: 27.47}
-  m_LocalScale: {x: 19.999998, y: 19.999998, z: 19.999998}
+  m_LocalScale: {x: 30, y: 30, z: 30}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 128547190}
