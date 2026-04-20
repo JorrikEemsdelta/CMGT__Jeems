@@ -43,13 +43,21 @@ public class QuestionUIController : MonoBehaviour
     [Tooltip("The text label displayed next to the checkmark.")]
     public TMP_Text checkmarkLabelText; 
 
-    [Header("Explanation Overlay (Shows when wrong)")]
+    [Header("Explanation Overlay (Shows when WRONG)")]
     [Tooltip("The panel that appears to explain a wrong answer.")]
     public GameObject explanationPanel;      
     [Tooltip("The text component displaying the explanation context.")]
     public TMP_Text explanationTextDisplay;  
     [Tooltip("The button to dismiss the explanation and try again or continue.")]
     public Button continueButton;            
+
+    [Header("Right Explanation Overlay (Shows when CORRECT)")]
+    [Tooltip("The panel that appears to explain a right answer.")]
+    public GameObject rightExplanationPanel;      
+    [Tooltip("The text component displaying the right explanation context.")]
+    public TMP_Text rightExplanationText;  
+    [Tooltip("The button to dismiss the right explanation and continue.")]
+    public Button closeRightExplanationButton; 
 
     // Cached image components to avoid expensive GetComponent calls during runtime
     private Image[] _multipleChoiceImages;
@@ -84,7 +92,9 @@ public class QuestionUIController : MonoBehaviour
         if (trueFalsePanel != null) trueFalsePanel.SetActive(type == QuestionType.TrueFalse);
         if (checkmarkPanel != null) checkmarkPanel.SetActive(type == QuestionType.Checkmark);
         
+        // Hide both explanation panels when setting up a new question
         HideExplanation(); 
+        HideRightExplanation();
 
         switch (type)
         {
@@ -147,6 +157,7 @@ public class QuestionUIController : MonoBehaviour
             _falseButtonImage.color = isCorrect ? Color.green : Color.red;
     }
     
+    // --- WRONG ANSWER EXPLANATION METHODS ---
     public void ShowExplanation(string explanation, UnityEngine.Events.UnityAction onContinueClicked)
     {
         if (explanationPanel != null) explanationPanel.SetActive(true);
@@ -162,5 +173,23 @@ public class QuestionUIController : MonoBehaviour
     public void HideExplanation()
     {
         if (explanationPanel != null) explanationPanel.SetActive(false);
+    }
+
+    // --- RIGHT ANSWER EXPLANATION METHODS ---
+    public void ShowRightExplanation(string explanation, UnityEngine.Events.UnityAction onContinueClicked)
+    {
+        if (rightExplanationPanel != null) rightExplanationPanel.SetActive(true);
+        if (rightExplanationText != null) rightExplanationText.text = explanation;
+
+        if (closeRightExplanationButton != null)
+        {
+            closeRightExplanationButton.onClick.RemoveAllListeners(); 
+            closeRightExplanationButton.onClick.AddListener(onContinueClicked); 
+        }
+    }
+
+    public void HideRightExplanation()
+    {
+        if (rightExplanationPanel != null) rightExplanationPanel.SetActive(false);
     }
 }
