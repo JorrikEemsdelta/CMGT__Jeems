@@ -86,7 +86,7 @@ public class QuizManager : MonoBehaviour
     [Space(10)]
     [Header("Animation References")]
     [Tooltip("Drag your GameResultAnimator object here to trigger win/fail animations.")]
-    public CharacterActionManager resultAnimator;
+    public GameResultAnimator resultAnimator;
 
     [Space(10)]
     [Header("Gamification")]
