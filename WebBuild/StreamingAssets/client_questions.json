@@ -1,0 +1,329 @@
+{
+  "lastPlayedDate": "",
+  "level1": [
+    {
+      "questionType": 1,
+      "title": "Documenten Delen",
+      "questionText": "Als je met een collega aan een document wilt samenwerken, kun je het document het beste als bijlage via de mail sturen.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Je moet altijd de link naar het document delen, en niet het document zelf als bijlage sturen. Zo behouden we 'één digitale waarheid'.",
+      "explanationWhenRight": "Helemaal goed! Door altijd een link te delen, werken we netjes in hetzelfde document en voorkomen we dubbele versies.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Inloggen & Beveiliging",
+      "questionText": "Een collega is zijn wachtwoord vergeten en moet dringend in een systeem zijn. Wat doe je?",
+      "multipleChoiceOptions": [
+        { "answerText": "1. Inloggen op mijn account", "isCorrect": false },
+        { "answerText": "2. Wachtwoord geven", "isCorrect": false },
+        { "answerText": "3. Nooit delen en IT bellen", "isCorrect": true },
+        { "answerText": "4. Lokaal opslaan", "isCorrect": false }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Dit is een groot veiligheidsrisico. Je mag je inloggegevens nooit met anderen delen en niemand anders op jouw account laten werken.",
+      "explanationWhenRight": "Precies! Inloggegevens zijn strikt persoonlijk. Zo voorkomen we misbruik en is altijd helder wie welke actie heeft uitgevoerd.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 2,
+      "title": "Handboek Gelezen",
+      "questionText": "Heb je het Handboek Digitaal Werken van de Gemeente Eemsdelta gelezen en begrepen?",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "Ja, ik heb het handboek gelezen.",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Je moet bevestigen dat je de regels rondom digitaal werken kent voordat je verder gaat.",
+      "explanationWhenRight": "Super, je bent nu helemaal op de hoogte van de belangrijkste basisregels. Succes!",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    }
+  ],
+  "level2": [
+    {
+      "questionType": 0,
+      "title": "Externe Communicatie",
+      "questionText": "Je wilt communiceren met inwoners of ondernemers via de gemeentelijke website. Wie helpt je hierbij?",
+      "multipleChoiceOptions": [
+        { "answerText": "1. Team Online", "isCorrect": false },
+        { "answerText": "2. Team Communicatie", "isCorrect": true },
+        { "answerText": "3. Team D&P", "isCorrect": false },
+        { "answerText": "4. Informatie Adviseur", "isCorrect": false }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Voor advies en ondersteuning bij (online) communicatie met inwoners en ondernemers moet je altijd contact opnemen met team Communicatie.",
+      "explanationWhenRight": "Uitstekend! Team Communicatie is er specifiek om ons te ondersteunen bij externe uitingen.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Projectinformatie",
+      "questionText": "Het is toegestaan om informatie over gemeentelijke projecten tijdelijk op te slaan op je eigen computer, zolang je het later maar in MS Teams zet.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Dit mag niet. Het is niet toegestaan om informatie over projecten en programma's buiten Teams of op je eigen computer buiten het netwerk op te slaan.",
+      "explanationWhenRight": "Goed onthouden! Projectinformatie hoort áltijd in MS Teams te staan, zodat het direct voor iedereen toegankelijk én veilig is.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    }
+  ],
+  "level3": [
+    {
+      "questionType": 0,
+      "title": "Nieuwe Software Nodig",
+      "questionText": "Je komt erachter dat je voor je werk een nieuwe digitale oplossing nodig hebt die de huidige systemen niet bieden. Wat is de eerste stap?",
+      "multipleChoiceOptions": [
+        { "answerText": "1. Zelf licentie kopen", "isCorrect": false },
+        { "answerText": "2. Eigen Excel maken", "isCorrect": false },
+        { "answerText": "3. Contact opnemen met informatie adviseur", "isCorrect": true },
+        { "answerText": "4. Team Communicatie vragen", "isCorrect": false }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Je mag geen losse administraties of eigen Excelbestanden aanleggen. Neem altijd contact op met de informatie adviseur.",
+      "explanationWhenRight": "Klopt helemaal! De informatie adviseur kijkt of we al zoiets hebben en helpt direct met privacy, architectuur en veiligheid.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Privacy in ONEGOV",
+      "questionText": "Omdat je toegang hebt tot ONEGOV, mag je elk dossier inzien dat zichtbaar voor je is, ook als je er inhoudelijk niet bij betrokken bent.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Je mag uitsluitend dossiers raadplegen waarbij je inhoudelijk betrokken bent en die noodzakelijk zijn voor je werk.",
+      "explanationWhenRight": "Zeer goed geantwoord. Privacy staat voorop: open alleen dossiers als je er zelf daadwerkelijk inhoudelijk aan meewerkt.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Interne Communicatie",
+      "questionText": "Je wilt een algemeen bericht of informatie delen met de hele organisatie via het intranet. Aan wie vraag je hulp?",
+      "multipleChoiceOptions": [
+        { "answerText": "1. Team Communicatie", "isCorrect": false },
+        { "answerText": "2. Team Online", "isCorrect": true },
+        { "answerText": "3. Team D&P", "isCorrect": false },
+        { "answerText": "4. Informatie Adviseur", "isCorrect": false }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Team Online is verantwoordelijk voor het intranet en helpt je om berichten op het juiste moment binnen de organisatie te publiceren.",
+      "explanationWhenRight": "Juist! Team Online is de beheerder van het intranet en regelt al onze interne communicatie.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Toegang tot OneDrive",
+      "questionText": "Als een collega langdurig ziek is, mag jij zelf even inloggen op zijn of haar OneDrive om een belangrijk document op te zoeken.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "OneDrive en Outlook zijn persoonlijk. Alleen met expliciete toestemming van het management mag toegang worden verleend tot andermans bestanden.",
+      "explanationWhenRight": "Helemaal waar. Bestanden zijn strikt persoonlijk. Alleen in extreme gevallen, mét goedkeuring van het management, mag er in andermans OneDrive gekeken worden.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Gedeelde Mailboxen",
+      "questionText": "Wat is het beleid van de gemeente Eemsdelta met betrekking tot gedeelde e-mailaccounts?",
+      "multipleChoiceOptions": [
+        { "answerText": "1. Standaard manier van werken", "isCorrect": false },
+        { "answerText": "2. Gebruik zoveel mogelijk verminderen", "isCorrect": true },
+        { "answerText": "3. Na 3 maanden verwijderd", "isCorrect": false },
+        { "answerText": "4. Verplicht voor extern", "isCorrect": false }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "De gemeente wil het gebruik van gedeelde e-mailaccounts zoveel mogelijk verminderen. Zoek naar een oplossing in ONEGOV.",
+      "explanationWhenRight": "Heel scherp. We werken veel liever via het zaaksysteem (ONEGOV) om overzicht te houden en effectiever samen te werken.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    }
+  ],
+  "level4": [
+    {
+      "questionType": 0,
+      "title": "Collegevoorstellen",
+      "questionText": "Wie is er verantwoordelijk voor dat een collegevoorstel op tijd door de juiste personen wordt behandeld?",
+      "multipleChoiceOptions": [
+        { "answerText": "1. Het college van B&W", "isCorrect": false },
+        { "answerText": "2. De griffie", "isCorrect": false },
+        { "answerText": "3. Team D&P", "isCorrect": false },
+        { "answerText": "4. De steller van het voorstel", "isCorrect": true }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "De steller van het voorstel heeft de regie en is verantwoordelijk voor een tijdige behandeling. Je moet het proces volgen in ONEGOV.",
+      "explanationWhenRight": "Precies! Als steller ben jíj de regisseur. Jij zorgt ervoor dat het voorstel tijdig door het hele proces wordt geloodst.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Archiefwet",
+      "questionText": "E-mails en documenten in Outlook en OneDrive worden automatisch formeel gearchiveerd door de back-up van de gemeente.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Hoewel er back-ups worden gemaakt, telt dit niet als formeel archiveren. Je bent zelf verantwoordelijk om informatie actief over te zetten.",
+      "explanationWhenRight": "Spot on. Een back-up is zeker geen archief. Je moet belangrijke stukken altijd zelf actief overzetten naar ONEGOV of een vakapplicatie.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Fysieke Inkomende Post",
+      "questionText": "Wat gebeurt er met meldingen en verzoeken van inwoners die nog via de ouderwetse fysieke post binnenkomen?",
+      "multipleChoiceOptions": [
+        { "answerText": "1. Naar bureau behandelaar", "isCorrect": false },
+        { "answerText": "2. Gescand, in ONEGOV gezet, na 3 maanden vernietigd", "isCorrect": true },
+        { "answerText": "3. Niet in behandeling genomen", "isCorrect": false },
+        { "answerText": "4. Origineel in kluis", "isCorrect": false }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Alle inkomende post wordt gescand en digitaal via ONEGOV aangeboden. Het originele papier wordt na 3 maanden vernietigd.",
+      "explanationWhenRight": "Juist! Alles wordt keurig gescand en gaat digitaal de organisatie in via ONEGOV, waarna het papier veilig wordt vernietigd.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 2,
+      "title": "Brieven in de Huisstijl",
+      "questionText": "Om brieven in de juiste vorm en huisstijl te maken die direct in het dossier worden opgeslagen, gebruiken we de sjablonen (Xential) binnen ONEGOV.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "Ik begrijp dat ik Xential sjablonen in ONEGOV moet gebruiken.",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Door de Xential sjablonen in ONEGOV te gebruiken, weet je zeker dat de huisstijl klopt en de brief veilig is opgeslagen.",
+      "explanationWhenRight": "Mooi werk! Xential garandeert namelijk dat alles automatisch in de correcte huisstijl wordt opgemaakt én veilig bewaard blijft.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "De Route van Raadsvoorstellen",
+      "questionText": "Hoe verloopt de procedure in ONEGOV als je een voorstel hebt dat door de gemeenteraad besproken moet worden?",
+      "multipleChoiceOptions": [
+        { "answerText": "1. Naar de griffie sturen", "isCorrect": false },
+        { "answerText": "2. Eerst een collegevoorstel maken", "isCorrect": true },
+        { "answerText": "3. Op intranet plaatsen", "isCorrect": false },
+        { "answerText": "4. Mailen als PDF", "isCorrect": false }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Het college doet formeel een voorstel aan de gemeenteraad. Je moet dus altijd eerst een collegevoorstel maken.",
+      "explanationWhenRight": "Helemaal goed. Het loopt altijd eerst via het college, en stroomt daarna via een nieuwe zaak soepel door naar de raad.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    }
+  ],
+  "level5": [
+    {
+      "questionType": 0,
+      "title": "De AVG en Gegevens Minimalisatie",
+      "questionText": "Wat is de hoofdregel volgens de AVG bij het uitvragen van persoonsgegevens bij inwoners?",
+      "multipleChoiceOptions": [
+        { "answerText": "1. Zoveel mogelijk gegevens vragen", "isCorrect": false },
+        { "answerText": "2. Alleen wat noodzakelijk is", "isCorrect": true },
+        { "answerText": "3. Onbeperkt bewaren op netwerk", "isCorrect": false },
+        { "answerText": "4. Altijd voor andere doelen gebruiken", "isCorrect": false }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "We moeten ons altijd afvragen of het echt noodzakelijk is. Als we ons werk ook kunnen doen zonder (of met minder) persoonsgegevens, heeft dat de voorkeur. In Goodhabitz is ook een hele mooie cursus over AVG!",
+      "explanationWhenRight": "Top geantwoord. We noemen dit 'dataminimalisatie': we vragen echt nóóit meer dan strikt noodzakelijk. Goed bezig!",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Eigen Apparaten (Informatiebeveiliging)",
+      "questionText": "Als je de laptop van de gemeente bent vergeten, is het toegestaan om tijdelijk in te loggen en te werken op je eigen privé-laptop thuis.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Dit is streng verboden volgens het beveiligingsbeleid. Je moet altijd en uitsluitend de apparaten gebruiken die door de gemeente zijn geleverd.",
+      "explanationWhenRight": "Heel goed! Privé-apparatuur kan onzichtbare veiligheidsrisico's met zich meebrengen. Gebruik dus altijd uitsluitend de hardware van de gemeente.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "De Noodzaak van Archiveren",
+      "questionText": "Waarom zijn we als gemeente wettelijk verplicht om documenten en besluiten goed te archiveren?",
+      "multipleChoiceOptions": [
+        { "answerText": "1. Zodat burgemeester overzicht heeft", "isCorrect": false },
+        { "answerText": "2. Voor Woo-verzoeken, verantwoording en privacybescherming", "isCorrect": true },
+        { "answerText": "3. Opslag Teams is 1 jaar", "isCorrect": false },
+        { "answerText": "4. Zodat je nooit iets verwijdert", "isCorrect": false }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Archiveren is essentieel voor de Wet open overheid (Woo), de Archiefwet, en de AVG.",
+      "explanationWhenRight": "Exact! Correct archiveren is de basis voor de Wet open overheid (Woo), transparante verantwoording én onze privacyregels (AVG).",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Projecten in MS Teams",
+      "questionText": "Zodra een project is afgerond, wordt de bijbehorende MS Teams-omgeving direct door de IT-afdeling vernietigd om ruimte te besparen.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Na afsluiting blijft een Team nog wel raadpleegbaar. Aan de hand van de selectielijst wordt later bepaald wat vernietigd of bewaard wordt.",
+      "explanationWhenRight": "Klopt. MS Teams omgevingen blijven in eerste instantie bewaard, zodat we achteraf volgens de archiefwet kunnen bepalen wat er permanent gearchiveerd moet worden.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    }
+  ]
+}
