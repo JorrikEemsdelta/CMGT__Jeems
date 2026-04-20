@@ -9,4 +9,10 @@ public class GoBack : MonoBehaviour
   
         SceneManager.LoadScene("StartMenu");
     }
+
+    public void GotoFileTraining()
+    {
+
+        SceneManager.LoadScene("ThomasScene");
+    }
 }
