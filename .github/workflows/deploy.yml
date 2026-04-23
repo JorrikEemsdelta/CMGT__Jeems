@@ -1,0 +1,22 @@
+name: Deploy WebGL to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Or 'master' depending on your default branch name
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: webbuild # The folder where your build lives
+          branch: gh-pages # The branch the site will serve from
