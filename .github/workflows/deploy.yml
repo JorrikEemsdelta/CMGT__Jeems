@@ -18,5 +18,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: webbuild # The folder where your build lives
+          folder: WebBuild # The folder where your build lives
           branch: gh-pages # The branch the site will serve from
