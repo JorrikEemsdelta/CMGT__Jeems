@@ -4,49 +4,33 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Networking; // <--- REQUIRED FOR WEBGL FILE READING
+using UnityEngine.Networking;
 
 [System.Serializable]
 public class AnswerOption
 {
-    [Tooltip("The text to display for this answer.")]
-    public string answerText; 
-    [Tooltip("Is this the correct answer?")]
-    public bool isCorrect;    
+    public string answerText;
+    public bool isCorrect;
 }
 
 [System.Serializable]
 public class QuizQuestion
 {
-    [Header("General Setup")]
-    public QuestionType questionType; 
-    public string title;              
-    [TextArea(2, 5)] public string questionText; 
-    
-    [Space(10)]
-    [Header("Multiple Choice Settings")]
-    public AnswerOption[] multipleChoiceOptions; 
+    public QuestionType questionType;
+    public string title;
+    [TextArea(2, 5)] public string questionText;
 
-    [Space(10)]
-    [Header("True/False Settings")]
-    public bool correctTrueFalseAnswer; 
+    public AnswerOption[] multipleChoiceOptions;
+    public bool correctTrueFalseAnswer;
+    public string checkmarkLabel = "I have completed this task";
+    public bool correctCheckmarkState = true;
 
-    [Space(10)]
-    [Header("Checkmark Task Settings")]
-    public string checkmarkLabel = "I have completed this task"; 
-    public bool correctCheckmarkState = true; 
+    [TextArea(2, 4)] public string explanationWhenWrong = "Incorrect.";
+    [TextArea(2, 4)] public string explanationWhenRight = "Correct!";
 
-    [Space(10)]
-    [Header("Feedback")]
-    [TextArea(2, 4)]
-    public string explanationWhenWrong = "Incorrect. Please review the material and try again tomorrow.";
-
-    [TextArea(2, 4)]
-    public string explanationWhenRight = "Correct! Great job.";
-
-    [HideInInspector] public bool isCompleted = false; 
-    [HideInInspector] public bool isFailed = false;    
-    [HideInInspector] public string assignedDate = ""; 
+    [HideInInspector] public bool isCompleted = false;
+    [HideInInspector] public bool isFailed = false;
+    [HideInInspector] public string assignedDate = "";
 }
 
 [System.Serializable]
@@ -63,47 +47,39 @@ public class QuizDataWrapper
 public class QuizManager : MonoBehaviour
 {
     [Header("Daily Settings")]
-    [Range(1, 100)] public int dailyQuestionLimit = 5; 
+    [Range(1, 100)] public int dailyQuestionLimit = 5;
 
-    [Space(10)]
     [Header("UI References")]
-    public QuestionUIController[] uiSlots; 
-    public GameObject endOfDayPanel; 
+    public QuestionUIController[] uiSlots;
+    public GameObject endOfDayPanel;
 
-    [Space(10)]
-    [Header("Animation References")]
-    public CharacterActionManager resultAnimator; // Re-linked to your new unified script
-
-    [Space(10)]
-    [Header("Gamification")]
+    [Header("Animation/Visuals")]
+    public CharacterActionManager resultAnimator;
     public TMPro.TMP_Text mainStreakDisplay;
 
-    [Space(10)]
-    [Header("Question Library (Populated from JSON)")]
+    [Header("Question Library")]
     public List<QuizQuestion> level1_VeryEasy = new List<QuizQuestion>();
     public List<QuizQuestion> level2_Easy = new List<QuizQuestion>();
     public List<QuizQuestion> level3_Medium = new List<QuizQuestion>();
     public List<QuizQuestion> level4_Hard = new List<QuizQuestion>();
     public List<QuizQuestion> level5_VeryHard = new List<QuizQuestion>();
 
-    private List<QuizQuestion> todayQuestions = new List<QuizQuestion>(); 
+    private List<QuizQuestion> todayQuestions = new List<QuizQuestion>();
 
     void Start()
     {
-        // For WebGL, we MUST start with a Coroutine so the game can "wait" for the web request to download the JSON
+        // Must use Coroutine for WebGL to download the JSON from the server
         StartCoroutine(LoadDataAndInitializeRoutine());
     }
 
-    // --- NEW WEBGL-SAFE LOADING ROUTINE ---
     private IEnumerator LoadDataAndInitializeRoutine()
     {
         string clientJsonPath = Path.Combine(Application.streamingAssetsPath, "client_questions.json");
         string masterJson = "";
 
-        // 1. Fetch the Master JSON from StreamingAssets (Works for WebGL and Editor)
-        if (clientJsonPath.Contains("://") || clientJsonPath.Contains(":///"))
+        // 1. Fetch JSON (Web or Local)
+        if (clientJsonPath.Contains("://") || Application.platform == RuntimePlatform.WebGLPlayer)
         {
-            // If it's a URL (WebGL or Android), use UnityWebRequest to download it
             using (UnityWebRequest www = UnityWebRequest.Get(clientJsonPath))
             {
                 yield return www.SendWebRequest();
@@ -111,26 +87,18 @@ public class QuizManager : MonoBehaviour
                 if (www.result == UnityWebRequest.Result.Success)
                 {
                     masterJson = www.downloadHandler.text;
+                    Debug.Log("Master JSON loaded successfully.");
                 }
                 else
                 {
-                    Debug.LogError("WebGL File Error: Could not find client_questions.json in StreamingAssets. " + www.error);
+                    Debug.LogError($"JSON LOAD FAILED! Check file name case-sensitivity. Path: {clientJsonPath} Error: {www.error}");
                 }
             }
         }
         else
         {
-            // If it's a local PC/Editor build, use standard File IO
 #if !UNITY_WEBGL
-            if (File.Exists(clientJsonPath))
-            {
-                masterJson = File.ReadAllText(clientJsonPath);
-            }
-            else
-            {
-                Debug.LogWarning("Client JSON not found! Generating a template...");
-                SaveMasterTemplate(clientJsonPath);
-            }
+            if (File.Exists(clientJsonPath)) masterJson = File.ReadAllText(clientJsonPath);
 #endif
         }
 
@@ -148,7 +116,7 @@ public class QuizManager : MonoBehaviour
             }
         }
 
-        // 2. Load the Player's Save Data directly from the Browser's Local Storage (PlayerPrefs)
+        // 2. Load Save Data
         string saveJson = PlayerPrefs.GetString("PlayerQuizSave", "");
         if (!string.IsNullOrEmpty(saveJson))
         {
@@ -163,79 +131,20 @@ public class QuizManager : MonoBehaviour
             }
         }
 
-        // 3. Now that data is fully loaded, build the UI!
+        // 3. Kick off Game Logic
         InitializeDailyQuiz();
-    }
-
-    private void ApplySaveState(List<QuizQuestion> masterList, List<QuizQuestion> saveList)
-    {
-        if (masterList == null || saveList == null) return;
-
-        foreach (var savedQ in saveList)
-        {
-            var masterQ = masterList.FirstOrDefault(q => q.title == savedQ.title);
-            if (masterQ != null)
-            {
-                masterQ.isCompleted = savedQ.isCompleted;
-                masterQ.isFailed = savedQ.isFailed;
-                masterQ.assignedDate = savedQ.assignedDate;
-            }
-        }
-    }
-
-    // --- NEW WEBGL-SAFE SAVING ---
-    private void SavePlayerProgress()
-    {
-        QuizDataWrapper wrapper = new QuizDataWrapper 
-        { 
-            level1 = this.level1_VeryEasy, level2 = this.level2_Easy,
-            level3 = this.level3_Medium, level4 = this.level4_Hard, level5 = this.level5_VeryHard
-        };
-        
-        string json = JsonUtility.ToJson(wrapper, true);
-        
-        // Instead of writing to a file, we save the JSON string directly into the browser cache
-        PlayerPrefs.SetString("PlayerQuizSave", json);
-        PlayerPrefs.Save();
-    }
-
-    private void SaveMasterTemplate(string path)
-    {
-#if !UNITY_WEBGL
-        string dir = Path.GetDirectoryName(path);
-        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-
-        QuizDataWrapper wrapper = new QuizDataWrapper 
-        { 
-            level1 = this.level1_VeryEasy, level2 = this.level2_Easy,
-            level3 = this.level3_Medium, level4 = this.level4_Hard, level5 = this.level5_VeryHard
-        };
-        
-        string json = JsonUtility.ToJson(wrapper, true); 
-        File.WriteAllText(path, json);
-#endif
-    }
-
-    private List<QuizQuestion> GetAllQuestions()
-    {
-        List<QuizQuestion> combined = new List<QuizQuestion>();
-        if (level1_VeryEasy != null) combined.AddRange(level1_VeryEasy);
-        if (level2_Easy != null) combined.AddRange(level2_Easy);
-        if (level3_Medium != null) combined.AddRange(level3_Medium);
-        if (level4_Hard != null) combined.AddRange(level4_Hard);
-        if (level5_VeryHard != null) combined.AddRange(level5_VeryHard);
-        return combined;
     }
 
     private void InitializeDailyQuiz()
     {
-        string today = DateTime.Now.ToString("yyyy-MM-dd"); 
-        string lastDate = PlayerPrefs.GetString("LastPlayedDate", ""); 
+        string today = DateTime.Now.ToString("yyyy-MM-dd");
+        string lastDate = PlayerPrefs.GetString("LastPlayedDate", "");
 
         if (today != lastDate)
         {
             GenerateDailyList(today);
-            PlayerPrefs.SetString("LastPlayedDate", today); 
+            PlayerPrefs.SetString("LastPlayedDate", today);
+            PlayerPrefs.Save();
         }
         else
         {
@@ -243,80 +152,83 @@ public class QuizManager : MonoBehaviour
         }
 
         UpdateStreakUI();
-        RefreshUISlots(); 
-    }
-
-    private void UpdateStreakUI()
-    {
-        if (mainStreakDisplay != null)
-        {
-            int currentStreak = PlayerPrefs.GetInt("TotalDaysPlayed", 0);
-            mainStreakDisplay.text = "Streak: " + currentStreak;
-        }
-    }
-
-    private void GenerateDailyList(string todayString)
-    {
-        todayQuestions.Clear(); 
-        var allQuestions = GetAllQuestions(); 
-
-        var failedQuestions = allQuestions.Where(q => q.isFailed).ToList(); 
-        foreach (var q in failedQuestions)
-        {
-            q.isFailed = false;    
-            q.isCompleted = false; 
-            q.assignedDate = todayString; 
-            todayQuestions.Add(q); 
-        }
-
-        int amountNeeded = dailyQuestionLimit - todayQuestions.Count; 
-        if (amountNeeded > 0)
-        {
-            var newQuestions = allQuestions
-                .Where(q => !q.isCompleted && !todayQuestions.Contains(q)) 
-                .Take(amountNeeded) 
-                .ToList();
-                
-            foreach (var q in newQuestions) q.assignedDate = todayString; 
-            todayQuestions.AddRange(newQuestions); 
-        }
-
-        SavePlayerProgress(); 
+        RefreshUISlots();
     }
 
     private void LoadCurrentDailyProgress(string todayString)
     {
         var allQuestions = GetAllQuestions();
+
+        // CIRCUIT BREAKER: If no questions exist, stop initialization to prevent recursion crash
+        if (allQuestions.Count == 0)
+        {
+            Debug.LogWarning("No questions available to load for today. Check JSON content.");
+            return;
+        }
+
         todayQuestions = allQuestions.Where(q => q.assignedDate == todayString).ToList();
-        if (todayQuestions.Count == 0) GenerateDailyList(todayString);
+
+        // Only generate if we don't have any assigned for today yet
+        if (todayQuestions.Count == 0)
+        {
+            GenerateDailyList(todayString);
+        }
+    }
+
+    private void GenerateDailyList(string todayString)
+    {
+        todayQuestions.Clear();
+        var allQuestions = GetAllQuestions();
+        if (allQuestions.Count == 0) return;
+
+        // Carry over failures
+        var failedQuestions = allQuestions.Where(q => q.isFailed).ToList();
+        foreach (var q in failedQuestions)
+        {
+            q.isFailed = false;
+            q.isCompleted = false;
+            q.assignedDate = todayString;
+            todayQuestions.Add(q);
+        }
+
+        int amountNeeded = dailyQuestionLimit - todayQuestions.Count;
+        if (amountNeeded > 0)
+        {
+            var newQuestions = allQuestions
+                .Where(q => !q.isCompleted && !todayQuestions.Contains(q))
+                .Take(amountNeeded)
+                .ToList();
+
+            foreach (var q in newQuestions) q.assignedDate = todayString;
+            todayQuestions.AddRange(newQuestions);
+        }
+
+        SavePlayerProgress();
+    }
+
+    private void SavePlayerProgress()
+    {
+        QuizDataWrapper wrapper = new QuizDataWrapper
+        {
+            level1 = this.level1_VeryEasy,
+            level2 = this.level2_Easy,
+            level3 = this.level3_Medium,
+            level4 = this.level4_Hard,
+            level5 = this.level5_VeryHard
+        };
+
+        PlayerPrefs.SetString("PlayerQuizSave", JsonUtility.ToJson(wrapper));
+        PlayerPrefs.Save();
     }
 
     private void RefreshUISlots()
     {
         var activeQuestions = todayQuestions.Where(q => !q.isCompleted).ToList();
-        
-        if (activeQuestions.Count == 0) 
-        {
-            string today = DateTime.Now.ToString("yyyy-MM-dd");
-            string lastStreakDate = PlayerPrefs.GetString("LastStreakDate", "");
 
-            if (today != lastStreakDate)
-            {
-                int currentStreak = PlayerPrefs.GetInt("TotalDaysPlayed", 0);
-                currentStreak++;
-                PlayerPrefs.SetInt("TotalDaysPlayed", currentStreak);
-                PlayerPrefs.SetString("LastStreakDate", today); 
-                
-                UpdateStreakUI(); 
-            }
-
-            if (endOfDayPanel != null) endOfDayPanel.SetActive(true);
-            foreach (var slot in uiSlots) slot.gameObject.SetActive(false);
-            return; 
-        }
-        else
+        if (activeQuestions.Count == 0 && todayQuestions.Count > 0)
         {
-            if (endOfDayPanel != null) endOfDayPanel.SetActive(false);
+            HandleEndOfDay();
+            return;
         }
 
         for (int i = 0; i < uiSlots.Length; i++)
@@ -325,13 +237,31 @@ public class QuizManager : MonoBehaviour
             {
                 uiSlots[i].gameObject.SetActive(true);
                 uiSlots[i].ResetColors();
-                SetupSlot(i, activeQuestions[i]); 
+                SetupSlot(i, activeQuestions[i]);
             }
             else
             {
                 uiSlots[i].gameObject.SetActive(false);
             }
         }
+    }
+
+    private void HandleEndOfDay()
+    {
+        string today = DateTime.Now.ToString("yyyy-MM-dd");
+        string lastStreakDate = PlayerPrefs.GetString("LastStreakDate", "");
+
+        if (today != lastStreakDate)
+        {
+            int currentStreak = PlayerPrefs.GetInt("TotalDaysPlayed", 0) + 1;
+            PlayerPrefs.SetInt("TotalDaysPlayed", currentStreak);
+            PlayerPrefs.SetString("LastStreakDate", today);
+            PlayerPrefs.Save();
+            UpdateStreakUI();
+        }
+
+        if (endOfDayPanel != null) endOfDayPanel.SetActive(true);
+        foreach (var slot in uiSlots) slot.gameObject.SetActive(false);
     }
 
     private void SetupSlot(int slotIndex, QuizQuestion q)
@@ -343,13 +273,13 @@ public class QuizManager : MonoBehaviour
             uiAnswers = new string[] { q.checkmarkLabel };
 
         uiSlots[slotIndex].SetupQuestion(q.questionType, q.title, q.questionText, uiAnswers);
-        
+
         if (q.questionType == QuestionType.MultipleChoice)
         {
             for (int i = 0; i < uiSlots[slotIndex].multipleChoiceButtons.Length; i++)
             {
-                uiSlots[slotIndex].multipleChoiceButtons[i].onClick.RemoveAllListeners(); 
-                int choiceIndex = i; 
+                uiSlots[slotIndex].multipleChoiceButtons[i].onClick.RemoveAllListeners();
+                int choiceIndex = i;
                 uiSlots[slotIndex].multipleChoiceButtons[i].onClick.AddListener(() => HandleMultipleChoice(slotIndex, q, choiceIndex));
             }
         }
@@ -389,63 +319,78 @@ public class QuizManager : MonoBehaviour
 
     private void ProcessAnswer(int slotIndex, QuizQuestion q, bool isCorrect)
     {
-        q.isCompleted = true; 
-        
-        if (isCorrect) 
-        {
-            q.isFailed = false; 
-            SavePlayerProgress();
+        q.isCompleted = true;
 
+        if (isCorrect)
+        {
+            q.isFailed = false;
+            SavePlayerProgress();
             if (resultAnimator != null) resultAnimator.TriggerRandomVictory();
 
-            uiSlots[slotIndex].ShowRightExplanation(q.explanationWhenRight, () => 
+            uiSlots[slotIndex].ShowRightExplanation(q.explanationWhenRight, () =>
             {
                 uiSlots[slotIndex].HideRightExplanation();
-                RefreshUISlots(); 
+                RefreshUISlots();
             });
         }
-        else 
+        else
         {
-            q.isFailed = true; 
+            q.isFailed = true;
             SavePlayerProgress();
-
             if (resultAnimator != null) resultAnimator.TriggerRandomFail();
 
-            uiSlots[slotIndex].ShowExplanation(q.explanationWhenWrong, () => 
+            uiSlots[slotIndex].ShowExplanation(q.explanationWhenWrong, () =>
             {
                 uiSlots[slotIndex].HideExplanation();
-                RefreshUISlots(); 
+                RefreshUISlots();
             });
         }
     }
 
-    [ContextMenu("1. Reset All Progress (Back to Start)")]
-    private void ClearSaveData()
+    private List<QuizQuestion> GetAllQuestions()
     {
-        PlayerPrefs.DeleteKey("LastPlayedDate");
-        PlayerPrefs.DeleteKey("LastStreakDate"); 
-        PlayerPrefs.DeleteKey("TotalDaysPlayed"); 
-        PlayerPrefs.DeleteKey("PlayerQuizSave"); // Clear the new web-safe save
-        
-        foreach (var q in GetAllQuestions())
-        {
-            q.isCompleted = false;
-            q.isFailed = false;
-            q.assignedDate = ""; 
-        }
-        
-        UpdateStreakUI(); 
-        Debug.Log("Progress and Streak Reset!");
+        List<QuizQuestion> combined = new List<QuizQuestion>();
+        combined.AddRange(level1_VeryEasy ?? new List<QuizQuestion>());
+        combined.AddRange(level2_Easy ?? new List<QuizQuestion>());
+        combined.AddRange(level3_Medium ?? new List<QuizQuestion>());
+        combined.AddRange(level4_Hard ?? new List<QuizQuestion>());
+        combined.AddRange(level5_VeryHard ?? new List<QuizQuestion>());
+        return combined;
     }
 
-    [ContextMenu("2. Fast Forward to Tomorrow")]
-    private void SimulateNextDay()
+    private void UpdateStreakUI()
     {
-        string fakeYesterday = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
-        
-        PlayerPrefs.SetString("LastPlayedDate", fakeYesterday);
-        PlayerPrefs.SetString("LastStreakDate", fakeYesterday); 
-        
-        Debug.Log("<b>Time travel successful!</b> The game now fully thinks you last played yesterday.");
+        if (mainStreakDisplay != null)
+        {
+            int currentStreak = PlayerPrefs.GetInt("TotalDaysPlayed", 0);
+            mainStreakDisplay.text = "Streak: " + currentStreak;
+        }
+    }
+
+    private void ApplySaveState(List<QuizQuestion> masterList, List<QuizQuestion> saveList)
+    {
+        if (masterList == null || saveList == null) return;
+
+        foreach (var savedQ in saveList)
+        {
+            var masterQ = masterList.FirstOrDefault(q => q.title == savedQ.title);
+            if (masterQ != null)
+            {
+                masterQ.isCompleted = savedQ.isCompleted;
+                masterQ.isFailed = savedQ.isFailed;
+                masterQ.assignedDate = savedQ.assignedDate;
+            }
+        }
+    }
+
+    [ContextMenu("Reset Save Data")]
+    public void ClearSaveData()
+    {
+        PlayerPrefs.DeleteKey("PlayerQuizSave");
+        PlayerPrefs.DeleteKey("LastPlayedDate");
+        PlayerPrefs.DeleteKey("LastStreakDate");
+        PlayerPrefs.DeleteKey("TotalDaysPlayed");
+        PlayerPrefs.Save();
+        Debug.Log("Save data cleared!");
     }
 }
