@@ -1,47 +1,62 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
-using UnityEngine.InputSystem;
+using TMPro; // Required for TextMeshPro
+using UnityEngine.UI; // Required for the Button
 
-// Dit is nodig om de tekst van de vraag in JSON te zetten
 [System.Serializable]
 public class ChatData
 {
     public string tekst;
 }
 
-// Dit vangt het antwoord op
 [System.Serializable]
 public class ChatResponse
 {
     public string antwoord;
-
 }
 
 public class Chatbot : MonoBehaviour
 {
-    public string vraagstel;
-    // PLAK HIER JE URL VAN HUGGING FACE (eindigend op /vraag)
+    [Header("UI References")]
+    public TMP_InputField inputField;  // Drag your Input Field here
+    public TMP_Text outputText;        // Drag your Response Text here
+    public Button sendButton;          // Drag your Button here
+
+    [Header("API Settings")]
     public string apiUrl = "https://jorrinkie-eemsdelta-assistant.hf.space/vraag";
 
-    void Update()
+    void Start()
     {
-        // Test: druk op de Spatiebalk om een vraag te stellen
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        // Automatically add the listener so you don't have to do it in the Inspector
+        if (sendButton != null)
         {
-            StelVraag(vraagstel);
+            sendButton.onClick.AddListener(OnSendButtonClick);
         }
     }
 
-    public void StelVraag(string vraagTekst)
+    // This method is called when the button is clicked
+    public void OnSendButtonClick()
     {
-        StartCoroutine(VerstuurVraag(vraagTekst));
+        string userQuestion = inputField.text;
+
+        if (!string.IsNullOrEmpty(userQuestion))
+        {
+            StartCoroutine(VerstuurVraag(userQuestion));
+        }
+        else
+        {
+            outputText.text = "Typ eerst een vraag...";
+        }
     }
 
     IEnumerator VerstuurVraag(string vraagTekst)
     {
-        ChatData data = new ChatData();
-        data.tekst = vraagTekst;
+        // Visual feedback for the user
+        outputText.text = "Aan het typen...";
+        inputField.text = ""; // Clear input after sending
+
+        ChatData data = new ChatData { tekst = vraagTekst };
         string json = JsonUtility.ToJson(data);
 
         UnityWebRequest request = new UnityWebRequest(apiUrl, "POST");
@@ -50,21 +65,19 @@ public class Chatbot : MonoBehaviour
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
 
-        Debug.Log("Vraag verzonden aan AI...");
-
         yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            // Zet het JSON antwoord om naar een leesbare string
             ChatResponse response = JsonUtility.FromJson<ChatResponse>(request.downloadHandler.text);
+            
+            // Show the answer in the TMP Text box
+            outputText.text = response.antwoord;
             Debug.Log("AI Antwoord: " + response.antwoord);
-
-
         }
         else
         {
-            Debug.LogError("Fout bij verbinden met AI: " + request.error);
+            outputText.text = "Fout: " + request.error;
             Debug.LogError("Details: " + request.downloadHandler.text);
         }
     }

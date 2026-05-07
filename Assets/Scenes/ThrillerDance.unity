@@ -1803,7 +1803,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c2333697e627a4287201a7f7f88c62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chatbot
-  vraagstel: 
+  inputField: {fileID: 2046800038}
+  outputText: {fileID: 931730697}
+  sendButton: {fileID: 336932020}
   apiUrl: https://jorrinkie-eemsdelta-assistant.hf.space/vraag
 --- !u!1 &2046800036
 GameObject:
