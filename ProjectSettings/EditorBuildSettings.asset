@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ThomasScene.unity
     guid: 6d8bd39d6040466428a7e78e7280cacc
+  - enabled: 1
+    path: Assets/Scenes/ThrillerDance.unity
+    guid: 6319597c631ff56408f4c426acb846d7
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
