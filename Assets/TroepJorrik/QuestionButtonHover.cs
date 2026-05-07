@@ -1,12 +1,13 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 // This is the extra line needed for the new system
 using UnityEngine.InputSystem; 
 
 public class QuestionButtonHover : MonoBehaviour
 {
     [Header("Scene Transition")]
-    public string sceneToLoad;
+    // Instead of loading a scene, we toggle UI GameObjects
+    public GameObject uiToDisable;
+    public GameObject uiToEnable;
 
     [Header("Shader Settings")]
     public string shaderReferenceName = "_outline_scale"; 
@@ -63,9 +64,18 @@ public class QuestionButtonHover : MonoBehaviour
 
     void LoadTargetScene()
     {
-        if (!string.IsNullOrEmpty(sceneToLoad))
+
+        bool enableIsActive = uiToEnable != null && uiToEnable.activeSelf;
+
+        if (enableIsActive)
         {
-            SceneManager.LoadScene(sceneToLoad);
+            if (uiToEnable != null) uiToEnable.SetActive(false);
+            if (uiToDisable != null) uiToDisable.SetActive(true);
+        }
+        else
+        {
+            if (uiToEnable != null) uiToEnable.SetActive(true);
+            if (uiToDisable != null) uiToDisable.SetActive(false);
         }
     }
 }
