@@ -14,6 +14,13 @@ public class ButtonManager : MonoBehaviour
     {
         Application.Quit();
     }
-
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("StartMenu");
+    }
+    public void LoadTeamsTraining()
+    {
+        SceneManager.LoadScene("TeamsTraining");
+    }
 
 }
