@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
-using TMPro; // Required for TextMeshPro
-using UnityEngine.UI; // Required for the Button
+using System.Text;
+using TMPro;
+using UnityEngine.UI; 
 
 [System.Serializable]
 public class ChatData
@@ -22,6 +23,11 @@ public class Chatbot : MonoBehaviour
     public TMP_InputField inputField;  // Drag your Input Field here
     public TMP_Text outputText;        // Drag your Response Text here
     public Button sendButton;          // Drag your Button here
+    // Optional: assign the ScrollRect that contains the chat output so we can auto-scroll
+    public ScrollRect chatScrollRect;
+
+    // Keep the chat history as a running log
+    private StringBuilder chatHistory = new StringBuilder();
 
     [Header("API Settings")]
     public string apiUrl = "https://jorrinkie-eemsdelta-assistant.hf.space/vraag";
@@ -35,6 +41,27 @@ public class Chatbot : MonoBehaviour
         }
     }
 
+    // Scroll the ScrollRect to the bottom to show the latest messages
+    void ScrollToBottom()
+    {
+        if (chatScrollRect == null) return;
+
+        // Ensure layout elements have updated first
+        Canvas.ForceUpdateCanvases();
+        chatScrollRect.verticalNormalizedPosition = 0f;
+
+        // As a fallback, move to bottom on the next frame as well
+        StartCoroutine(ScrollToBottomNextFrame());
+    }
+
+    IEnumerator ScrollToBottomNextFrame()
+    {
+        yield return null;
+        if (chatScrollRect == null) yield break;
+        Canvas.ForceUpdateCanvases();
+        chatScrollRect.verticalNormalizedPosition = 0f;
+    }
+
     // This method is called when the button is clicked
     public void OnSendButtonClick()
     {
@@ -42,6 +69,15 @@ public class Chatbot : MonoBehaviour
 
         if (!string.IsNullOrEmpty(userQuestion))
         {
+            // Append user's question to the chat history and show it immediately
+            chatHistory.AppendLine("<b>Jij:</b> " + userQuestion);
+            // Show history and a typing indicator
+            if (outputText != null)
+            {
+                outputText.text = chatHistory.ToString() + "\nAan het typen...";
+                ScrollToBottom();
+            }
+
             StartCoroutine(VerstuurVraag(userQuestion));
         }
         else
@@ -52,8 +88,12 @@ public class Chatbot : MonoBehaviour
 
     IEnumerator VerstuurVraag(string vraagTekst)
     {
-        // Visual feedback for the user
-        outputText.text = "Aan het typen...";
+        // Visual feedback for the user: show the full history and a typing indicator
+        if (outputText != null)
+        {
+            outputText.text = chatHistory.ToString() + "\nAan het typen...";
+            ScrollToBottom();
+        }
         inputField.text = ""; // Clear input after sending
 
         ChatData data = new ChatData { tekst = vraagTekst };
@@ -71,13 +111,26 @@ public class Chatbot : MonoBehaviour
         {
             ChatResponse response = JsonUtility.FromJson<ChatResponse>(request.downloadHandler.text);
             
-            // Show the answer in the TMP Text box
-            outputText.text = response.antwoord;
+            // Append AI answer to history and display full chat
+            chatHistory.AppendLine("<b>Jeems:</b> " + response.antwoord);
+            chatHistory.AppendLine();
+            if (outputText != null)
+            {
+                outputText.text = chatHistory.ToString();
+                ScrollToBottom();
+            }
             Debug.Log("AI Antwoord: " + response.antwoord);
         }
         else
         {
-            outputText.text = "Fout: " + request.error;
+            string errorMsg = "Fout: " + request.error;
+            chatHistory.AppendLine("<b>AI:</b> " + errorMsg);
+            chatHistory.AppendLine();
+            if (outputText != null)
+            {
+                outputText.text = chatHistory.ToString();
+                ScrollToBottom();
+            }
             Debug.LogError("Details: " + request.downloadHandler.text);
         }
     }
