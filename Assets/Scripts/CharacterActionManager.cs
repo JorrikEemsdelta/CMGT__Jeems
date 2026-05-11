@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem; // Required for the New Input System
 
 [System.Serializable]
 public class WalkRoute
@@ -22,12 +21,8 @@ public class CharacterActionManager : MonoBehaviour
 
     [Space(10)]
     [Header("Face Emotions")]
-    [Tooltip("Drag the specific body part/mesh that holds the face material here.")]
     public SkinnedMeshRenderer faceRenderer;
-    [Tooltip("If the face is combined with the body, which material slot is the face? (Usually 0, 1, or 2)")]
     public int faceMaterialIndex = 0;
-
-    [Space(5)]
     public Material normalFaceMaterial;
     public Material sadFaceMaterial;
     public Material happyFaceMaterial;
@@ -37,8 +32,7 @@ public class CharacterActionManager : MonoBehaviour
     public float minIdleTime = 5f;
     public float maxIdleTime = 15f;
     public string idleStateName = "Idle";
-    [Tooltip("The name of your Talking state in the Animator to prevent idle overlaps.")]
-    public string talkingStateName = "Talking";
+    public string walkingStateName = "Walking";
     private float nextActionTime;
 
     [Space(10)]
@@ -63,20 +57,19 @@ public class CharacterActionManager : MonoBehaviour
     {
         if (animator == null) return;
 
-
-
-        // If walking, we don't process random idles
         if (animator.GetBool("isWalking"))
         {
             ResetTimer();
             return;
         }
 
-        bool isIdling = animator.GetCurrentAnimatorStateInfo(0).IsName(idleStateName);
-        bool isTalking = animator.GetCurrentAnimatorStateInfo(0).IsName(talkingStateName);
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        bool isIdling = stateInfo.IsName(idleStateName);
+        
+        // FIX: Explicitly check for both Talking states based on your Animator graph
+        bool isTalking = stateInfo.IsName("Talking 1") || stateInfo.IsName("Talking 2");
         bool isTransitioning = animator.IsInTransition(0);
 
-        // Only trigger random idle animations if we are in the Idle state and not already talking
         if (isIdling && !isTalking && !isTransitioning)
         {
             if (Time.time >= nextActionTime)
@@ -84,71 +77,40 @@ public class CharacterActionManager : MonoBehaviour
                 TriggerRandomIdleAnimation();
             }
         }
-        else
+        else if (!isIdling && !isTalking && !isTransitioning && !animator.GetBool("isWalking"))
         {
             ResetTimer();
         }
     }
 
     // ==========================================
-    // TALKING LOGIC
+    // TALKING LOGIC (PRIORITY FIX)
     // ==========================================
-
     public void TriggerRandomTalking()
     {
         if (animator == null || animator.GetBool("isWalking")) return;
 
-        // Reset triggers to prevent queuing
-        animator.ResetTrigger("PlayTalking1");
-        animator.ResetTrigger("PlayTalking2");
+        // Clear out any pending waves or looks
+        ClearIdleTriggers();
 
-        // Randomly choose between 1 and 2
         int randomTalk = Random.Range(1, 3);
+        string targetState = "Talking " + randomTalk;
+
+        // FIX: Force the animator to transition to the talking state immediately.
+        // This overrides any Waving or Looking animation currently playing.
+        animator.CrossFadeInFixedTime(targetState, 0.1f);
+        
+        // Keep the trigger set just in case your graph relies on it, but the CrossFade handles the heavy lifting
         animator.SetTrigger("PlayTalking" + randomTalk);
+
+        // Reset the idle timer so they don't immediately wave the millisecond talking finishes
+        ResetTimer();
     }
-
-    // ==========================================
-    // DYNAMIC EMOTION LOGIC
-    // ==========================================
-
-    private void ChangeFaceMaterialInstantly(Material newFace)
-    {
-        if (faceRenderer == null || newFace == null) return;
-
-        Material[] mats = faceRenderer.materials;
-        if (faceMaterialIndex >= 0 && faceMaterialIndex < mats.Length)
-        {
-            mats[faceMaterialIndex] = newFace;
-            faceRenderer.materials = mats;
-        }
-    }
-
-
-    private IEnumerator EmotionTiedToAnimationRoutine(Material emotionFace)
-    {
-        ChangeFaceMaterialInstantly(emotionFace);
-
-        yield return null;
-        yield return null;
-
-        while (animator.IsInTransition(0) || !animator.GetCurrentAnimatorStateInfo(0).IsName(idleStateName))
-        {
-            yield return null;
-        }
-
-        ChangeFaceMaterialInstantly(normalFaceMaterial);
-    }
-
-    // ==========================================
-    // QUIZ RESULTS (Win / Fail)
-    // ==========================================
 
     public void TriggerRandomVictory()
     {
         if (animator == null || animator.GetBool("isWalking")) return;
-
-        animator.ResetTrigger("PlayFail");
-        animator.ResetTrigger("PlayVictory");
+        ClearIdleTriggers();
 
         int randomAnimation = Random.Range(0, 3);
         animator.SetInteger("VictoryIndex", randomAnimation);
@@ -164,9 +126,7 @@ public class CharacterActionManager : MonoBehaviour
     public void TriggerRandomFail()
     {
         if (animator == null || animator.GetBool("isWalking")) return;
-
-        animator.ResetTrigger("PlayVictory");
-        animator.ResetTrigger("PlayFail");
+        ClearIdleTriggers();
 
         int randomAnimation = Random.Range(0, 3);
         animator.SetInteger("FailIndex", randomAnimation);
@@ -179,20 +139,25 @@ public class CharacterActionManager : MonoBehaviour
         }
     }
 
-    // ==========================================
-    // RANDOM IDLE ACTIONS
-    // ==========================================
-
     private void TriggerRandomIdleAnimation()
     {
-        if (animator == null) return;
+        if (animator == null || animator.GetBool("isWalking")) return;
 
         int chance = Random.Range(0, 100);
-
         if (chance < 50) animator.SetTrigger("isWaving");
         else animator.SetTrigger("isLooking");
 
         ResetTimer();
+    }
+
+    private void ClearIdleTriggers()
+    {
+        animator.ResetTrigger("isWaving");
+        animator.ResetTrigger("isLooking");
+        animator.ResetTrigger("PlayTalking1");
+        animator.ResetTrigger("PlayTalking2");
+        animator.ResetTrigger("PlayVictory");
+        animator.ResetTrigger("PlayFail");
     }
 
     private void ResetTimer()
@@ -200,22 +165,14 @@ public class CharacterActionManager : MonoBehaviour
         nextActionTime = Time.time + Random.Range(minIdleTime, maxIdleTime);
     }
 
-    // ==========================================
-    // MOVEMENT & ROUTES
-    // ==========================================
-
     public void StartWalkingRoute(int routeIndex)
     {
         if (routeIndex < 0 || routeIndex >= availableRoutes.Length) return;
 
-        if (currentRouteCoroutine != null)
-        {
-            StopCoroutine(currentRouteCoroutine);
-        }
-
+        if (currentRouteCoroutine != null) StopCoroutine(currentRouteCoroutine);
         if (faceResetCoroutine != null) StopCoroutine(faceResetCoroutine);
+        
         ChangeFaceMaterialInstantly(normalFaceMaterial);
-
         currentRouteCoroutine = StartCoroutine(FollowRouteRoutine(availableRoutes[routeIndex]));
     }
 
@@ -223,7 +180,9 @@ public class CharacterActionManager : MonoBehaviour
     {
         if (route.waypoints.Length == 0) yield break;
 
-        if (animator != null) animator.SetBool("isWalking", true);
+        ClearIdleTriggers();
+        animator.SetBool("isWalking", true);
+        animator.CrossFadeInFixedTime(walkingStateName, 0.1f);
 
         foreach (Transform waypoint in route.waypoints)
         {
@@ -240,34 +199,47 @@ public class CharacterActionManager : MonoBehaviour
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
                 }
 
-                transform.position = Vector3.MoveTowards(
-                    transform.position,
-                    waypoint.position,
-                    walkSpeed * Time.deltaTime
-                );
-
+                transform.position = Vector3.MoveTowards(transform.position, waypoint.position, walkSpeed * Time.deltaTime);
                 yield return null;
             }
-
             transform.position = waypoint.position;
         }
 
         if (route.faceFinalWaypointDirection)
         {
             Transform finalWaypoint = route.waypoints[route.waypoints.Length - 1];
-            Vector3 finalEuler = finalWaypoint.eulerAngles;
-            Quaternion flatFinalRotation = Quaternion.Euler(0, finalEuler.y, 0);
-
+            Quaternion flatFinalRotation = Quaternion.Euler(0, finalWaypoint.eulerAngles.y, 0);
             while (Quaternion.Angle(transform.rotation, flatFinalRotation) > 0.5f)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, flatFinalRotation, turnSpeed * Time.deltaTime);
                 yield return null;
             }
-
             transform.rotation = flatFinalRotation;
         }
 
-        if (animator != null) animator.SetBool("isWalking", false);
+        animator.SetBool("isWalking", false);
         currentRouteCoroutine = null;
+    }
+
+    private void ChangeFaceMaterialInstantly(Material newFace)
+    {
+        if (faceRenderer == null || newFace == null) return;
+        Material[] mats = faceRenderer.materials;
+        if (faceMaterialIndex >= 0 && faceMaterialIndex < mats.Length)
+        {
+            mats[faceMaterialIndex] = newFace;
+            faceRenderer.materials = mats;
+        }
+    }
+
+    private IEnumerator EmotionTiedToAnimationRoutine(Material emotionFace)
+    {
+        ChangeFaceMaterialInstantly(emotionFace);
+        yield return new WaitForSeconds(0.1f);
+        while (animator.IsInTransition(0) || !animator.GetCurrentAnimatorStateInfo(0).IsName(idleStateName))
+        {
+            yield return null;
+        }
+        ChangeFaceMaterialInstantly(normalFaceMaterial);
     }
 }
