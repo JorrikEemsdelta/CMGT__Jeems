@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem; // Required for the New Input System
 
 [System.Serializable]
 public class WalkRoute
@@ -7,7 +8,7 @@ public class WalkRoute
     public string routeName = "New Route";
     [Tooltip("Drag your waypoint empty GameObjects here in the order the character should walk them.")]
     public Transform[] waypoints;
-    
+
     [Space(5)]
     [Tooltip("If true, the character will turn to match the blue arrow (Forward Z-axis) of the FINAL waypoint when they stop.")]
     public bool faceFinalWaypointDirection = true;
@@ -25,30 +26,32 @@ public class CharacterActionManager : MonoBehaviour
     public SkinnedMeshRenderer faceRenderer;
     [Tooltip("If the face is combined with the body, which material slot is the face? (Usually 0, 1, or 2)")]
     public int faceMaterialIndex = 0;
-    
+
     [Space(5)]
     public Material normalFaceMaterial;
     public Material sadFaceMaterial;
-    public Material happyFaceMaterial; // Optional!
+    public Material happyFaceMaterial;
 
     [Space(10)]
     [Header("Idle Randomizer Settings")]
     public float minIdleTime = 5f;
     public float maxIdleTime = 15f;
     public string idleStateName = "Idle";
+    [Tooltip("The name of your Talking state in the Animator to prevent idle overlaps.")]
+    public string talkingStateName = "Talking";
     private float nextActionTime;
 
     [Space(10)]
     [Header("Movement Settings")]
     public float walkSpeed = 3f;
-    public float turnSpeed = 5f; 
+    public float turnSpeed = 5f;
 
     [Space(10)]
     [Header("Route Setup")]
     public WalkRoute[] availableRoutes;
 
-    private Coroutine currentRouteCoroutine; 
-    private Coroutine faceResetCoroutine; // Tracks the face emotion
+    private Coroutine currentRouteCoroutine;
+    private Coroutine faceResetCoroutine;
 
     void Awake()
     {
@@ -58,18 +61,23 @@ public class CharacterActionManager : MonoBehaviour
 
     void Update()
     {
-        if (animator == null) return; 
+        if (animator == null) return;
 
-        if (animator.GetBool("isWalking")) 
+
+
+        // If walking, we don't process random idles
+        if (animator.GetBool("isWalking"))
         {
             ResetTimer();
-            return; 
+            return;
         }
 
         bool isIdling = animator.GetCurrentAnimatorStateInfo(0).IsName(idleStateName);
+        bool isTalking = animator.GetCurrentAnimatorStateInfo(0).IsName(talkingStateName);
         bool isTransitioning = animator.IsInTransition(0);
 
-        if (isIdling && !isTransitioning)
+        // Only trigger random idle animations if we are in the Idle state and not already talking
+        if (isIdling && !isTalking && !isTransitioning)
         {
             if (Time.time >= nextActionTime)
             {
@@ -80,6 +88,23 @@ public class CharacterActionManager : MonoBehaviour
         {
             ResetTimer();
         }
+    }
+
+    // ==========================================
+    // TALKING LOGIC
+    // ==========================================
+
+    public void TriggerRandomTalking()
+    {
+        if (animator == null || animator.GetBool("isWalking")) return;
+
+        // Reset triggers to prevent queuing
+        animator.ResetTrigger("PlayTalking1");
+        animator.ResetTrigger("PlayTalking2");
+
+        // Randomly choose between 1 and 2
+        int randomTalk = Random.Range(1, 3);
+        animator.SetTrigger("PlayTalking" + randomTalk);
     }
 
     // ==========================================
@@ -98,22 +123,19 @@ public class CharacterActionManager : MonoBehaviour
         }
     }
 
+
     private IEnumerator EmotionTiedToAnimationRoutine(Material emotionFace)
     {
-        // 1. Apply the sad/happy face instantly
         ChangeFaceMaterialInstantly(emotionFace);
 
-        // 2. Wait two frames to give the Animator time to receive the trigger and start moving out of Idle
         yield return null;
         yield return null;
 
-        // 3. Keep waiting as long as the Animator is transitioning, OR is currently playing the Fail/Win animation
         while (animator.IsInTransition(0) || !animator.GetCurrentAnimatorStateInfo(0).IsName(idleStateName))
         {
             yield return null;
         }
 
-        // 4. The exact moment we return to the Idle state, reset the face!
         ChangeFaceMaterialInstantly(normalFaceMaterial);
     }
 
@@ -123,8 +145,7 @@ public class CharacterActionManager : MonoBehaviour
 
     public void TriggerRandomVictory()
     {
-        if (animator == null) return; 
-        if (animator.GetBool("isWalking")) return;
+        if (animator == null || animator.GetBool("isWalking")) return;
 
         animator.ResetTrigger("PlayFail");
         animator.ResetTrigger("PlayVictory");
@@ -133,8 +154,7 @@ public class CharacterActionManager : MonoBehaviour
         animator.SetInteger("VictoryIndex", randomAnimation);
         animator.SetTrigger("PlayVictory");
 
-        // --- Trigger dynamic happy face ---
-        if (happyFaceMaterial != null) 
+        if (happyFaceMaterial != null)
         {
             if (faceResetCoroutine != null) StopCoroutine(faceResetCoroutine);
             faceResetCoroutine = StartCoroutine(EmotionTiedToAnimationRoutine(happyFaceMaterial));
@@ -143,8 +163,7 @@ public class CharacterActionManager : MonoBehaviour
 
     public void TriggerRandomFail()
     {
-        if (animator == null) return;
-        if (animator.GetBool("isWalking")) return;
+        if (animator == null || animator.GetBool("isWalking")) return;
 
         animator.ResetTrigger("PlayVictory");
         animator.ResetTrigger("PlayFail");
@@ -153,8 +172,7 @@ public class CharacterActionManager : MonoBehaviour
         animator.SetInteger("FailIndex", randomAnimation);
         animator.SetTrigger("PlayFail");
 
-        // --- Trigger dynamic sad face ---
-        if (sadFaceMaterial != null) 
+        if (sadFaceMaterial != null)
         {
             if (faceResetCoroutine != null) StopCoroutine(faceResetCoroutine);
             faceResetCoroutine = StartCoroutine(EmotionTiedToAnimationRoutine(sadFaceMaterial));
@@ -195,7 +213,6 @@ public class CharacterActionManager : MonoBehaviour
             StopCoroutine(currentRouteCoroutine);
         }
 
-        // Return face to normal instantly if they suddenly start walking
         if (faceResetCoroutine != null) StopCoroutine(faceResetCoroutine);
         ChangeFaceMaterialInstantly(normalFaceMaterial);
 
@@ -215,8 +232,8 @@ public class CharacterActionManager : MonoBehaviour
             while (Vector3.Distance(transform.position, waypoint.position) > 0.05f)
             {
                 Vector3 direction = (waypoint.position - transform.position).normalized;
-                direction.y = 0; 
-                
+                direction.y = 0;
+
                 if (direction != Vector3.zero)
                 {
                     Quaternion targetRotation = Quaternion.LookRotation(direction);
@@ -224,12 +241,12 @@ public class CharacterActionManager : MonoBehaviour
                 }
 
                 transform.position = Vector3.MoveTowards(
-                    transform.position, 
-                    waypoint.position, 
+                    transform.position,
+                    waypoint.position,
                     walkSpeed * Time.deltaTime
                 );
 
-                yield return null; 
+                yield return null;
             }
 
             transform.position = waypoint.position;
@@ -238,7 +255,6 @@ public class CharacterActionManager : MonoBehaviour
         if (route.faceFinalWaypointDirection)
         {
             Transform finalWaypoint = route.waypoints[route.waypoints.Length - 1];
-            
             Vector3 finalEuler = finalWaypoint.eulerAngles;
             Quaternion flatFinalRotation = Quaternion.Euler(0, finalEuler.y, 0);
 
@@ -247,7 +263,7 @@ public class CharacterActionManager : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, flatFinalRotation, turnSpeed * Time.deltaTime);
                 yield return null;
             }
-            
+
             transform.rotation = flatFinalRotation;
         }
 

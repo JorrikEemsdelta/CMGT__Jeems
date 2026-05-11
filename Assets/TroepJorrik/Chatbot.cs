@@ -25,6 +25,8 @@ public class Chatbot : MonoBehaviour
     public Button sendButton;          // Drag your Button here
     // Optional: assign the ScrollRect that contains the chat output so we can auto-scroll
     public ScrollRect chatScrollRect;
+    // Optional: assign the CharacterActionManager to trigger talking when an answer arrives
+    public CharacterActionManager characterActionManager;
 
     // Keep the chat history as a running log
     private StringBuilder chatHistory = new StringBuilder();
@@ -118,6 +120,11 @@ public class Chatbot : MonoBehaviour
             {
                 outputText.text = chatHistory.ToString();
                 ScrollToBottom();
+            }
+            // Let the character perform a talking animation when the AI answer arrives
+            if (characterActionManager != null)
+            {
+                characterActionManager.TriggerRandomTalking();
             }
             Debug.Log("AI Antwoord: " + response.antwoord);
         }
