@@ -17,24 +17,25 @@ jobs:
 name: Checkout Code
       uses: actions/checkout@v4
 
-      # STAP 1: De titel in index.html aanpassen
+      # STAP 1: De titel in de index.html aanpassen
       
 name: Fix Title in index.html
-      run: |# Dit zoekt naar de tekst tussen <title> en </title> en vervangt het door jouw naam
+      run: |# Dit vervangt de standaard Unity titel door jouw eigen titel
         sed -i 's/<title>.*</title>/<title>Jeems - Gemeente Eemsdelta</title>/g' WebBuild/index.html
 
-      # STAP 2: Het icoontje vervangen
-      # Zorg dat je jouw favicon.ico in de root van je GitHub repo hebt staan (niet in de WebBuild map)
+      # STAP 2: Het icoontje overschrijven in de TemplateData map
       
-name: Replace Favicon
-      run: |
-        if [ -f "favicon.ico" ]; then
-          cp favicon.ico WebBuild/favicon.ico
-          echo "Favicon vervangen!"
+name: Replace Favicon in TemplateData
+      run: |# We kijken of jouw eigen favicon.ico in de root staat
+        if [ -f "favicon.ico" ]; then# We kopiëren hem DIRECT naar de TemplateData map in de build folder
+          cp favicon.ico WebBuild/TemplateData/favicon.ico
+          echo "Jeems icoon is succesvol naar TemplateData gekopieerd!"
         else
-          echo "Geen favicon.ico gevonden in de root, stap overgeslagen."
+          echo "FOUT: Ik kan geen favicon.ico vinden in de hoofdmap van je repository."
+          exit 1
         fi
 
+      # STAP 3: De boel live zetten
       
 name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4
