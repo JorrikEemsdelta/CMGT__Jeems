@@ -8,12 +8,19 @@ public class ButtonManager : MonoBehaviour
     // Update is called once per frame
     public void LoadDailyQuiz()
     {
-        SceneManager.LoadScene("TestUI");
+        SceneManager.LoadScene("ThrillerDance");
     }
     public void QuitGame()
     {
         Application.Quit();
     }
-
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("StartMenu");
+    }
+    public void LoadTeamsTraining()
+    {
+        SceneManager.LoadScene("TeamsTraining");
+    }
 
 }
