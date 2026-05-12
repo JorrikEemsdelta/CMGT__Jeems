@@ -1,44 +1,43 @@
 name: Deploy WebGL to GitHub Pages
 
+
+
 on:
+
   push:
+
     branches:
-      
-main
+
+      - main # Or 'master' depending on your default branch name
+
+
 
 permissions:
+
   contents: write
 
+
+
 jobs:
+
   deploy:
+
     runs-on: ubuntu-latest
+
     steps:
-      
-name: Checkout Code
-      uses: actions/checkout@v4
 
-      # STAP 1: De titel in de index.html aanpassen
-      
-name: Fix Title in index.html
-      run: |# Dit vervangt de standaard Unity titel door jouw eigen titel
-        sed -i 's/<title>.*</title>/<title>Jeems - Gemeente Eemsdelta</title>/g' WebBuild/index.html
+      - name: Checkout Code
 
-      # STAP 2: Het icoontje overschrijven in de TemplateData map
-      
-name: Replace Favicon in TemplateData
-      run: |# We kijken of jouw eigen favicon.ico in de root staat
-        if [ -f "favicon.ico" ]; then# We kopiëren hem DIRECT naar de TemplateData map in de build folder
-          cp favicon.ico WebBuild/TemplateData/favicon.ico
-          echo "Jeems icoon is succesvol naar TemplateData gekopieerd!"
-        else
-          echo "FOUT: Ik kan geen favicon.ico vinden in de hoofdmap van je repository."
-          exit 1
-        fi
+        uses: actions/checkout@v4
 
-      # STAP 3: De boel live zetten
-      
-name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        folder: WebBuild
-        branch: gh-pages
+
+
+      - name: Deploy to GitHub Pages
+
+        uses: JamesIves/github-pages-deploy-action@v4
+
+        with:
+
+          folder: WebBuild # The folder where your build lives
+
+          branch: gh-pages # The branch the site will serve from
