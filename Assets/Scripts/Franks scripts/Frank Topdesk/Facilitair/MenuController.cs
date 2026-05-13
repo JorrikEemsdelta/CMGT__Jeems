@@ -20,6 +20,7 @@ public class MenuController : MonoBehaviour
     panelHome.SetActive(false);
     panelSchedule.SetActive(true);
     panelConfirm.SetActive(false);
+    panelFacilitaire.SetActive(false); 
 }
     public void GoToConfirm() { HideAll(); panelConfirm.SetActive(true); } // <-- The missing line!
     public void GoToMyBookings() { HideAll(); panelMyBookings.SetActive(true); }
