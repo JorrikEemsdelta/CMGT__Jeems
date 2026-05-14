@@ -1,0 +1,80 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+// --- NEW: SAVE DATA WRAPPER ---
+[System.Serializable]
+public class GeneralSaveData
+{
+    public List<GeneralReport> reports;
+}
+
+[System.Serializable]
+public class GeneralReport
+{
+    public string category;
+    [TextArea(3, 6)]
+    public string description;
+}
+
+public class GeneralReportManager : MonoBehaviour
+{
+    public static GeneralReportManager Instance;
+
+    public List<GeneralReport> reportedItems = new List<GeneralReport>();
+
+    void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+
+        // Instantly load saved data when the game starts!
+        LoadData();
+    }
+
+    public void SubmitReport(string category, string description)
+    {
+        GeneralReport newReport = new GeneralReport
+        {
+            category = category,
+            description = description
+        };
+
+        reportedItems.Add(newReport);
+        Debug.Log($"📝 ALGEMEEN GEMELD: [{category}] - {description}");
+
+        // Save immediately!
+        SaveData();
+    }
+
+    // ==========================================
+    // THE SAVE SYSTEM
+    // ==========================================
+    public void SaveData()
+    {
+        GeneralSaveData data = new GeneralSaveData();
+        data.reports = reportedItems;
+
+        string json = JsonUtility.ToJson(data);
+        PlayerPrefs.SetString("GeneralSaveData", json);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadData()
+    {
+        if (PlayerPrefs.HasKey("GeneralSaveData"))
+        {
+            string json = PlayerPrefs.GetString("GeneralSaveData");
+            GeneralSaveData data = JsonUtility.FromJson<GeneralSaveData>(json);
+            
+            reportedItems = data.reports != null ? data.reports : new List<GeneralReport>();
+        }
+    }
+
+    public void ClearSaveData()
+    {
+        reportedItems.Clear();
+        PlayerPrefs.DeleteKey("GeneralSaveData");
+        PlayerPrefs.Save();
+        Debug.Log("🗑️ General Report Data Verwijderd!");
+    }
+}

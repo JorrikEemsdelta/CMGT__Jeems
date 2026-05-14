@@ -1,5 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
+[System.Serializable]
+public class BookingSaveData
+{
+    public List<Reservation> savedReservations;
+}
 
 [System.Serializable]
 public class RoomData
@@ -11,148 +18,201 @@ public class RoomData
 [System.Serializable]
 public class Reservation
 {
+    public bool isPlayerBooking;
     public string roomName;
     public string date;
-    public int startHour; 
-    public int endHour;   
+    public int startHour;
+    public int endHour;
+    public string bookerName;
     public string description;
-    public int amountOfPeople; 
-    public string bookerName; 
-    public bool isPlayerBooking; 
+    public int amountOfPeople;
 }
 
 public class BookingManager : MonoBehaviour
 {
-    public static BookingManager Instance; 
+    public static BookingManager Instance;
 
-    [Header("Simulation Settings")]
-    public int bookingsPerDay = 6;
-    
-    public string[] weekDates = { 
-        "11 mei 2026 (Ma)", 
-        "12 mei 2026 (Di)", 
-        "13 mei 2026 (Wo)", 
-        "14 mei 2026 (Do)", 
-        "15 mei 2026 (Vr)" 
-    };
+    [Header("Setup Data")]
+    public List<RoomData> rooms = new List<RoomData>();
+    [Tooltip("The list of dates used in the dropdown (e.g. 11 mei 2026 (Ma))")]
+    public string[] weekDates;
 
+    [Header("Random Generator Settings")]
+    [Range(0, 10)]
+    public int reservationsPerDay = 3;
+
+    [Header("Active Database (Live Data)")]
     public List<Reservation> allReservations = new List<Reservation>();
-    
-    public List<RoomData> rooms = new List<RoomData>
-    {
-        new RoomData { roomName = "Kamer 10", capacity = 6 },
-        new RoomData { roomName = "Kamer 11", capacity = 8 },
-        new RoomData { roomName = "Kamer 30", capacity = 15 },
-        new RoomData { roomName = "Kamer 32", capacity = 6 },
-        new RoomData { roomName = "Kamer 34", capacity = 8 },
-        new RoomData { roomName = "Kamer 35", capacity = 15 },
-        new RoomData { roomName = "Kamer 5", capacity = 6 },
-        new RoomData { roomName = "Kamer 7a", capacity = 8 }
-    };
+
+    // Random data for the generator to pick from
+    private string[] randomNames = { "S. Bakker", "M. Jansen", "J. de Vries", "L. Visser", "P. Smits", "E. Mulder" };
+    private string[] randomDescs = { "Overleg", "Meeting", "Project focus", "Interne audit", "Brainstorm", "Koffie break" };
 
     void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-        
-        GenerateComputerBookings();
+
+        LoadData(); 
     }
 
-    void GenerateComputerBookings()
+    // ==========================================
+    // HELPER FUNCTIONS
+    // ==========================================
+
+    public int GetRoomCapacity(string roomName)
     {
-        string[] meetingNames = { "Overleg", "Inzicht in project", "Teamvergadering", "Klantgesprek", "Brainstorm", "Lunchbespreking", "Sollicitatie" };
-        string[] fakeNames = { "Jan de Vries", "Sanne Bakker", "Pieter Visser", "Lisa Smit", "Tom de Boer", "Maaike Dijk", "Klaas Jansen" };
-
-        foreach (string currentDate in weekDates)
+        foreach (var room in rooms)
         {
-            int spawned = 0;
-            int safetyNet = 0;
+            if (room.roomName == roomName) return room.capacity;
+        }
+        return 0; 
+    }
 
-            while (spawned < bookingsPerDay && safetyNet < 100)
+    public Reservation GetBookingStartingAt(string roomName, string date, int hour)
+    {
+        foreach (var res in allReservations)
+        {
+            if (res.roomName == roomName && res.date == date)
             {
-                safetyNet++;
-                RoomData randomRoom = rooms[Random.Range(0, rooms.Count)];
-                int startH = Random.Range(9, 16); 
-                int duration = Random.Range(1, 3); 
-                int endH = Mathf.Min(startH + duration, 17); 
-
-                if (IsSlotFree(randomRoom.roomName, currentDate, startH, endH))
-                {
-                    string randomDesc = meetingNames[Random.Range(0, meetingNames.Length)];
-                    string randomBooker = fakeNames[Random.Range(0, fakeNames.Length)]; 
-                    int randomPeople = Random.Range(2, randomRoom.capacity + 1);
-
-                    allReservations.Add(new Reservation 
-                    { 
-                        roomName = randomRoom.roomName, 
-                        date = currentDate, 
-                        startHour = startH, 
-                        endHour = endH, 
-                        description = randomDesc, 
-                        amountOfPeople = randomPeople, 
-                        bookerName = randomBooker, 
-                        isPlayerBooking = false 
-                    });
-                    spawned++; 
-                }
+                if (hour >= res.startHour && hour < res.endHour) return res;
             }
-        }
-    }
-
-    public void AddPlayerBooking(string room, string date, int start, int end, string desc, int people)
-    {
-        allReservations.Add(new Reservation 
-        { 
-            roomName = room, 
-            date = date, 
-            startHour = start, 
-            endHour = end, 
-            description = desc, 
-            amountOfPeople = people, 
-            bookerName = "Jij", 
-            isPlayerBooking = true 
-        });
-
-        // --- UPDATED: Send the exact 'end' time instead of the duration ---
-        if (AssignmentManager.Instance != null)
-        {
-            AssignmentManager.Instance.CheckActionBooking(date, start, end, people);
-        }
-        else
-        {
-            Debug.LogWarning("AssignmentManager is missing in the scene! Cannot check assignments yet.");
-        }
-    }
-
-    public void DeleteBooking(Reservation resToDelete)
-    {
-        if (allReservations.Contains(resToDelete)) allReservations.Remove(resToDelete);
-    }
-
-    public bool IsSlotFree(string room, string date, int newStart, int newEnd)
-    {
-        foreach (Reservation res in allReservations)
-        {
-            if (res.roomName == room && res.date == date)
-            {
-                if (newStart < res.endHour && newEnd > res.startHour) return false; 
-            }
-        }
-        return true; 
-    }
-
-    public Reservation GetBookingStartingAt(string room, string date, int hour)
-    {
-        foreach (Reservation res in allReservations)
-        {
-            if (res.roomName == room && res.date == date && res.startHour == hour) return res;
         }
         return null;
     }
 
-    public int GetRoomCapacity(string name)
+    // ==========================================
+    // ADD / DELETE LOGIC
+    // ==========================================
+
+    public void AddPlayerBooking(Reservation res)
     {
-        foreach (var room in rooms) { if (room.roomName == name) return room.capacity; }
-        return 0;
+        res.isPlayerBooking = true;
+        allReservations.Add(res);
+        SaveData(); 
+    }
+
+    public void AddPlayerBooking(string room, string date, int start, int end, string desc, int people)
+    {
+        Reservation newRes = new Reservation
+        {
+            isPlayerBooking = true,
+            roomName = room,
+            date = date,
+            startHour = start,
+            endHour = end,
+            bookerName = "Jij (Speler)", 
+            description = desc,
+            amountOfPeople = people
+        };
+        allReservations.Add(newRes);
+        SaveData(); 
+    }
+
+    public void DeleteBooking(Reservation res)
+    {
+        if (allReservations.Contains(res))
+        {
+            allReservations.Remove(res);
+            SaveData();
+        }
+    }
+
+    public bool IsSlotFree(string room, string date, int start, int end)
+    {
+        foreach (var res in allReservations)
+        {
+            if (res.roomName == room && res.date == date)
+            {
+                if (start < res.endHour && end > res.startHour) return false;
+            }
+        }
+        return true;
+    }
+
+    // ==========================================
+    // THE SAVE SYSTEM
+    // ==========================================
+
+    public void SaveData()
+    {
+        BookingSaveData data = new BookingSaveData();
+        data.savedReservations = allReservations;
+        string json = JsonUtility.ToJson(data);
+        PlayerPrefs.SetString("BookingSaveData", json);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadData()
+    {
+        if (PlayerPrefs.HasKey("BookingSaveData"))
+        {
+            string json = PlayerPrefs.GetString("BookingSaveData");
+            BookingSaveData data = JsonUtility.FromJson<BookingSaveData>(json);
+            allReservations = data.savedReservations ?? new List<Reservation>();
+        }
+    }
+
+    public void ClearSaveData()
+    {
+        allReservations.RemoveAll(res => res.isPlayerBooking);
+        PlayerPrefs.DeleteKey("BookingSaveData");
+        PlayerPrefs.Save();
+    }
+
+    // ==========================================
+    // RANDOM DUMMY DATA GENERATOR
+    // ==========================================
+    public void GenerateDummyBookings()
+    {
+        // 1. Clear current non-player bookings
+        allReservations.RemoveAll(res => !res.isPlayerBooking);
+
+        if (rooms.Count == 0 || weekDates.Length == 0)
+        {
+            Debug.LogError("Setup Data (Rooms/Dates) missing on BookingManager!");
+            return;
+        }
+
+        // 2. Loop through every day in your week
+        foreach (string date in weekDates)
+        {
+            int createdToday = 0;
+            int attempts = 0;
+
+            // Try to create the requested amount of bookings
+            while (createdToday < reservationsPerDay && attempts < 50)
+            {
+                attempts++;
+
+                // Pick random room and time
+                RoomData randomRoom = rooms[Random.Range(0, rooms.Count)];
+                int start = Random.Range(9, 16); // 09:00 to 16:00
+                int duration = Random.Range(1, 3); // 1 or 2 hours
+                int end = start + duration;
+
+                // Check if the random slot is actually free
+                if (IsSlotFree(randomRoom.roomName, date, start, end))
+                {
+                    Reservation randomRes = new Reservation
+                    {
+                        isPlayerBooking = false,
+                        roomName = randomRoom.roomName,
+                        date = date,
+                        startHour = start,
+                        endHour = end,
+                        bookerName = randomNames[Random.Range(0, randomNames.Length)],
+                        description = randomDescs[Random.Range(0, randomDescs.Length)],
+                        amountOfPeople = Random.Range(1, randomRoom.capacity + 1)
+                    };
+
+                    allReservations.Add(randomRes);
+                    createdToday++;
+                }
+            }
+        }
+
+        SaveData(); 
+        Debug.Log($"✅ Succes: {reservationsPerDay} willekeurige boekingen per dag gegenereerd!");
     }
 }
