@@ -1,43 +1,43 @@
 name: Deploy WebGL to GitHub Pages
 
+
+
 on:
+
   push:
+
     branches:
-      
-main
+
+      - main # Or 'master' depending on your default branch name
+
+
 
 permissions:
+
   contents: write
 
+
+
 jobs:
+
   deploy:
+
     runs-on: ubuntu-latest
+
     steps:
-      
-name: Checkout Code
-      uses: actions/checkout@v4
 
-      # STAP 1: De titel in index.html aanpassen
-      
-name: Fix Title in index.html
-      run: |# Dit zoekt naar de tekst tussen <title> en </title> en vervangt het door jouw naam
-        sed -i 's/<title>.*</title>/<title>Jeems - Gemeente Eemsdelta</title>/g' WebBuild/index.html
+      - name: Checkout Code
 
-      # STAP 2: Het icoontje vervangen
-      # Zorg dat je jouw favicon.ico in de root van je GitHub repo hebt staan (niet in de WebBuild map)
-      
-name: Replace Favicon
-      run: |
-        if [ -f "favicon.ico" ]; then
-          cp favicon.ico WebBuild/favicon.ico
-          echo "Favicon vervangen!"
-        else
-          echo "Geen favicon.ico gevonden in de root, stap overgeslagen."
-        fi
+        uses: actions/checkout@v4
 
-      
-name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        folder: WebBuild
-        branch: gh-pages
+
+
+      - name: Deploy to GitHub Pages
+
+        uses: JamesIves/github-pages-deploy-action@v4
+
+        with:
+
+          folder: WebBuild # The folder where your build lives
+
+          branch: gh-pages # The branch the site will serve from
