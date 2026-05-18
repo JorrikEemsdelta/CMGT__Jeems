@@ -111,7 +111,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4281479730
-  m_fontColor: {r: 0.5176471, g: 0.7411765, b: 0, a: 1}
+  m_fontColor: {r: 0, g: 0.27058825, b: 0.5058824, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4281479730
-  m_fontColor: {r: 0.5176471, g: 0.7411765, b: 0, a: 1}
+  m_fontColor: {r: 0, g: 0.27058825, b: 0.5058824, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -871,7 +871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextColorHighlight
   buttonText: {fileID: 6030052307915176715}
-  normalColor: {r: 0.5176471, g: 0.7411765, b: 0, a: 1}
+  normalColor: {r: 0, g: 0.27058825, b: 0.5058824, a: 1}
   highlightColor: {r: 0.9137255, g: 0.9137255, b: 0.9254902, a: 1}
 --- !u!1 &2150769065242564535
 GameObject:
@@ -947,8 +947,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278238596
-  m_fontColor: {r: 0.5176471, g: 0.7411765, b: 0, a: 1}
+    rgba: 4286661888
+  m_fontColor: {r: 0, g: 0.27058825, b: 0.5058824, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1231,7 +1231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextColorHighlight
   buttonText: {fileID: 6677238278163790536}
-  normalColor: {r: 0.5176471, g: 0.7411765, b: 0, a: 1}
+  normalColor: {r: 0, g: 0.27058825, b: 0.5058824, a: 1}
   highlightColor: {r: 0.9137255, g: 0.9137255, b: 0.9254902, a: 1}
 --- !u!1 &2798100536980911095
 GameObject:
@@ -1300,7 +1300,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1ec201694a47d9242a58323446d19b80, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1367,7 +1367,7 @@ MonoBehaviour:
   m_margin: {x: -159.33655, y: -53.89795, z: -467.82104, w: -179.99017}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &3358926018185694102
@@ -1558,7 +1558,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1ec201694a47d9242a58323446d19b80, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1625,7 +1625,7 @@ MonoBehaviour:
   m_margin: {x: -159.33655, y: -53.89795, z: -467.82104, w: -179.99017}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &3605893117704307782
@@ -1763,7 +1763,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextColorHighlight
   buttonText: {fileID: 1261273145432025504}
-  normalColor: {r: 0.5176471, g: 0.7411765, b: 0, a: 1}
+  normalColor: {r: 0, g: 0.27058825, b: 0.5058824, a: 1}
   highlightColor: {r: 0.9137255, g: 0.9137255, b: 0.9254902, a: 1}
 --- !u!1 &3947017896097050520
 GameObject:
@@ -1923,7 +1923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextColorHighlight
   buttonText: {fileID: 3005232353722459758}
-  normalColor: {r: 0.5176471, g: 0.7411765, b: 0, a: 1}
+  normalColor: {r: 0, g: 0.27058825, b: 0.5058824, a: 1}
   highlightColor: {r: 0.9137255, g: 0.9137255, b: 0.9254902, a: 1}
 --- !u!1 &4345307004200226774
 GameObject:
@@ -2060,7 +2060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextColorHighlight
   buttonText: {fileID: 7434269381784645124}
-  normalColor: {r: 0.5176471, g: 0.7411765, b: 0, a: 1}
+  normalColor: {r: 0, g: 0.27058825, b: 0.5058824, a: 1}
   highlightColor: {r: 0.9137255, g: 0.9137255, b: 0.9254902, a: 1}
 --- !u!1 &4434984107162179311
 GameObject:
@@ -2211,8 +2211,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278238596
-  m_fontColor: {r: 0.5176471, g: 0.7411765, b: 0, a: 1}
+    rgba: 4286661888
+  m_fontColor: {r: 0, g: 0.27058825, b: 0.5058824, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2348,8 +2348,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278238596
-  m_fontColor: {r: 0.5176471, g: 0.7411765, b: 0, a: 1}
+    rgba: 4286661888
+  m_fontColor: {r: 0, g: 0.27058825, b: 0.5058824, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2959,8 +2959,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278238596
-  m_fontColor: {r: 0.5176471, g: 0.7411765, b: 0, a: 1}
+    rgba: 4286661888
+  m_fontColor: {r: 0, g: 0.27058825, b: 0.5058824, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3468,7 +3468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextColorHighlight
   buttonText: {fileID: 449825890196740165}
-  normalColor: {r: 0.5176471, g: 0.7411765, b: 0, a: 1}
+  normalColor: {r: 0, g: 0.27058825, b: 0.5058824, a: 1}
   highlightColor: {r: 0.9137255, g: 0.9137255, b: 0.9254902, a: 1}
 --- !u!1 &9190425719638240688
 GameObject:
