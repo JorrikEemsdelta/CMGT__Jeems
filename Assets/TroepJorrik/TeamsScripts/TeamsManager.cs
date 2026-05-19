@@ -52,7 +52,7 @@ public class TeamsManager : MonoBehaviour
     {
         if (mainChatPanel != null) mainChatPanel.SetActive(true);
 
-        chatHeaderTitle.text = "Project Team Alpha (Groep)";
+        chatHeaderTitle.text = "Team Onboarding (Groep)";
 
         messageHistoryText.text = "<color=#A0A0A0><i>Je bevindt je in de groepschat met Anouk en Ben.</i></color>\n\n" +
                                    "<b>Ben:</b> Top dat deze groep is aangemaakt! Heeft iemand de link naar de documenten?";

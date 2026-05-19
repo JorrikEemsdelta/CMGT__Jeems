@@ -59,7 +59,7 @@ public class ChatControllerTeams : MonoBehaviour
         AnalyzeLanguage(userMessage);
 
         // Check of ze de link delen én of ze dat wel tegen Anouk doen!
-        if (userMessage.Contains("Onboarding_Handleiding.docx") || userMessage.Contains("ProjectTeamAlpha"))
+        if (userMessage.Contains("zo-werkt-eemsdelta.pdf") || userMessage.Contains("ProjectTeamAlpha"))
         {
             if (chatHeaderTitle.text.Contains("Anouk"))
             {
@@ -67,7 +67,8 @@ public class ChatControllerTeams : MonoBehaviour
             }
             else
             {
-                messageHistoryText.text += "\n<color=orange><i>💡 Tip: Je deelt het bestand nu in de verkeerde chat. De opdracht was om deze naar Anouk te sturen!</i></color>";
+            
+                messageHistoryText.text += "\n<color=orange><i> Tip: Je deelt het bestand nu in de verkeerde chat. De opdracht was om deze naar Anouk te sturen!</i></color>";
             }
         }
 
@@ -79,7 +80,7 @@ public class ChatControllerTeams : MonoBehaviour
         string lowerMessage = message.ToLower().Trim();
         if (ContainsWord(lowerMessage, "u") || ContainsWord(lowerMessage, "uw"))
         {
-            messageHistoryText.text += "\n<color=orange><i>💡 Tip: Binnen Teams communiceren we informeel. Gebruik 'je', 'jij' of 'jouw' in plaats van 'u' of 'uw'.</i></color>";
+            messageHistoryText.text += "\n<color=orange><i> Tip: Binnen Teams communiceren we informeel. Gebruik 'je', 'jij' of 'jouw' in plaats van 'u' of 'uw'.</i></color>";
             return;
         }
         if (ContainsWord(lowerMessage, "je") || ContainsWord(lowerMessage, "jij") || ContainsWord(lowerMessage, "jouw"))
