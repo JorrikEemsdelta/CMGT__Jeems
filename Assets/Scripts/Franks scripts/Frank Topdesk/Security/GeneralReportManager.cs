@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// --- NEW: SAVE DATA WRAPPER ---
 [System.Serializable]
 public class GeneralSaveData
 {
@@ -27,7 +26,6 @@ public class GeneralReportManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        // Instantly load saved data when the game starts!
         LoadData();
     }
 
@@ -42,7 +40,12 @@ public class GeneralReportManager : MonoBehaviour
         reportedItems.Add(newReport);
         Debug.Log($"📝 ALGEMEEN GEMELD: [{category}] - {description}");
 
-        // Save immediately!
+        // --- NEW: Tell Assignment Manager ---
+        if (AssignmentManager.Instance != null) 
+        {
+            AssignmentManager.Instance.CheckActionGeneralReport(category);
+        }
+
         SaveData();
     }
 

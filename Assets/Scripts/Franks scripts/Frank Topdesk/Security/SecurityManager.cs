@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// --- NEW: SAVE DATA WRAPPER (Unity needs this to translate lists into text) ---
 [System.Serializable]
 public class SecuritySaveData
 {
@@ -9,7 +8,6 @@ public class SecuritySaveData
     public List<DataBreachReport> breaches;
 }
 
-// --- EXISTING INCIDENT DATA ---
 [System.Serializable]
 public class SecurityIncident
 {
@@ -20,7 +18,6 @@ public class SecurityIncident
     public string detailedDescription;
 }
 
-// --- EXISTING DATALEK DATA ---
 [System.Serializable]
 public class DataBreachReport
 {
@@ -44,7 +41,6 @@ public class SecurityManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        // Instantly load saved data when the game starts!
         LoadData(); 
     }
 
@@ -61,7 +57,12 @@ public class SecurityManager : MonoBehaviour
         reportedIncidents.Add(newIncident);
         Debug.Log($"✅ SUCCES: {category} incident gemeld op {date}.");
 
-        // Save immediately!
+        // --- NEW: Tell Assignment Manager ---
+        if (AssignmentManager.Instance != null) 
+        {
+            AssignmentManager.Instance.CheckActionSecurityIncident(category);
+        }
+
         SaveData();
     }
 
@@ -80,7 +81,12 @@ public class SecurityManager : MonoBehaviour
         string breachDateText = isUnknown ? "Onbekend" : breachDate;
         Debug.Log($"🚨 DATALEK GEMELD: Inbreuk was op: {breachDateText}. Ontdekt op: {discoveredDate}.");
 
-        // Save immediately!
+        // --- NEW: Tell Assignment Manager ---
+        if (AssignmentManager.Instance != null) 
+        {
+            AssignmentManager.Instance.CheckActionDataBreach();
+        }
+
         SaveData();
     }
 
@@ -105,7 +111,6 @@ public class SecurityManager : MonoBehaviour
             string json = PlayerPrefs.GetString("SecuritySaveData");
             SecuritySaveData data = JsonUtility.FromJson<SecuritySaveData>(json);
             
-            // Safety check in case the save file is weird
             reportedIncidents = data.incidents != null ? data.incidents : new List<SecurityIncident>();
             reportedBreaches = data.breaches != null ? data.breaches : new List<DataBreachReport>();
         }

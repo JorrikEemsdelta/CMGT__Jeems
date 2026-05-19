@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement; 
 
 [System.Serializable]
 public class BookingSaveData
@@ -44,7 +45,6 @@ public class BookingManager : MonoBehaviour
     [Header("Active Database (Live Data)")]
     public List<Reservation> allReservations = new List<Reservation>();
 
-    // Random data for the generator to pick from
     private string[] randomNames = { "S. Bakker", "M. Jansen", "J. de Vries", "L. Visser", "P. Smits", "E. Mulder" };
     private string[] randomDescs = { "Overleg", "Meeting", "Project focus", "Interne audit", "Brainstorm", "Koffie break" };
 
@@ -56,9 +56,10 @@ public class BookingManager : MonoBehaviour
         LoadData(); 
     }
 
-    // ==========================================
-    // HELPER FUNCTIONS
-    // ==========================================
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("StartMenu");
+    }
 
     public int GetRoomCapacity(string roomName)
     {
@@ -81,14 +82,16 @@ public class BookingManager : MonoBehaviour
         return null;
     }
 
-    // ==========================================
-    // ADD / DELETE LOGIC
-    // ==========================================
-
     public void AddPlayerBooking(Reservation res)
     {
         res.isPlayerBooking = true;
         allReservations.Add(res);
+        
+        // --- UPDATED: Passing res.roomName to the Assignment Manager ---
+        if (AssignmentManager.Instance != null)
+        {
+            AssignmentManager.Instance.CheckActionBooking(res.roomName, res.date, res.startHour, res.endHour, res.amountOfPeople);
+        }
         SaveData(); 
     }
 
@@ -106,6 +109,12 @@ public class BookingManager : MonoBehaviour
             amountOfPeople = people
         };
         allReservations.Add(newRes);
+        
+        // --- UPDATED: Passing room to the Assignment Manager ---
+        if (AssignmentManager.Instance != null)
+        {
+            AssignmentManager.Instance.CheckActionBooking(room, date, start, end, people);
+        }
         SaveData(); 
     }
 
@@ -129,10 +138,6 @@ public class BookingManager : MonoBehaviour
         }
         return true;
     }
-
-    // ==========================================
-    // THE SAVE SYSTEM
-    // ==========================================
 
     public void SaveData()
     {
@@ -160,12 +165,8 @@ public class BookingManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    // ==========================================
-    // RANDOM DUMMY DATA GENERATOR
-    // ==========================================
     public void GenerateDummyBookings()
     {
-        // 1. Clear current non-player bookings
         allReservations.RemoveAll(res => !res.isPlayerBooking);
 
         if (rooms.Count == 0 || weekDates.Length == 0)
@@ -174,24 +175,20 @@ public class BookingManager : MonoBehaviour
             return;
         }
 
-        // 2. Loop through every day in your week
         foreach (string date in weekDates)
         {
             int createdToday = 0;
             int attempts = 0;
 
-            // Try to create the requested amount of bookings
             while (createdToday < reservationsPerDay && attempts < 50)
             {
                 attempts++;
 
-                // Pick random room and time
                 RoomData randomRoom = rooms[Random.Range(0, rooms.Count)];
-                int start = Random.Range(9, 16); // 09:00 to 16:00
-                int duration = Random.Range(1, 3); // 1 or 2 hours
+                int start = Random.Range(9, 16); 
+                int duration = Random.Range(1, 3); 
                 int end = start + duration;
 
-                // Check if the random slot is actually free
                 if (IsSlotFree(randomRoom.roomName, date, start, end))
                 {
                     Reservation randomRes = new Reservation

@@ -2562,7 +2562,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: -390}
+  m_AnchoredPosition: {x: -100, y: -360}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &225295349
@@ -2947,7 +2947,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: -390}
+  m_AnchoredPosition: {x: -400, y: -360}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &286251552
@@ -3206,15 +3206,13 @@ MonoBehaviour:
   - roomName: Kamer 11
     capacity: 8
   - roomName: Kamer 30
-    capacity: 15
+    capacity: 6
   - roomName: Kamer 32
     capacity: 6
   - roomName: Kamer 34
     capacity: 8
   - roomName: Kamer 35
     capacity: 15
-  - roomName: Kamer 5
-    capacity: 6
   weekDates:
   - 11 mei 2026 (Ma)
   - 12 mei 2026 (Di)
@@ -3224,205 +3222,205 @@ MonoBehaviour:
   reservationsPerDay: 5
   allReservations:
   - isPlayerBooking: 0
+    roomName: Kamer 35
+    date: 11 mei 2026 (Ma)
+    startHour: 10
+    endHour: 12
+    bookerName: S. Bakker
+    description: Koffie break
+    amountOfPeople: 1
+  - isPlayerBooking: 0
     roomName: Kamer 11
     date: 11 mei 2026 (Ma)
     startHour: 15
     endHour: 17
-    bookerName: L. Visser
-    description: Meeting
-    amountOfPeople: 7
-  - isPlayerBooking: 0
-    roomName: Kamer 32
-    date: 11 mei 2026 (Ma)
-    startHour: 11
-    endHour: 12
-    bookerName: L. Visser
-    description: Meeting
-    amountOfPeople: 4
-  - isPlayerBooking: 0
-    roomName: Kamer 11
-    date: 11 mei 2026 (Ma)
-    startHour: 10
-    endHour: 11
-    bookerName: L. Visser
-    description: Interne audit
-    amountOfPeople: 5
-  - isPlayerBooking: 0
-    roomName: Kamer 34
-    date: 11 mei 2026 (Ma)
-    startHour: 12
-    endHour: 13
-    bookerName: P. Smits
-    description: Brainstorm
+    bookerName: J. de Vries
+    description: Project focus
     amountOfPeople: 3
   - isPlayerBooking: 0
-    roomName: Kamer 34
+    roomName: Kamer 32
     date: 11 mei 2026 (Ma)
     startHour: 14
-    endHour: 15
-    bookerName: S. Bakker
-    description: Brainstorm
-    amountOfPeople: 4
-  - isPlayerBooking: 0
-    roomName: Kamer 35
-    date: 12 mei 2026 (Di)
-    startHour: 9
-    endHour: 11
-    bookerName: M. Jansen
-    description: Meeting
-    amountOfPeople: 10
-  - isPlayerBooking: 0
-    roomName: Kamer 11
-    date: 12 mei 2026 (Di)
-    startHour: 10
-    endHour: 11
+    endHour: 16
     bookerName: M. Jansen
     description: Interne audit
-    amountOfPeople: 7
-  - isPlayerBooking: 0
-    roomName: Kamer 35
-    date: 12 mei 2026 (Di)
-    startHour: 15
-    endHour: 17
-    bookerName: M. Jansen
-    description: Interne audit
-    amountOfPeople: 1
-  - isPlayerBooking: 0
-    roomName: Kamer 32
-    date: 12 mei 2026 (Di)
-    startHour: 10
-    endHour: 12
-    bookerName: M. Jansen
-    description: Overleg
-    amountOfPeople: 4
-  - isPlayerBooking: 0
-    roomName: Kamer 11
-    date: 12 mei 2026 (Di)
-    startHour: 11
-    endHour: 13
-    bookerName: S. Bakker
-    description: Interne audit
-    amountOfPeople: 4
-  - isPlayerBooking: 0
-    roomName: Kamer 10
-    date: 13 mei 2026 (Wo)
-    startHour: 10
-    endHour: 12
-    bookerName: E. Mulder
-    description: Project focus
-    amountOfPeople: 1
-  - isPlayerBooking: 0
-    roomName: Kamer 11
-    date: 13 mei 2026 (Wo)
-    startHour: 11
-    endHour: 12
-    bookerName: L. Visser
-    description: Brainstorm
     amountOfPeople: 2
   - isPlayerBooking: 0
     roomName: Kamer 35
-    date: 13 mei 2026 (Wo)
+    date: 11 mei 2026 (Ma)
+    startHour: 13
+    endHour: 14
+    bookerName: L. Visser
+    description: Meeting
+    amountOfPeople: 11
+  - isPlayerBooking: 0
+    roomName: Kamer 30
+    date: 11 mei 2026 (Ma)
     startHour: 9
     endHour: 10
     bookerName: E. Mulder
+    description: Overleg
+    amountOfPeople: 1
+  - isPlayerBooking: 0
+    roomName: Kamer 11
+    date: 12 mei 2026 (Di)
+    startHour: 13
+    endHour: 15
+    bookerName: L. Visser
     description: Meeting
-    amountOfPeople: 10
+    amountOfPeople: 1
   - isPlayerBooking: 0
     roomName: Kamer 35
-    date: 13 mei 2026 (Wo)
-    startHour: 14
-    endHour: 16
+    date: 12 mei 2026 (Di)
+    startHour: 11
+    endHour: 13
+    bookerName: E. Mulder
+    description: Brainstorm
+    amountOfPeople: 6
+  - isPlayerBooking: 0
+    roomName: Kamer 30
+    date: 12 mei 2026 (Di)
+    startHour: 12
+    endHour: 14
+    bookerName: P. Smits
+    description: Overleg
+    amountOfPeople: 3
+  - isPlayerBooking: 0
+    roomName: Kamer 10
+    date: 12 mei 2026 (Di)
+    startHour: 12
+    endHour: 14
     bookerName: M. Jansen
-    description: Project focus
-    amountOfPeople: 1
+    description: Overleg
+    amountOfPeople: 5
+  - isPlayerBooking: 0
+    roomName: Kamer 30
+    date: 12 mei 2026 (Di)
+    startHour: 15
+    endHour: 16
+    bookerName: L. Visser
+    description: Meeting
+    amountOfPeople: 2
   - isPlayerBooking: 0
     roomName: Kamer 10
     date: 13 mei 2026 (Wo)
-    startHour: 12
-    endHour: 13
+    startHour: 9
+    endHour: 10
     bookerName: S. Bakker
-    description: Brainstorm
-    amountOfPeople: 4
+    description: Meeting
+    amountOfPeople: 1
+  - isPlayerBooking: 0
+    roomName: Kamer 11
+    date: 13 mei 2026 (Wo)
+    startHour: 14
+    endHour: 15
+    bookerName: L. Visser
+    description: Overleg
+    amountOfPeople: 7
   - isPlayerBooking: 0
     roomName: Kamer 34
-    date: 14 mei 2026 (Do)
-    startHour: 9
-    endHour: 11
+    date: 13 mei 2026 (Wo)
+    startHour: 15
+    endHour: 16
     bookerName: S. Bakker
+    description: Koffie break
+    amountOfPeople: 3
+  - isPlayerBooking: 0
+    roomName: Kamer 30
+    date: 13 mei 2026 (Wo)
+    startHour: 15
+    endHour: 16
+    bookerName: J. de Vries
     description: Interne audit
-    amountOfPeople: 2
+    amountOfPeople: 1
+  - isPlayerBooking: 0
+    roomName: Kamer 32
+    date: 13 mei 2026 (Wo)
+    startHour: 15
+    endHour: 16
+    bookerName: J. de Vries
+    description: Koffie break
+    amountOfPeople: 1
   - isPlayerBooking: 0
     roomName: Kamer 11
     date: 14 mei 2026 (Do)
     startHour: 10
-    endHour: 12
+    endHour: 11
     bookerName: M. Jansen
-    description: Meeting
-    amountOfPeople: 4
+    description: Overleg
+    amountOfPeople: 5
   - isPlayerBooking: 0
     roomName: Kamer 11
     date: 14 mei 2026 (Do)
-    startHour: 14
-    endHour: 15
-    bookerName: M. Jansen
-    description: Brainstorm
-    amountOfPeople: 3
-  - isPlayerBooking: 0
-    roomName: Kamer 10
-    date: 14 mei 2026 (Do)
-    startHour: 14
-    endHour: 16
-    bookerName: E. Mulder
-    description: Project focus
-    amountOfPeople: 6
-  - isPlayerBooking: 0
-    roomName: Kamer 5
-    date: 14 mei 2026 (Do)
-    startHour: 15
-    endHour: 16
-    bookerName: S. Bakker
-    description: Overleg
-    amountOfPeople: 2
-  - isPlayerBooking: 0
-    roomName: Kamer 35
-    date: 15 mei 2026 (Vr)
     startHour: 12
     endHour: 13
-    bookerName: L. Visser
-    description: Overleg
+    bookerName: M. Jansen
+    description: Meeting
+    amountOfPeople: 1
+  - isPlayerBooking: 0
+    roomName: Kamer 35
+    date: 14 mei 2026 (Do)
+    startHour: 14
+    endHour: 15
+    bookerName: E. Mulder
+    description: Interne audit
+    amountOfPeople: 5
+  - isPlayerBooking: 0
+    roomName: Kamer 11
+    date: 14 mei 2026 (Do)
+    startHour: 13
+    endHour: 14
+    bookerName: J. de Vries
+    description: Meeting
+    amountOfPeople: 6
+  - isPlayerBooking: 0
+    roomName: Kamer 11
+    date: 14 mei 2026 (Do)
+    startHour: 11
+    endHour: 12
+    bookerName: S. Bakker
+    description: Interne audit
     amountOfPeople: 8
   - isPlayerBooking: 0
     roomName: Kamer 11
     date: 15 mei 2026 (Vr)
-    startHour: 13
-    endHour: 14
+    startHour: 14
+    endHour: 16
     bookerName: S. Bakker
+    description: Interne audit
+    amountOfPeople: 6
+  - isPlayerBooking: 0
+    roomName: Kamer 11
+    date: 15 mei 2026 (Vr)
+    startHour: 9
+    endHour: 10
+    bookerName: S. Bakker
+    description: Brainstorm
+    amountOfPeople: 7
+  - isPlayerBooking: 0
+    roomName: Kamer 10
+    date: 15 mei 2026 (Vr)
+    startHour: 11
+    endHour: 13
+    bookerName: J. de Vries
     description: Meeting
     amountOfPeople: 3
   - isPlayerBooking: 0
     roomName: Kamer 35
     date: 15 mei 2026 (Vr)
-    startHour: 15
-    endHour: 16
+    startHour: 9
+    endHour: 10
+    bookerName: S. Bakker
+    description: Project focus
+    amountOfPeople: 6
+  - isPlayerBooking: 0
+    roomName: Kamer 30
+    date: 15 mei 2026 (Vr)
+    startHour: 13
+    endHour: 14
     bookerName: J. de Vries
-    description: Brainstorm
-    amountOfPeople: 15
-  - isPlayerBooking: 0
-    roomName: Kamer 11
-    date: 15 mei 2026 (Vr)
-    startHour: 9
-    endHour: 11
-    bookerName: L. Visser
-    description: Overleg
-    amountOfPeople: 5
-  - isPlayerBooking: 0
-    roomName: Kamer 10
-    date: 15 mei 2026 (Vr)
-    startHour: 9
-    endHour: 11
-    bookerName: E. Mulder
-    description: Koffie break
-    amountOfPeople: 5
+    description: Interne audit
+    amountOfPeople: 4
 --- !u!4 &355683219
 Transform:
   m_ObjectHideFlags: 0
@@ -3450,12 +3448,117 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f984e055cb2e8548a8397769c7066cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AssignmentManager
-  narrativeScenarios:
+  maxActiveTasks: 3
+  securityPrompts:
   - category: 0
-    narrativeText: JO JO JO TEST <color=red>rode tekst</color>
+    description: Er bevindt zich een nieuwe werkbalk in je internetbrowser waar je
+      niet om hebt gevraagd.
+  - category: 0
+    description: Je mailbox is overgenomen door iemand van buitenaf.
+  - category: 0
+    description: Wachtwoorden zijn om welke reden dan ook bekend geraakt.
+  - category: 0
+    description: Je hebt plotseling een ander wachtwoord nadat je terugkomt van vakantie.
   - category: 1
-    narrativeText: JO JO JO TEST actie
-  activeAssignments: []
+    description: Diefstal of verlies van data of hardware (bijv. in de vorm van laptop,
+      tablet, smartphone of USB-stick).
+  - category: 1
+    description: Dossiers c.q. vertrouwelijke documenten liggen rond te zwerven in
+      de organisatie.
+  - category: 1
+    description: Personen die daarvoor niet geautoriseerd zijn bevinden zich zonder
+      begeleiding in afgeschermde gedeelten van het gemeentehuis.
+  - category: 2
+    description: Je virusscanner haalt geen updates meer op of geeft vage foutmeldingen.
+  - category: 2
+    description: Een informatiesysteem bevat onjuiste of niet-actuele informatie.
+  - category: 2
+    description: Een backup van gegevens is niet gelukt.
+  - category: 3
+    description: Je krijgt vreemde meldingen op je computer te zien.
+  - category: 3
+    description: Je bent bestanden kwijt, je harde schijf is geheel of gedeeltelijk
+      gewist.
+  - category: 3
+    description: Mogelijke (vermoedelijke) besmettingen met virussen en/of malware.
+  - category: 3
+    description: Er zijn pogingen gedaan om ongeautoriseerd toegang te krijgen tot
+      informatie of systemen (hacken).
+  dataBreachPrompts:
+  - Een apparaat met daarop een kopie van het klantenbestand van de organisatie is
+    zoekgeraakt of gestolen.
+  - De enige kopie van een verzameling persoonsgegevens is door 'ransomware' (gijzelsoftware)
+    versleuteld.
+  - Iemand heeft zijn computer niet gelocked, waardoor mogelijk anderen in mappen
+    met persoonsgegevens hebben kunnen neuzen.
+  generalReportPrompts:
+  - category: 0
+    description: Microsoft Word crasht telkens bij het opstarten.
+  - category: 1
+    description: De printer op de 2e verdieping geeft een inkt-error.
+  - category: 2
+    description: Ik heb een nieuwe simkaart nodig voor mijn werktelefoon.
+  - category: 3
+    description: Ik ben het wachtwoord van mijn laptop vergeten, kun je deze resetten?
+  - category: 4
+    description: De lamp in de gang op de begane grond is kapot.
+  - category: 5
+    description: Ik wil graag mijn ouderschapsverlof aanvragen, waar kan ik dat doen?
+  - category: 6
+    description: Mijn E-Herkenning token werkt niet meer bij het inloggen.
+  - category: 7
+    description: Ik heb een vraag over de kerstpakketten van dit jaar.
+  assignments:
+  - title: Systeem Controle (Naam)
+    description: 'Kijk in het reserveringssysteem: Wie heeft Kamer 35 geboekt op
+      11 mei 2026 (Ma) om 13:00 uur? (Typ de naam exact over)'
+    type: 4
+    targetCategory: 
+    targetDate: 
+    targetStartHour: 0
+    targetEndHour: 0
+    targetPeople: 0
+    correctTextAnswer: L. Visser
+    correctNumberAnswer: 0
+    isCompleted: 0
+  - title: Datalek Melden (AVG)
+    description: 'Situatie:
+
+      "Iemand heeft zijn computer niet gelocked, waardoor
+      mogelijk anderen in mappen met persoonsgegevens hebben kunnen neuzen."
+
+
+      Datum
+      van inbreuk: 15 mei 2026 (Vr)
+
+
+      Meld dit direct in het Datalek formulier.'
+    type: 2
+    targetCategory: 
+    targetDate: 
+    targetStartHour: 0
+    targetEndHour: 0
+    targetPeople: 0
+    correctTextAnswer: 
+    correctNumberAnswer: 0
+    isCompleted: 0
+  - title: Beveiligingsincident Melden
+    description: 'Situatie:
+
+      "Een informatiesysteem bevat onjuiste of niet-actuele
+      informatie."
+
+
+      Registreer dit incident onder de juiste categorie: Storing.'
+    type: 1
+    targetCategory: Storing
+    targetDate: 
+    targetStartHour: 0
+    targetEndHour: 0
+    targetPeople: 0
+    correctTextAnswer: 
+    correctNumberAnswer: 0
+    isCompleted: 0
 --- !u!114 &355683221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7793,6 +7896,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711844044}
   m_CullTransparentMesh: 1
+--- !u!21 &729076378
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI/RoundedCorners/IndependentRoundedCorners
+  m_Shader: {fileID: 4800000, guid: d3beb88e61f88ca4393acdefb005fa70, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _OuterUV: {r: 0, g: 0, b: 1, a: 1}
+    - _halfSize: {r: 50, g: 50, b: 0, a: 0}
+    - _r: {r: 40, g: 40, b: 40, a: 40}
+    - _rect2props: {r: 0, g: -0.0000076293945, b: 42.42641, a: 42.42641}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &736574114
 GameObject:
   m_ObjectHideFlags: 0
@@ -8095,6 +8241,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756680265}
   m_CullTransparentMesh: 1
+--- !u!21 &757890308
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI/RoundedCorners/IndependentRoundedCorners
+  m_Shader: {fileID: 4800000, guid: d3beb88e61f88ca4393acdefb005fa70, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _OuterUV: {r: 0, g: 0, b: 1, a: 1}
+    - _halfSize: {r: 50, g: 50, b: 0, a: 0}
+    - _r: {r: 40, g: 40, b: 40, a: 40}
+    - _rect2props: {r: 0, g: -0.0000076293945, b: 42.42641, a: 42.42641}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &768595742
 GameObject:
   m_ObjectHideFlags: 0
@@ -8232,6 +8421,11 @@ RectTransform:
   m_AnchoredPosition: {x: -7.5, y: -0.5}
   m_SizeDelta: {x: -35, y: -13}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!4 &797839680 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3792658882776115395, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+  m_PrefabInstance: {fileID: 1032944567}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &849370513
 GameObject:
   m_ObjectHideFlags: 0
@@ -10983,6 +11177,78 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1018113005}
   m_CullTransparentMesh: 1
+--- !u!1001 &1032944567
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2071432516}
+    m_Modifications:
+    - target: {fileID: 138584832390769557, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 1054244597}
+    - target: {fileID: 3792658882776115395, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 905
+      objectReference: {fileID: 0}
+    - target: {fileID: 3792658882776115395, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -660.37396
+      objectReference: {fileID: 0}
+    - target: {fileID: 3792658882776115395, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1178.6753
+      objectReference: {fileID: 0}
+    - target: {fileID: 3792658882776115395, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3792658882776115395, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3792658882776115395, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3792658882776115395, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3792658882776115395, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3792658882776115395, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3792658882776115395, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897658127532488622, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 729076378}
+    - target: {fileID: 7603178472758353700, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+      propertyPath: m_Name
+      value: TasklistEmpty
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 3804202957455459525, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+    - {fileID: 4871004528476118036, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+    - {fileID: 9064844616560406726, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+    - {fileID: 1839333493278625182, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7049036622596654652, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1064475893}
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
 --- !u!1 &1041321166
 GameObject:
   m_ObjectHideFlags: 0
@@ -11257,6 +11523,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1048450334}
   m_CullTransparentMesh: 1
+--- !u!21 &1054244597
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI/RoundedCorners/IndependentRoundedCorners
+  m_Shader: {fileID: 4800000, guid: d3beb88e61f88ca4393acdefb005fa70, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _OuterUV: {r: 0, g: 0, b: 1, a: 1}
+    - _halfSize: {r: 50, g: 50, b: 0, a: 0}
+    - _r: {r: 40, g: 40, b: 40, a: 40}
+    - _rect2props: {r: 0, g: -0.0000076293945, b: 42.42641, a: 42.42641}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &1057171626
 GameObject:
   m_ObjectHideFlags: 0
@@ -11392,11 +11701,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 0}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -11433,7 +11742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11484,19 +11793,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064475892}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 4.812256}
+  m_LocalScale: {x: 0.8333332, y: 0.8333332, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2061542115}
   - {fileID: 1059674554}
-  m_Father: {fileID: 2071432516}
+  m_Father: {fileID: 1067004683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 799, y: -256}
-  m_SizeDelta: {x: 300, y: 500}
+  m_AnchoredPosition: {x: 4.6793823, y: -13.883331}
+  m_SizeDelta: {x: 420, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1064475894
 MonoBehaviour:
@@ -11541,7 +11850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11566,6 +11875,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064475892}
   m_CullTransparentMesh: 1
+--- !u!224 &1067004683 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7049036622596654652, guid: 94efe70c1ecfad34f83f5d08484888a0, type: 3}
+  m_PrefabInstance: {fileID: 1032944567}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1074588941
 GameObject:
   m_ObjectHideFlags: 0
@@ -12918,6 +13232,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1141366701}
   m_CullTransparentMesh: 1
+--- !u!21 &1143182239
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI/RoundedCorners/IndependentRoundedCorners
+  m_Shader: {fileID: 4800000, guid: d3beb88e61f88ca4393acdefb005fa70, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _OuterUV: {r: 0, g: 0, b: 1, a: 1}
+    - _halfSize: {r: 50, g: 50, b: 0, a: 0}
+    - _r: {r: 40, g: 40, b: 40, a: 40}
+    - _rect2props: {r: 0, g: -0.0000076293945, b: 42.42641, a: 42.42641}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &1149897066
 GameObject:
   m_ObjectHideFlags: 0
@@ -19751,6 +20108,63 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!1001 &1801417814
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 120991853439441932, guid: b758287bfdde6784eace092c6e4c09bb, type: 3}
+      propertyPath: m_Name
+      value: RenderCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915213035722844991, guid: b758287bfdde6784eace092c6e4c09bb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2596.2056
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915213035722844991, guid: b758287bfdde6784eace092c6e4c09bb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 37.971287
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915213035722844991, guid: b758287bfdde6784eace092c6e4c09bb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -707.9294
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915213035722844991, guid: b758287bfdde6784eace092c6e4c09bb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.005313477
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915213035722844991, guid: b758287bfdde6784eace092c6e4c09bb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0010468935
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915213035722844991, guid: b758287bfdde6784eace092c6e4c09bb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.9969671
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915213035722844991, guid: b758287bfdde6784eace092c6e4c09bb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.077636376
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915213035722844991, guid: b758287bfdde6784eace092c6e4c09bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915213035722844991, guid: b758287bfdde6784eace092c6e4c09bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915213035722844991, guid: b758287bfdde6784eace092c6e4c09bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b758287bfdde6784eace092c6e4c09bb, type: 3}
 --- !u!1 &1833940193
 GameObject:
   m_ObjectHideFlags: 0
@@ -23241,7 +23655,7 @@ RectTransform:
   - {fileID: 215694191}
   - {fileID: 1253768681}
   - {fileID: 849370514}
-  - {fileID: 1064475893}
+  - {fileID: 797839680}
   - {fileID: 756680266}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -24006,3 +24420,4 @@ SceneRoots:
   - {fileID: 916017958}
   - {fileID: 2071432516}
   - {fileID: 355683219}
+  - {fileID: 1801417814}
