@@ -7,7 +7,7 @@ public class StreakDisplay : MonoBehaviour
     public string prefix = "Day Streak: ";
     public string suffix = "";
 
-    void Start()
+    void Update()
     {
         UpdateDisplay();
     }
