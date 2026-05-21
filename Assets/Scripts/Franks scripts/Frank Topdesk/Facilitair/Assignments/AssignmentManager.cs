@@ -82,7 +82,7 @@ public class AssignmentManager : MonoBehaviour
         new SecurityIncidentPrompt { category = SecurityCategory.Overig, description = "Je krijgt vreemde meldingen op je computer te zien." },
         new SecurityIncidentPrompt { category = SecurityCategory.Overig, description = "Je bent bestanden kwijt, je harde schijf is geheel of gedeeltelijk gewist." },
         new SecurityIncidentPrompt { category = SecurityCategory.Phishing, description = "Er bevindt zich een nieuwe werkbalk in je internetbrowser waar je niet om hebt gevraagd." },
-        new SecurityIncidentPrompt { category = SecurityCategory.Storing, description = "Je virusscanner haalt geen updates meer op of geeft vage foutmeaning." },
+        new SecurityIncidentPrompt { category = SecurityCategory.Storing, description = "Je virusscanner haalt geen updates meer op of geeft vage foutmeldingen." },
         new SecurityIncidentPrompt { category = SecurityCategory.Overig, description = "Mogelijke (vermoedelijke) besmettingen met virussen i.c.m. malware." },
         new SecurityIncidentPrompt { category = SecurityCategory.Overig, description = "Er zijn pogingen gedaan om ongeautoriseerd toegang te krijgen tot informatie of systemen (hacken)." },
         new SecurityIncidentPrompt { category = SecurityCategory.FysiekeBeveiliging, description = "Diefstal of verlies van data of hardware (bijv. in de vorm van laptop, tablet, smartphone of USB-stick)." },
@@ -98,7 +98,7 @@ public class AssignmentManager : MonoBehaviour
     public List<string> dataBreachPrompts = new List<string> {
         "Een apparaat met daarop een kopie van het klantenbestand van de organisatie is zoekgeraakt of gestolen.",
         "De enige kopie van een verzameling persoonsgegevens is door 'ransomware' (gijzelsoftware) versleuteld.",
-        "Iemand heeft his computer niet gelocked, waardoor mogelijk anderen in mappen met persoonsgegevens hebben kunnen neuzen."
+        "Iemand heeft zijn computer niet gelocked, waardoor mogelijk anderen in mappen met persoonsgegevens hebben kunnen neuzen."
     };
 
     public List<GeneralReportPrompt> generalReportPrompts = new List<GeneralReportPrompt> {
@@ -109,7 +109,7 @@ public class AssignmentManager : MonoBehaviour
         new GeneralReportPrompt { category = GeneralCategory.GemeentelijkGebouw, description = "De lamp in de gang op de begane grond is kapot." },
         new GeneralReportPrompt { category = GeneralCategory.POZaken, description = "Ik wil graag mijn ouderschapsverlof aanvragen, waar kan ik dat doen?" },
         new GeneralReportPrompt { category = GeneralCategory.EHerkenning, description = "Mijn E-Herkenning token werkt niet meer bij het inloggen." },
-        new GeneralReportPrompt { category = GeneralCategory.Overig, description = "Ik heb een vraag over de kerstpakketten van dit jaar." }
+        new GeneralReportPrompt { category = GeneralCategory.Overig, description = "Ik heb een vraag over de kerstpakketten van dit year." }
     };
 
     [HideInInspector]
@@ -198,10 +198,14 @@ public class AssignmentManager : MonoBehaviour
         }
 
         bool canDoQuestions = compBookings.Count > 0;
-        bool canDoBookingAction = bookingMgr != null && bookingMgr.rooms.Count > 0 && bookingMgr.weekDates.Length > 0;
+        bool canDoBookingAction = bookingMgr != null && bookingMgr.rooms.Count > 0 && bookingMgr.weekDates != null && bookingMgr.weekDates.Length > 0;
+
+        // --- NIEUW: VERPLICHTE DEBUG LOGS ---
+        Debug.Log($"[Generator] Rol: {categoryRoll}. Vragen Mogelijk: {canDoQuestions}, Zelf Boeken Mogelijk: {canDoBookingAction}");
 
         if (categoryRoll == 0 && !canDoQuestions && !canDoBookingAction)
         {
+            Debug.LogWarning("[Generator Fallback] Kamerboeking gerold, maar je BookingManager heeft geen Kamers, Datums óf gegenereerde computer reserveringen! Reroll gedwongen naar Security/Datalek/Algemeen.");
             categoryRoll = Random.Range(1, 4); 
         }
 
@@ -218,6 +222,7 @@ public class AssignmentManager : MonoBehaviour
                 newTask.title = "Systeem Controle (Naam)";
                 newTask.description = $"Kijk in het reserveringssysteem: Wie heeft {target.roomName} geboekt op {target.date} om {target.startHour}:00 uur? (Typ de naam exact over)";
                 newTask.correctTextAnswer = target.bookerName;
+                Debug.Log("🎲 Generator: Succesvol een Kamer-invulvraag (Naam) aangemaakt.");
             }
             else if (bookingSubRoll == 1) 
             {
@@ -226,6 +231,7 @@ public class AssignmentManager : MonoBehaviour
                 newTask.title = "Systeem Controle (Aantal)";
                 newTask.description = $"Kijk in het reserveringssysteem: Voor hoeveel personen is {target.roomName} geboekt op {target.date} om {target.startHour}:00 uur? (Vul alleen een getal in)";
                 newTask.correctNumberAnswer = target.amountOfPeople;
+                Debug.Log("🎲 Generator: Succesvol een Kamer-invulvraag (Aantal) aangemaakt.");
             }
             else 
             {
@@ -246,6 +252,7 @@ public class AssignmentManager : MonoBehaviour
                 newTask.targetStartHour = rStart;
                 newTask.targetEndHour = rEnd;
                 newTask.targetPeople = rPeople;
+                Debug.Log("🎲 Generator: Succesvol een 'Zelf Boeken' opdracht aangemaakt.");
             }
         }
         // --- 1/4 KANS: BEVEILIGINGSINCIDENTEN ---
@@ -257,6 +264,7 @@ public class AssignmentManager : MonoBehaviour
             string requiredCat = GetSecurityString(prompt.category);
             newTask.description = $"Situatie:\n\"{prompt.description}\"\n\nRegistreer dit incident onder de juiste categorie: {requiredCat}.";
             newTask.targetCategory = requiredCat; 
+            Debug.Log("🎲 Generator: Succesvol een Security opdracht aangemaakt.");
         }
         // --- 1/4 KANS: DATALEKKEN ---
         else if (categoryRoll == 2 && dataBreachPrompts.Count > 0)
@@ -272,6 +280,7 @@ public class AssignmentManager : MonoBehaviour
             newTask.title = "Datalek Melden (AVG)";
             newTask.description = $"Situatie:\n\"{prompt}\"\n\nDatum van inbreuk: {rDate}\n\nMeld dit direct in het Datalek formulier.";
             newTask.targetCategory = ""; 
+            Debug.Log("🎲 Generator: Succesvol een Datalek opdracht aangemaakt.");
         }
         // --- 1/4 KANS: ALGEMENE MELDINGEN ---
         else if (categoryRoll == 3 && generalReportPrompts.Count > 0)
@@ -282,6 +291,7 @@ public class AssignmentManager : MonoBehaviour
             newTask.description = $"Situatie:\n\"{prompt.description}\"\n\nMaak een ticket aan en kies de juiste categorie: {requiredCat}.";
             newTask.type = AssignmentType.GeneralReport;
             newTask.targetCategory = requiredCat; 
+            Debug.Log("🎲 Generator: Succesvol een Algemene melding opdracht aangemaakt.");
         }
 
         assignments.Add(newTask);
@@ -307,13 +317,11 @@ public class AssignmentManager : MonoBehaviour
                     capacityMatch = roomCap >= task.targetPeople;
                 }
 
-                // FIX: Controleer of de gekozen kamer NIET al bezet is door een computerboeking
                 bool isRoomFree = true;
                 if (BookingManager.Instance != null)
                 {
                     foreach (var reservation in BookingManager.Instance.allReservations)
                     {
-                        // We controleren alleen overlappingen met computerboekingen (!isPlayerBooking)
                         if (!reservation.isPlayerBooking &&
                             reservation.roomName.Trim().ToLower() == roomName.Trim().ToLower() &&
                             reservation.date.Trim().ToLower() == date.Trim().ToLower())
@@ -334,10 +342,6 @@ public class AssignmentManager : MonoBehaviour
                     task.isCompleted = true;
                     hasChanged = true;
                     Debug.Log($"🎉 KAMER SUCCESVOL GEBOEKT EN VRIJ: {task.title}");
-                }
-                else if (!isRoomFree && dateMatch && startMatch && endMatch)
-                {
-                    Debug.LogWarning($"⚠️ Opdracht afgewezen: Kamer '{roomName}' is al bezet door een computerboeking op dit tijdstip.");
                 }
             }
         }

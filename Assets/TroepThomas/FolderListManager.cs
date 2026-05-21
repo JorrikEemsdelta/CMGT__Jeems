@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems; // Nodig voor rechtsklik detectie
+using UnityEngine.EventSystems; 
 using TMPro;
 
 public class FolderListManager : MonoBehaviour
@@ -22,7 +22,7 @@ public class FolderListManager : MonoBehaviour
         [Tooltip("Kies hier uit of het een bestand of folder moet zijn. Folders kan je openen, en bestanden kun je bewerken of verwijderen.")]
         public ItemType type;
 
-        [Tooltip("Klik dit aan als je wil dat het bestand verwjiderbaar is.")]
+        [Tooltip("Klik dit aan als je wil dat het bestand verwijderbaar is.")]
         public bool kanVerwijderen = true;
         [Tooltip("Klik dit aan als je wil dat de bestandsnaam gewijzigd kan worden.")]
         public bool kanHernoemen = true;
@@ -36,6 +36,8 @@ public class FolderListManager : MonoBehaviour
         public Color categorieKleur = Color.gray;
 
         [Header("Alleen invullen bij Folder")]
+        // --- DE FIX ZIT HIER ---
+        [SerializeReference]
         public FolderContainer targetContainer;
 
         [Header("Virus Opties")]
@@ -58,7 +60,7 @@ public class FolderListManager : MonoBehaviour
     [Header("Prefabs")]
     public GameObject folderPrefab;
     public GameObject bestandPrefab;
-    public ContextMenuManager contextMenu; // Sleep hier je contextmenu-object naartoe
+    public ContextMenuManager contextMenu; 
 
     [Header("UI Referenties")]
     public Transform contentParent;
@@ -72,7 +74,7 @@ public class FolderListManager : MonoBehaviour
     private FolderContainer huidigeContainer;
 
     [Header("Overig")]
-    public PasteMenuManager pasteMenu; // Sleep je nieuwe plak-prefab hierheen
+    public PasteMenuManager pasteMenu; 
     public CategoryColorManager colorManager;
     public MetadataMenuManager metadataMenu;
 
@@ -82,7 +84,7 @@ public class FolderListManager : MonoBehaviour
     void Start()
     {
         if (terugKnop != null) terugKnop.onClick.AddListener(GaTerug);
-        if (contextMenu != null) contextMenu.Hide(); // Start verborgen
+        if (contextMenu != null) contextMenu.Hide(); 
 
         OpenNieuweLijst(mainList);
 
@@ -135,19 +137,15 @@ public class FolderListManager : MonoBehaviour
             GameObject newItem = Instantiate(prefabToSpawn, contentParent);
             newItem.GetComponentInChildren<TextMeshProUGUI>().text = data.itemName;
 
-            // 1. Zoek de componenten via de recursieve methode
             Transform tekstTransform = ZoekChildRecursief(newItem.transform, "CategorieTekst");
             Transform balkTransform = ZoekChildRecursief(newItem.transform, "CategorieBalk");
 
-            // 2. Pas de tekst aan (zonder nieuwe variabelen aan te maken die al bestaan)
             if (tekstTransform != null)
             {
                 var tComp = tekstTransform.GetComponent<TextMeshProUGUI>();
                 if (tComp != null) tComp.text = data.categorieNaam;
             }
 
-            // 3. Pas de kleur aan
-            // 3. Pas de kleur aan
             if (balkTransform != null)
             {
                 var bComp = balkTransform.GetComponent<RawImage>();
@@ -155,7 +153,6 @@ public class FolderListManager : MonoBehaviour
                 {
                     Color definitieveKleur = data.categorieKleur;
 
-                    // Check of er een centrale override is
                     if (colorManager != null)
                     {
                         definitieveKleur = colorManager.GetColorForCategory(data.categorieNaam, data.categorieKleur);
@@ -165,7 +162,6 @@ public class FolderListManager : MonoBehaviour
                 }
             }
 
-            // 4. EventTrigger logica
             EventTrigger trigger = newItem.GetComponent<EventTrigger>();
             if (trigger == null) trigger = newItem.AddComponent<EventTrigger>();
 
@@ -183,12 +179,10 @@ public class FolderListManager : MonoBehaviour
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            // Rechtsklik op een BESTAND (Context Menu: Verwijderen, Hernoemen, Knippen)
             if (data.type == ItemType.Bestand && contextMenu != null)
             {
                 contextMenu.Show(itemVisual, data, container);
             }
-            // NIEUW: Rechtsklik op een FOLDER (Metadata Menu: Categorie aanpassen)
             else if (data.type == ItemType.Folder && metadataMenu != null)
             {
                 metadataMenu.Show(data, this);
@@ -196,7 +190,6 @@ public class FolderListManager : MonoBehaviour
         }
         else if (eventData.button == PointerEventData.InputButton.Left)
         {
-            // Linksklik op een FOLDER (Map openen)
             if (data.type == ItemType.Folder)
             {
                 OpenNieuweLijst(data.targetContainer);
@@ -204,27 +197,9 @@ public class FolderListManager : MonoBehaviour
         }
     }
 
-    //   public void OnBackgroundClick(BaseEventData eventData)
-    //   {
-    //       
-    //       PointerEventData pointerData = (PointerEventData)eventData;
-    //
-    //      if (pointerData.button == PointerEventData.InputButton.Right)
-    //      {
-    //           // Sluit het andere menu als dat nog open stond
-    //           if (contextMenu != null) contextMenu.Hide();
-    //
-    // Open het plak menu
-    //         if (pasteMenu != null) pasteMenu.Show();
-    //     }
-    //  }
-
     public void OpenPlakMenu()
     {
-        // Sluit eerst het andere menu (verwijderen/knippen)
         if (contextMenu != null) contextMenu.Hide();
-
-        // Toon het plak menu
         if (pasteMenu != null) pasteMenu.Show();
     }
 
@@ -232,15 +207,12 @@ public class FolderListManager : MonoBehaviour
     {
         gekniptItemData = data;
         bronContainer = vanContainer;
-
-        // Optioneel: Vernietig direct het visuele object in de huidige map
         Destroy(visual);
         Debug.Log("Item geknipt: " + data.itemName);
     }
 
     public void PlakItem()
     {
-        // Als we al aan het plakken zijn, negeer deze tweede klik
         if (isBezigMetPlakken) return;
 
         if (gekniptItemData == null)
@@ -249,9 +221,8 @@ public class FolderListManager : MonoBehaviour
             return;
         }
 
-        isBezigMetPlakken = true; // Zet het slotje erop
+        isBezigMetPlakken = true; 
 
-        // --- Je bestaande logica ---
         string naamVanBestand = gekniptItemData.itemName;
         string naamVanMap = huidigeContainer.containerName;
 
@@ -269,7 +240,6 @@ public class FolderListManager : MonoBehaviour
         bronContainer = null;
         Debug.Log("Succesvol geplakt: " + naamVanBestand);
 
-        // Haal het slotje er na een korte pauze weer af
         Invoke("ResetPlakSlot", 0.2f);
     }
 
@@ -291,15 +261,14 @@ public class FolderListManager : MonoBehaviour
         {
             if (data.verschijnVertraging > 0f)
             {
-                data.isZichtbaar = false; // Verberg hem voor nu
+                data.isZichtbaar = false; 
                 StartCoroutine(SpawnBestandNaTijd(data, data.verschijnVertraging));
             }
             else
             {
-                data.isZichtbaar = true; // Gewone bestanden zijn meteen zichtbaar
+                data.isZichtbaar = true; 
             }
 
-            // Als dit item een map is, moeten we ook de inhoud van die map checken (recursie)
             if (data.type == ItemType.Folder && data.targetContainer != null)
             {
                 InitieerTijdgestuurdeBestanden(data.targetContainer);
@@ -310,21 +279,17 @@ public class FolderListManager : MonoBehaviour
     private System.Collections.IEnumerator SpawnBestandNaTijd(FolderData data, float tijd)
     {
         yield return new WaitForSeconds(tijd);
-        data.isZichtbaar = true; // Zet hem op zichtbaar!
+        data.isZichtbaar = true; 
 
-        // Als de speler toevallig NU in de map kijkt waar dit bestand hoort, 
-        // moeten we het scherm meteen verversen zodat hij oppopt.
         DisplayCurrentList();
     }
 
-    // Checkt of er überhaupt een virus van een specifiek type actief is in de huidige map
     public bool IsVirusTypeActief(VirusType type)
     {
         if (huidigeContainer == null || huidigeContainer.items == null) return false;
 
         foreach (FolderData data in huidigeContainer.items)
         {
-            // Check of het item gespawned is, een virus is, én van het juiste type is
             if (data.isZichtbaar && data.isVirus && data.typeVirus == type)
             {
                 return true;
@@ -333,7 +298,6 @@ public class FolderListManager : MonoBehaviour
         return false;
     }
 
-    // Eventuele algemene check (handig voor als je wilt weten of er *iets* aan de hand is)
     public bool IsErEenVirusActief()
     {
         if (huidigeContainer == null || huidigeContainer.items == null) return false;
