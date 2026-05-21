@@ -82,7 +82,7 @@ public class AssignmentManager : MonoBehaviour
         new SecurityIncidentPrompt { category = SecurityCategory.Overig, description = "Je krijgt vreemde meldingen op je computer te zien." },
         new SecurityIncidentPrompt { category = SecurityCategory.Overig, description = "Je bent bestanden kwijt, je harde schijf is geheel of gedeeltelijk gewist." },
         new SecurityIncidentPrompt { category = SecurityCategory.Phishing, description = "Er bevindt zich een nieuwe werkbalk in je internetbrowser waar je niet om hebt gevraagd." },
-        new SecurityIncidentPrompt { category = SecurityCategory.Storing, description = "Je virusscanner haalt geen updates meer op of geeft vage foutmeldingen." },
+        new SecurityIncidentPrompt { category = SecurityCategory.Storing, description = "Je virusscanner haalt geen updates meer op of geeft vage foutmeaning." },
         new SecurityIncidentPrompt { category = SecurityCategory.Overig, description = "Mogelijke (vermoedelijke) besmettingen met virussen i.c.m. malware." },
         new SecurityIncidentPrompt { category = SecurityCategory.Overig, description = "Er zijn pogingen gedaan om ongeautoriseerd toegang te krijgen tot informatie of systemen (hacken)." },
         new SecurityIncidentPrompt { category = SecurityCategory.FysiekeBeveiliging, description = "Diefstal of verlies van data of hardware (bijv. in de vorm van laptop, tablet, smartphone of USB-stick)." },
@@ -98,7 +98,7 @@ public class AssignmentManager : MonoBehaviour
     public List<string> dataBreachPrompts = new List<string> {
         "Een apparaat met daarop een kopie van het klantenbestand van de organisatie is zoekgeraakt of gestolen.",
         "De enige kopie van een verzameling persoonsgegevens is door 'ransomware' (gijzelsoftware) versleuteld.",
-        "Iemand heeft zijn computer niet gelocked, waardoor mogelijk anderen in mappen met persoonsgegevens hebben kunnen neuzen."
+        "Iemand heeft his computer niet gelocked, waardoor mogelijk anderen in mappen met persoonsgegevens hebben kunnen neuzen."
     };
 
     public List<GeneralReportPrompt> generalReportPrompts = new List<GeneralReportPrompt> {
@@ -136,7 +136,6 @@ public class AssignmentManager : MonoBehaviour
 
     private void ForceUIRefresh()
     {
-        // GEUPDATE: Gebruikt nu de moderne FindFirstObjectByType methode
         AssignmentUIController uiController = FindFirstObjectByType<AssignmentUIController>();
         if (uiController != null) uiController.RefreshAssignments();
     }
@@ -190,7 +189,6 @@ public class AssignmentManager : MonoBehaviour
         int categoryRoll = Random.Range(0, 4);
 
         BookingManager bookingMgr = BookingManager.Instance;
-        // GEUPDATE: Gebruikt nu de moderne FindFirstObjectByType methode
         if (bookingMgr == null) bookingMgr = FindFirstObjectByType<BookingManager>();
 
         List<Reservation> compBookings = new List<Reservation>();
@@ -207,6 +205,7 @@ public class AssignmentManager : MonoBehaviour
             categoryRoll = Random.Range(1, 4); 
         }
 
+        // --- 1/4 KANS: KAMERBOEKINGEN ---
         if (categoryRoll == 0)
         {
             int bookingSubRoll = Random.Range(0, 3);
@@ -249,6 +248,7 @@ public class AssignmentManager : MonoBehaviour
                 newTask.targetPeople = rPeople;
             }
         }
+        // --- 1/4 KANS: BEVEILIGINGSINCIDENTEN ---
         else if (categoryRoll == 1 && securityPrompts.Count > 0)
         {
             SecurityIncidentPrompt prompt = securityPrompts[Random.Range(0, securityPrompts.Count)];
@@ -258,6 +258,7 @@ public class AssignmentManager : MonoBehaviour
             newTask.description = $"Situatie:\n\"{prompt.description}\"\n\nRegistreer dit incident onder de juiste categorie: {requiredCat}.";
             newTask.targetCategory = requiredCat; 
         }
+        // --- 1/4 KANS: DATALEKKEN ---
         else if (categoryRoll == 2 && dataBreachPrompts.Count > 0)
         {
             string prompt = dataBreachPrompts[Random.Range(0, dataBreachPrompts.Count)];
@@ -272,6 +273,7 @@ public class AssignmentManager : MonoBehaviour
             newTask.description = $"Situatie:\n\"{prompt}\"\n\nDatum van inbreuk: {rDate}\n\nMeld dit direct in het Datalek formulier.";
             newTask.targetCategory = ""; 
         }
+        // --- 1/4 KANS: ALGEMENE MELDINGEN ---
         else if (categoryRoll == 3 && generalReportPrompts.Count > 0)
         {
             GeneralReportPrompt prompt = generalReportPrompts[Random.Range(0, generalReportPrompts.Count)];
@@ -305,13 +307,37 @@ public class AssignmentManager : MonoBehaviour
                     capacityMatch = roomCap >= task.targetPeople;
                 }
 
+                // FIX: Controleer of de gekozen kamer NIET al bezet is door een computerboeking
+                bool isRoomFree = true;
+                if (BookingManager.Instance != null)
+                {
+                    foreach (var reservation in BookingManager.Instance.allReservations)
+                    {
+                        // We controleren alleen overlappingen met computerboekingen (!isPlayerBooking)
+                        if (!reservation.isPlayerBooking &&
+                            reservation.roomName.Trim().ToLower() == roomName.Trim().ToLower() &&
+                            reservation.date.Trim().ToLower() == date.Trim().ToLower())
+                        {
+                            if (start < reservation.endHour && end > reservation.startHour)
+                            {
+                                isRoomFree = false;
+                                break; 
+                            }
+                        }
+                    }
+                }
+
                 bool specificRoomMatch = string.IsNullOrEmpty(task.targetCategory) || task.targetCategory.Trim().ToLower() == roomName.Trim().ToLower();
 
-                if (dateMatch && startMatch && endMatch && peopleMatch && capacityMatch && specificRoomMatch)
+                if (dateMatch && startMatch && endMatch && peopleMatch && capacityMatch && isRoomFree && specificRoomMatch)
                 {
                     task.isCompleted = true;
                     hasChanged = true;
-                    Debug.Log($"🎉 KAMER GEBOEKT EN TAAK VOLTOOID: {task.title}");
+                    Debug.Log($"🎉 KAMER SUCCESVOL GEBOEKT EN VRIJ: {task.title}");
+                }
+                else if (!isRoomFree && dateMatch && startMatch && endMatch)
+                {
+                    Debug.LogWarning($"⚠️ Opdracht afgewezen: Kamer '{roomName}' is al bezet door een computerboeking op dit tijdstip.");
                 }
             }
         }

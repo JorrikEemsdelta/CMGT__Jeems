@@ -47,7 +47,7 @@ public class AssignmentUIController : MonoBehaviour
                 if (statusObj != null)
                 {
                     TextMeshProUGUI statusText = statusObj.GetComponent<TextMeshProUGUI>();
-                    statusText.text = "✔ VOLTOOID";
+                    statusText.text = "VOLTOOID";
                     statusText.color = new Color(0.1f, 0.6f, 0.1f);
                 }
                 
