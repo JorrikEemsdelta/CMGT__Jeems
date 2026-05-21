@@ -22,5 +22,9 @@ public class ButtonManager : MonoBehaviour
     {
         SceneManager.LoadScene("TeamsTraining");
     }
+    public void Organisatiekennisload()
+    {
+        SceneManager.LoadScene("Organisatiekennis");
+    }
 
 }
