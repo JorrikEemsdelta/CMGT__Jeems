@@ -18,6 +18,13 @@ public class QuestManager : MonoBehaviour
         public string nieuweNaam;
     }
 
+    [System.Serializable]
+    public class MetadataOpdracht
+    {
+        public string oudeCategorie;
+        public string nieuweCategorie;
+    }
+
     [Header("Instellingen")]
     public FolderListManager listManager;
 
@@ -29,6 +36,9 @@ public class QuestManager : MonoBehaviour
 
     [Header("Naam Wijzigen Opdrachten")]
     public List<HernoemOpdracht> hernoemOpdrachten;
+
+    [Header("Metadata Opdrachten")]
+    public List<MetadataOpdracht> metadataOpdrachten;
 
     public void CheckOfNaamInLijstStaat(string verwijderdeNaam)
     {
@@ -131,4 +141,5 @@ public class QuestManager : MonoBehaviour
             }
         }
     }
+
 }

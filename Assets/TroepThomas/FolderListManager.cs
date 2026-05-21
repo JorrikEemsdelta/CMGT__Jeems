@@ -8,6 +8,8 @@ public class FolderListManager : MonoBehaviour
 {
     public enum ItemType { Folder, Bestand }
 
+    public enum VirusType { DraaiAchtergrond, GlitchTekst, ScrollManipulator }
+
     public QuestManager questManager;
 
     private bool isBezigMetPlakken = false;
@@ -15,18 +17,35 @@ public class FolderListManager : MonoBehaviour
     [System.Serializable]
     public class FolderData
     {
+        [Tooltip("De naam van het bestand of folder.")]
         public string itemName;
+        [Tooltip("Kies hier uit of het een bestand of folder moet zijn. Folders kan je openen, en bestanden kun je bewerken of verwijderen.")]
         public ItemType type;
 
+        [Tooltip("Klik dit aan als je wil dat het bestand verwjiderbaar is.")]
         public bool kanVerwijderen = true;
+        [Tooltip("Klik dit aan als je wil dat de bestandsnaam gewijzigd kan worden.")]
         public bool kanHernoemen = true;
+        [Tooltip("Klik dit aan als je wil dat de folder pas verschijnt na een aantal secondes. Dit kan bijvoorbeeld gebruikt worden voor virussen.")]
+        public float verschijnVertraging = 0f;
 
         [Header("Categorie Instellingen")]
+        [Tooltip("Voer hier de naam in van de categorie van de folder. Dit wordt 'metadata' genoemd in het spel.")]
         public string categorieNaam = "Ongecategoriseerd";
+        [Tooltip("Voer hier de kleur in van de categorie van de folder. Dit wordt 'metadata' genoemd in het spel. Ga naar CategorieIndex aan de linkerkant om standaard kleuren in te stellen die dezen overschrijden, zodat je niet steeds dezelfde kleur hoeft te kiezen voor dezelfde categorie.")]
         public Color categorieKleur = Color.gray;
 
         [Header("Alleen invullen bij Folder")]
         public FolderContainer targetContainer;
+
+        [Header("Virus Opties")]
+        [Tooltip("Selecteer of dit bestand een virus is of niet.")]
+        public bool isVirus = false;
+        [Tooltip("Selecteer het soort virus. Draai Achtergrond draait de achtergrond, Glitch Text laat de tekst bovenaan het scherm veranderen, en Scroll Manipulator neemt de controle van het scrollwiel weg. Iets hier kiezen terwijl je Is Virus leeg laat zorgt ervoor dat er geen effecten plaatsnemen. Je kunt in Virus Manager aan de linkerkant deze effecten aanpassen.")]
+        public VirusType typeVirus;
+
+        [HideInInspector]
+        public bool isZichtbaar = false;
     }
 
     [System.Serializable]
@@ -55,6 +74,7 @@ public class FolderListManager : MonoBehaviour
     [Header("Overig")]
     public PasteMenuManager pasteMenu; // Sleep je nieuwe plak-prefab hierheen
     public CategoryColorManager colorManager;
+    public MetadataMenuManager metadataMenu;
 
     private FolderData gekniptItemData;
     private FolderContainer bronContainer;
@@ -65,6 +85,8 @@ public class FolderListManager : MonoBehaviour
         if (contextMenu != null) contextMenu.Hide(); // Start verborgen
 
         OpenNieuweLijst(mainList);
+
+        InitieerTijdgestuurdeBestanden(mainList);
     }
 
     public void OpenNieuweLijst(FolderContainer nieuweContainer)
@@ -104,6 +126,11 @@ public class FolderListManager : MonoBehaviour
 
         foreach (FolderData data in container.items)
         {
+
+            if (data.verschijnVertraging > 0f && !data.isZichtbaar)
+            {
+                continue;
+            }
             GameObject prefabToSpawn = (data.type == ItemType.Folder) ? folderPrefab : bestandPrefab;
             GameObject newItem = Instantiate(prefabToSpawn, contentParent);
             newItem.GetComponentInChildren<TextMeshProUGUI>().text = data.itemName;
@@ -156,15 +183,20 @@ public class FolderListManager : MonoBehaviour
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            // Alleen als het een bestand is
+            // Rechtsklik op een BESTAND (Context Menu: Verwijderen, Hernoemen, Knippen)
             if (data.type == ItemType.Bestand && contextMenu != null)
             {
-                // HIER GAAT HET OM: Je moet nu 3 dingen meesturen tussen de haakjes!
                 contextMenu.Show(itemVisual, data, container);
+            }
+            // NIEUW: Rechtsklik op een FOLDER (Metadata Menu: Categorie aanpassen)
+            else if (data.type == ItemType.Folder && metadataMenu != null)
+            {
+                metadataMenu.Show(data, this);
             }
         }
         else if (eventData.button == PointerEventData.InputButton.Left)
         {
+            // Linksklik op een FOLDER (Map openen)
             if (data.type == ItemType.Folder)
             {
                 OpenNieuweLijst(data.targetContainer);
@@ -172,20 +204,20 @@ public class FolderListManager : MonoBehaviour
         }
     }
 
- //   public void OnBackgroundClick(BaseEventData eventData)
- //   {
- //       
- //       PointerEventData pointerData = (PointerEventData)eventData;
-//
-  //      if (pointerData.button == PointerEventData.InputButton.Right)
-  //      {
- //           // Sluit het andere menu als dat nog open stond
- //           if (contextMenu != null) contextMenu.Hide();
- //
-            // Open het plak menu
-   //         if (pasteMenu != null) pasteMenu.Show();
-   //     }
-  //  }
+    //   public void OnBackgroundClick(BaseEventData eventData)
+    //   {
+    //       
+    //       PointerEventData pointerData = (PointerEventData)eventData;
+    //
+    //      if (pointerData.button == PointerEventData.InputButton.Right)
+    //      {
+    //           // Sluit het andere menu als dat nog open stond
+    //           if (contextMenu != null) contextMenu.Hide();
+    //
+    // Open het plak menu
+    //         if (pasteMenu != null) pasteMenu.Show();
+    //     }
+    //  }
 
     public void OpenPlakMenu()
     {
@@ -246,4 +278,69 @@ public class FolderListManager : MonoBehaviour
         isBezigMetPlakken = false;
     }
 
+    public void DisplayCurrentList()
+    {
+        DisplayList(huidigeContainer);
+    }
+
+    private void InitieerTijdgestuurdeBestanden(FolderContainer container)
+    {
+        if (container == null || container.items == null) return;
+
+        foreach (FolderData data in container.items)
+        {
+            if (data.verschijnVertraging > 0f)
+            {
+                data.isZichtbaar = false; // Verberg hem voor nu
+                StartCoroutine(SpawnBestandNaTijd(data, data.verschijnVertraging));
+            }
+            else
+            {
+                data.isZichtbaar = true; // Gewone bestanden zijn meteen zichtbaar
+            }
+
+            // Als dit item een map is, moeten we ook de inhoud van die map checken (recursie)
+            if (data.type == ItemType.Folder && data.targetContainer != null)
+            {
+                InitieerTijdgestuurdeBestanden(data.targetContainer);
+            }
+        }
+    }
+
+    private System.Collections.IEnumerator SpawnBestandNaTijd(FolderData data, float tijd)
+    {
+        yield return new WaitForSeconds(tijd);
+        data.isZichtbaar = true; // Zet hem op zichtbaar!
+
+        // Als de speler toevallig NU in de map kijkt waar dit bestand hoort, 
+        // moeten we het scherm meteen verversen zodat hij oppopt.
+        DisplayCurrentList();
+    }
+
+    // Checkt of er überhaupt een virus van een specifiek type actief is in de huidige map
+    public bool IsVirusTypeActief(VirusType type)
+    {
+        if (huidigeContainer == null || huidigeContainer.items == null) return false;
+
+        foreach (FolderData data in huidigeContainer.items)
+        {
+            // Check of het item gespawned is, een virus is, én van het juiste type is
+            if (data.isZichtbaar && data.isVirus && data.typeVirus == type)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Eventuele algemene check (handig voor als je wilt weten of er *iets* aan de hand is)
+    public bool IsErEenVirusActief()
+    {
+        if (huidigeContainer == null || huidigeContainer.items == null) return false;
+        foreach (FolderData data in huidigeContainer.items)
+        {
+            if (data.isZichtbaar && data.isVirus) return true;
+        }
+        return false;
+    }
 }
