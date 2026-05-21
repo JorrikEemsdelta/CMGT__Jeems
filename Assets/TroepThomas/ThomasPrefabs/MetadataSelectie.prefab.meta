@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/TroepThomas/ThomasPrefabs/MetadataSelectie.prefab.meta
 guid: 2429f29957d166043bd03de7902594f8
+========
+guid: b758287bfdde6784eace092c6e4c09bb
+>>>>>>>> 48089340da1b69724695b7dcb6162b0a18ffbca9:Assets/RenderCamera.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

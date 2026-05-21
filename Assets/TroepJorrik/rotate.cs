@@ -16,7 +16,7 @@ public class rotate : MonoBehaviour
     void Update()
     {
         // Rotate by rotationSpeed degrees per second around Z
-        transform.Rotate(0f, 0f, rotationSpeed * Time.deltaTime);
+        transform.Rotate(0f, rotationSpeed * Time.deltaTime, 0f);
 
     }
 }

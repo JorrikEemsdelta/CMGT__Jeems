@@ -10,7 +10,7 @@
       "checkmarkLabel": "I have completed this task",
       "correctCheckmarkState": true,
       "explanationWhenWrong": "Fout. Je moet altijd de link naar het document delen, en niet het document zelf als bijlage sturen. Zo behouden we 'één digitale waarheid'.",
-      "explanationWhenRight": "Helemaal goed! Door altijd een link te delen, werken we netjes in hetzelfde document en voorkomen we dubbele versies.",
+      "explanationWhenRight": "Helemaal goed! Door altijd een link te delen, werken we in hetzelfde document en voorkomen we dubbele versies.",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
@@ -20,16 +20,28 @@
       "title": "Inloggen & Beveiliging",
       "questionText": "Een collega is zijn wachtwoord vergeten en moet dringend in een systeem zijn. Wat doe je?",
       "multipleChoiceOptions": [
-        { "answerText": "1. Inloggen op mijn account", "isCorrect": false },
-        { "answerText": "2. Wachtwoord geven", "isCorrect": false },
-        { "answerText": "3. Nooit delen en IT bellen", "isCorrect": true },
-        { "answerText": "4. Lokaal opslaan", "isCorrect": false }
+        {
+          "answerText": "Wachtwoord geven",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Nooit delen en IT bellen",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Lokaal opslaan",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Inloggen op mijn account",
+          "isCorrect": false
+        }
       ],
       "correctTrueFalseAnswer": false,
       "checkmarkLabel": "I have completed this task",
       "correctCheckmarkState": true,
       "explanationWhenWrong": "Dit is een groot veiligheidsrisico. Je mag je inloggegevens nooit met anderen delen en niemand anders op jouw account laten werken.",
-      "explanationWhenRight": "Precies! Inloggegevens zijn strikt persoonlijk. Zo voorkomen we misbruik en is altijd helder wie welke actie heeft uitgevoerd.",
+      "explanationWhenRight": "Precies! Inloggegevens zijn strikt persoonlijk. Zo voorkomen we misbruik en is altijd duidelijk wie wat heeft gedaan.",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
@@ -47,28 +59,149 @@
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
-    }
-  ],
-  "level2": [
+    },
     {
-      "questionType": 0,
-      "title": "Externe Communicatie",
-      "questionText": "Je wilt communiceren met inwoners of ondernemers via de gemeentelijke website. Wie helpt je hierbij?",
-      "multipleChoiceOptions": [
-        { "answerText": "1. Team Online", "isCorrect": false },
-        { "answerText": "2. Team Communicatie", "isCorrect": true },
-        { "answerText": "3. Team D&P", "isCorrect": false },
-        { "answerText": "4. Informatie Adviseur", "isCorrect": false }
-      ],
-      "correctTrueFalseAnswer": false,
+      "questionType": 1,
+      "title": "Privégebruik Verboden",
+      "questionText": "Je Eemsdelta Outlook en OneDrive gebruik je alleen voor werk.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
       "checkmarkLabel": "I have completed this task",
       "correctCheckmarkState": true,
-      "explanationWhenWrong": "Voor advies en ondersteuning bij (online) communicatie met inwoners en ondernemers moet je altijd contact opnemen met team Communicatie.",
-      "explanationWhenRight": "Uitstekend! Team Communicatie is er specifiek om ons te ondersteunen bij externe uitingen.",
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. Privégebruik is niet toegestaan.",
+      "explanationWhenRight": "Correct! Privégebruik is niet toegestaan.",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
     },
+    {
+      "questionType": 1,
+      "title": "Link vs Bijlage",
+      "questionText": "Bij samenwerken stuur je het document als bijlage.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist níet toegestaan of correct. Je deelt altijd een link om versiebeheer te behouden.",
+      "explanationWhenRight": "Goed gedaan! Je deelt altijd een link om versiebeheer te behouden.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Teams Doel",
+      "questionText": "Microsoft Teams is bedoeld voor samenwerken in projecten.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. Teams is de centrale samenwerkomgeving.",
+      "explanationWhenRight": "Correct! Teams is de centrale samenwerkomgeving.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Persoonlijke Omgevingen",
+      "questionText": "Outlook en OneDrive zijn persoonlijk beheerde omgevingen.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. Je bent zelf verantwoordelijk voor inhoud. Dit is geen archief, archievren doe je in een daarvoor ingerichte applicatie",
+      "explanationWhenRight": "Correct! Je bent zelf verantwoordelijk voor inhoud. Dit is geen archief, archievren doe je in een daarvoor ingerichte applicatie",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Digitaal Werken",
+      "questionText": "Binnen Eemsdelta is digitaal werken de norm.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. Digitaal werken is de basis van ons dagelijks werk.",
+      "explanationWhenRight": "Correct! Digitaal werken is de basis van ons dagelijks werk.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Opslag Projectinfo",
+      "questionText": "Projectinformatie mag buiten Teams worden opgeslagen.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist níet toegestaan of correct. Alles hoort in Teams, de informatie is van de organisatie.",
+      "explanationWhenRight": "Goed gedaan! Alles hoort in Teams, de informatie is van de organisatie.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Back-up vs Archief",
+      "questionText": "Een back-up is hetzelfde als archiveren.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist níet toegestaan of correct. Archiveren is een aparte verantwoordelijkheid. Backup is technisch een kopie , in een archief hangen kenmerken aan informatie die zorgen dat iets vindbaar is en volgens rgels wordt bewaard en eventueel vernbietigd",
+      "explanationWhenRight": "Goed gedaan! Archiveren is een aparte verantwoordelijkheid. Backup is technisch een kopie , in een archief hangen kenmerken aan informatie die zorgen dat iets vindbaar is en volgens rgels wordt bewaard en eventueel vernbietigd",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Teams vs ONEGOV",
+      "questionText": "Informatie in Teams hoeft nooit in ONEGOV",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist níet toegestaan of correct. Teams is geen archief, informatie die bij een zaak of zaakdossier hoort moet worden vastgelegd in de zaak.",
+      "explanationWhenRight": "Goed gedaan! Teams is geen archief, informatie die bij een zaak of zaakdossier hoort moet worden vastgelegd in de zaak.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Persoonsgegevens Opslag",
+      "questionText": "Je bewaart persoonsgegevens in Outlook of OneDrive.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist níet toegestaan of correct. Niet veilig en niet toegestaan.",
+      "explanationWhenRight": "Goed gedaan! Niet veilig en niet toegestaan.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Teams vs ONEGOV Rollen",
+      "questionText": "Teams is voor samenwerken en ONEGOV voor vastleggen",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. informatie die ontwikkeld wordt in samenwerkingen moet na of tijdens vatsstelling in OneGov worden opgenomen",
+      "explanationWhenRight": "Correct! informatie die ontwikkeld wordt in samenwerkingen moet na of tijdens vatsstelling in OneGov worden opgenomen",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    }
+  ],
+  "level2": [
     {
       "questionType": 1,
       "title": "Projectinformatie",
@@ -78,7 +211,588 @@
       "checkmarkLabel": "I have completed this task",
       "correctCheckmarkState": true,
       "explanationWhenWrong": "Dit mag niet. Het is niet toegestaan om informatie over projecten en programma's buiten Teams of op je eigen computer buiten het netwerk op te slaan.",
-      "explanationWhenRight": "Goed onthouden! Projectinformatie hoort áltijd in MS Teams te staan, zodat het direct voor iedereen toegankelijk én veilig is.",
+      "explanationWhenRight": "Goed onthouden. Projectinformatie hoort altijd in MS Teams te staan, zodat het voor iedereen toegankelijk en veilig is.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Collega’s mogen altijd in jouw",
+      "questionText": "Collega’s mogen altijd in jouw mailbox kijken.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist níet toegestaan of correct. Alleen bij uitzondering en toestemming.",
+      "explanationWhenRight": "Goed gedaan! Alleen bij uitzondering en toestemming.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Externe Communicatie",
+      "questionText": "Je wilt communiceren met inwoners of ondernemers via de gemeentelijke website. Wie helpt je hierbij?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Informatie Adviseur",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Team D&P",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Team Online",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Team Communicatie",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Voor advies en ondersteuning bij (online) communicatie met inwoners en ondernemers moet je altijd contact opnemen met team Communicatie.",
+      "explanationWhenRight": "Correct! Team Communicatie is er specifiek om te helpen bij externe uitingen.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Rol Ambtelijke Org.",
+      "questionText": "De ambtelijke organisatie ondersteunt het bestuur bij uitvoering van beleid.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit klopt wel. Lees de regels over digitaal werken nog eens door.",
+      "explanationWhenRight": "Helemaal goed! Je hebt dit correct beantwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Ambtenaren & Besluiten",
+      "questionText": "Ambtenaren nemen politieke besluiten.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist niet de juiste werkwijze. Lees de regels nog eens door.",
+      "explanationWhenRight": "Goed gedaan! Je weet dat dit niet de juiste werkwijze is.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Terminologie & Samenwerking",
+      "questionText": "Eenduidige terminologie helpt samenwerking",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. terminologie kan voor verwarring zorgen, in de werkafspraken staat dan ook hoe terminologie bedoelt wordt binnen Eemsdelta",
+      "explanationWhenRight": "Correct! terminologie kan voor verwarring zorgen, in de werkafspraken staat dan ook hoe terminologie bedoelt wordt binnen Eemsdelta",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Doel Werkafspraken",
+      "questionText": "Werkafspraken zijn bedoeld om mensen te controleren",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist níet toegestaan of correct. werkafspraken zijn er om samen te weten waar iets hoort en nieuwe collega's snel wegwijs te maken in de digitale omgeving",
+      "explanationWhenRight": "Goed gedaan! werkafspraken zijn er om samen te weten waar iets hoort en nieuwe collega's snel wegwijs te maken in de digitale omgeving",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "ONEGOV Doel",
+      "questionText": "ONEGOV is vooral bedoeld voor controle achteraf",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist níet toegestaan of correct. OneGov is het zaakgericht werken vanaf de aanvraag is de informatie hier te vinden. De zaak start idrect in het systeem .",
+      "explanationWhenRight": "Goed gedaan! OneGov is het zaakgericht werken vanaf de aanvraag is de informatie hier te vinden. De zaak start idrect in het systeem .",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Werkafspraken Nut",
+      "questionText": "Werkafspraken voorkomen versnippering van informatie",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. transparantie en duidelijkheid over wie wat waar wanneer en hoe helpt bij taakuitvoering.",
+      "explanationWhenRight": "Correct! transparantie en duidelijkheid over wie wat waar wanneer en hoe helpt bij taakuitvoering.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Goede vastlegging helpt colleg",
+      "questionText": "Goede vastlegging helpt collega’s die werk overnemen",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. samenwerken op de juiste plek zorgt voor de juiste rechten voor de collega's zonder dat dat per geval aangepast moet worden",
+      "explanationWhenRight": "Correct! samenwerken op de juiste plek zorgt voor de juiste rechten voor de collega's zonder dat dat per geval aangepast moet worden",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Dossiers & Nieuwsgierigheid",
+      "questionText": "Je mag dossiers openen uit nieuwsgierigheid",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist níet toegestaan of correct. je hebt toegang tot veel informatie als ambtenaar, je bent integer en bekijkt alleen de informatie die je nodig hebt voor je eigen taak",
+      "explanationWhenRight": "Goed gedaan! je hebt toegang tot veel informatie als ambtenaar, je bent integer en bekijkt alleen de informatie die je nodig hebt voor je eigen taak",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Eigen Apparaten",
+      "questionText": "Eigen apparaten gebruiken mag soms wel.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist níet toegestaan of correct. Alleen met gemeentelijke middelen kun je toegang krijgen tot de informatie van de gemeente.",
+      "explanationWhenRight": "Goed gedaan! Alleen met gemeentelijke middelen kun je toegang krijgen tot de informatie van de gemeente.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Privéchat & Besluiten",
+      "questionText": "Privéchat is geschikt voor besluiten",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist níet toegestaan of correct. informatie uit privechat kan belangrijk zijn voor besluitvorming, het moet dan aan de juiste zaak  worden toegevoegd",
+      "explanationWhenRight": "Goed gedaan! informatie uit privechat kan belangrijk zijn voor besluitvorming, het moet dan aan de juiste zaak  worden toegevoegd",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Samenwerken betekent dat infor",
+      "questionText": "Samenwerken betekent dat informatie vindbaar is voor collega’s",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit klopt wel. Lees de regels over digitaal werken nog eens door.",
+      "explanationWhenRight": "Helemaal goed! Je hebt dit correct beantwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Informatie Buiten Netwerk",
+      "questionText": "Gemeente-informatie bewaar je nooit buiten het netwerk.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. dit verkleint de kans op datalekken.",
+      "explanationWhenRight": "Correct! dit verkleint de kans op datalekken.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Veilige Mail",
+      "questionText": "Persoonsgegevens deel je niet via onbeveiligde mail.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. Bescherm inwoners mail geen gevoelige gegevens.",
+      "explanationWhenRight": "Correct! Bescherm inwoners mail geen gevoelige gegevens.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Mail naar ONEGOV",
+      "questionText": "E-mailaanvragen moeten ook in ONEGOV worden opgenomen.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. Zaakgericht werken betekent dat proces van aanvraag tot resultaat in een applicatie bij elkaar hoort.",
+      "explanationWhenRight": "Correct! Zaakgericht werken betekent dat proces van aanvraag tot resultaat in een applicatie bij elkaar hoort.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Inloggegevens Delen",
+      "questionText": "Je deelt je inloggegevens nooit.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. Basisregel informatieveiligheid.",
+      "explanationWhenRight": "Correct! Basisregel informatieveiligheid.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Dossiers Inzien",
+      "questionText": "Je mag dossiers bekijken als je nieuwsgierig bent.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist níet toegestaan of correct. Alleen need-to-know. Je gaat integer om met de aan jou beschikbaar gestelde informatie.",
+      "explanationWhenRight": "Goed gedaan! Alleen need-to-know. Je gaat integer om met de aan jou beschikbaar gestelde informatie.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Werkafspraken & Vrijheid",
+      "questionText": "Werkafspraken beperken professionele ruimte volledig.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist niet de juiste werkwijze. Lees de regels nog eens door.",
+      "explanationWhenRight": "Goed gedaan! Je weet dat dit niet de juiste werkwijze is.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Organisatiekennis",
+      "questionText": "Organisatiekennis helpt om je werk effectiever te doen.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit klopt wel. Lees de regels over digitaal werken nog eens door.",
+      "explanationWhenRight": "Helemaal goed! Je hebt dit correct beantwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Organisatiewaarden",
+      "questionText": "Waarden zijn alleen bedoeld voor externe communicatie.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist niet de juiste werkwijze. Lees de regels nog eens door.",
+      "explanationWhenRight": "Goed gedaan! Je weet dat dit niet de juiste werkwijze is.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Politieke Sensitiviteit",
+      "questionText": "Politieke sensitiviteit is alleen relevant voor managers.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist niet de juiste werkwijze. Lees de regels nog eens door.",
+      "explanationWhenRight": "Goed gedaan! Je weet dat dit niet de juiste werkwijze is.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Grenzen Samenwerking",
+      "questionText": "Samenwerken stopt bij de grenzen van je eigen team.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist niet de juiste werkwijze. Lees de regels nog eens door.",
+      "explanationWhenRight": "Goed gedaan! Je weet dat dit niet de juiste werkwijze is.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Doelgroep Dienstverlening",
+      "questionText": "Dienstverlening richt zich alleen op inwoners.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist niet de juiste werkwijze. Lees de regels nog eens door.",
+      "explanationWhenRight": "Goed gedaan! Je weet dat dit niet de juiste werkwijze is.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Vastlegging helpt bij continuï",
+      "questionText": "Vastlegging helpt bij continuïteit wanneer collega’s wisselen.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit klopt wel. Lees de regels over digitaal werken nog eens door.",
+      "explanationWhenRight": "Helemaal goed! Je hebt dit correct beantwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Ambtelijke Neutraliteit",
+      "questionText": "De ambtelijke organisatie is neutraal en professioneel.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit klopt wel. Lees de regels over digitaal werken nog eens door.",
+      "explanationWhenRight": "Helemaal goed! Je hebt dit correct beantwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Ieders Bijdrage",
+      "questionText": "Iedere medewerker draagt bij aan het functioneren van de organisatie.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit klopt wel. Lees de regels over digitaal werken nog eens door.",
+      "explanationWhenRight": "Helemaal goed! Je hebt dit correct beantwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Teams: Kanaal Definitie",
+      "questionText": "Wat is een kanaal in Teams?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Privéchat",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Extern communicatiemiddel",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Thematische plek binnen een Team",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Archief",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Thematische plek binnen een Team\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Thematische plek binnen een Team\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Teams: Team Definitie",
+      "questionText": "Wat is binnen Teams een Team?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Een losse chat",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Een map op OneDrive",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Een samenwerkingsomgeving voor een project of team",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Een gedeelde mailbox",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Een samenwerkingsomgeving voor een project of team\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Een samenwerkingsomgeving voor een project of team\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Teams Werkafspraak",
+      "questionText": "Wat is een goede Teams-werkafspraak?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Alleen vergaderen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alles privéchat",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Overleg in juiste kanaal",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Alles per mail",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Overleg in juiste kanaal\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Overleg in juiste kanaal\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Bestandsnamen Belang",
+      "questionText": "Waarom zijn duidelijke bestandsnamen belangrijk?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Privacy",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Huisstijl",
+          "isCorrect": false
+        },
+        {
+          "answerText": "ICT vereiste",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Vindbaarheid en duurzaamheid",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Vindbaarheid en duurzaamheid\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Vindbaarheid en duurzaamheid\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Intranet Berichten",
+      "questionText": "Wie helpt bij het plaatsen van organisatiebrede intranetberichten?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Team Communicatie",
+          "isCorrect": false
+        },
+        {
+          "answerText": "FG",
+          "isCorrect": false
+        },
+        {
+          "answerText": "ICT",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Team Online",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Team Online\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Team Online\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Teams vs E-mail",
+      "questionText": "Wat is een voordeel van Teams t.o.v. e-mail?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Informatie is transparant vindbaar voor het hele team",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Geen vastlegging nodig",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Berichten verdwijnen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Informeler werken",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Informatie is transparant vindbaar voor het hele team\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Informatie is transparant vindbaar voor het hele team\" is het juiste antwoord.",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
@@ -87,19 +801,341 @@
   "level3": [
     {
       "questionType": 0,
-      "title": "Nieuwe Software Nodig",
-      "questionText": "Je komt erachter dat je voor je werk een nieuwe digitale oplossing nodig hebt die de huidige systemen niet bieden. Wat is de eerste stap?",
+      "title": "Wat betekent ‘één digitale waa",
+      "questionText": "Wat betekent ‘één digitale waarheid’?",
       "multipleChoiceOptions": [
-        { "answerText": "1. Zelf licentie kopen", "isCorrect": false },
-        { "answerText": "2. Eigen Excel maken", "isCorrect": false },
-        { "answerText": "3. Contact opnemen met informatie adviseur", "isCorrect": true },
-        { "answerText": "4. Team Communicatie vragen", "isCorrect": false }
+        {
+          "answerText": "We printen alles",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Iedereen bewaart eigen versie",
+          "isCorrect": false
+        },
+        {
+          "answerText": "We sturen bijlagen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Door links te delen voorkom je versie-chaos",
+          "isCorrect": true
+        }
       ],
       "correctTrueFalseAnswer": false,
       "checkmarkLabel": "I have completed this task",
       "correctCheckmarkState": true,
-      "explanationWhenWrong": "Je mag geen losse administraties of eigen Excelbestanden aanleggen. Neem altijd contact op met de informatie adviseur.",
-      "explanationWhenRight": "Klopt helemaal! De informatie adviseur kijkt of we al zoiets hebben en helpt direct met privacy, architectuur en veiligheid.",
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Door links te delen voorkom je versie-chaos\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Door links te delen voorkom je versie-chaos\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Projectinfo Locatie",
+      "questionText": "Waar hoort projectinformatie?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "In Teams",
+          "isCorrect": true
+        },
+        {
+          "answerText": "In OneDrive",
+          "isCorrect": false
+        },
+        {
+          "answerText": "In mailbox",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Op pc",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"In Teams\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"In Teams\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "E-mails Opslaan",
+      "questionText": "Waar sla je zaak-gerelateerde e-mails op?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "In Outlook",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Op pc",
+          "isCorrect": false
+        },
+        {
+          "answerText": "In ONEGOV/Vakapllicatie in de juiste zaak",
+          "isCorrect": true
+        },
+        {
+          "answerText": "In OneDrive",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"In ONEGOV/Vakapllicatie in de juiste zaak\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"In ONEGOV/Vakapllicatie in de juiste zaak\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Toegang Mailbox",
+      "questionText": "Wanneer mag toegang tot een mailbox?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Nooit",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Altijd",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Bij uitzondering met toestemming van de manager",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Bij vakantie",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Bij uitzondering met toestemming van de manager\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Bij uitzondering met toestemming van de manager\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Intern Kanaal",
+      "questionText": "Wat is juiste kanaal voor het uitwisselen van interne algemene informatie?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "WhatsApp",
+          "isCorrect": false
+        },
+        {
+          "answerText": "USB",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Privé mail",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Intranet",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Intranet\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Intranet\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Communicatie Afstemmen",
+      "questionText": "Met wie stem je interne en externe communicatie af?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Team Online",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Team D&P",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Een communicatie adviseur van Team Communicatie",
+          "isCorrect": true
+        },
+        {
+          "answerText": "ICT",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Een communicatie adviseur van Team Communicatie\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Een communicatie adviseur van Team Communicatie\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Hulp Digitaal Werken",
+      "questionText": "Wie helpt bij vragen over digitaal samenwerken?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "FG",
+          "isCorrect": false
+        },
+        {
+          "answerText": "ICT",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Communicatie",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Team D&P",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Team D&P\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Team D&P\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Hoe start je een project?",
+      "questionText": "Hoe start je een project?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Mail rond",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Map maken",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Excel",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Team aanmaken via Teamwork",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Team aanmaken via Teamwork\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Team aanmaken via Teamwork\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Gedeelde Mailboxen",
+      "questionText": "Wat is beleid voor gedeelde mailboxen?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Verboden",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen managers",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Zo veel mogelijk verminderen",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Altijd gebruiken",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Zo veel mogelijk verminderen\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Zo veel mogelijk verminderen\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Excel-lijstjes Risico",
+      "questionText": "Waarom zijn eigen Excel-lijstjes risicovol?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Excel werkt niet",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Excel is openbaar",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Privacy en beveiliging zijn niet geborgd",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Excel is verboden",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Privacy en beveiliging zijn niet geborgd\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Privacy en beveiliging zijn niet geborgd\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Systeem Niet Passend",
+      "questionText": "Wat doe je als een systeem niet past bij een proces?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Zelf iets bouwen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alles mailen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Niets doen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Contact opnemen met informatie-adviseur",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Contact opnemen met informatie-adviseur\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Contact opnemen met informatie-adviseur\" is het juiste antwoord.",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
@@ -113,26 +1149,38 @@
       "checkmarkLabel": "I have completed this task",
       "correctCheckmarkState": true,
       "explanationWhenWrong": "Je mag uitsluitend dossiers raadplegen waarbij je inhoudelijk betrokken bent en die noodzakelijk zijn voor je werk.",
-      "explanationWhenRight": "Zeer goed geantwoord. Privacy staat voorop: open alleen dossiers als je er zelf daadwerkelijk inhoudelijk aan meewerkt.",
+      "explanationWhenRight": "Zeer goed! Privacy is belangrijk. Open alleen dossiers als je er zelf inhoudelijk aan meewerkt.",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
     },
     {
       "questionType": 0,
-      "title": "Interne Communicatie",
-      "questionText": "Je wilt een algemeen bericht of informatie delen met de hele organisatie via het intranet. Aan wie vraag je hulp?",
+      "title": "Gedeelde Mailboxen",
+      "questionText": "Wat is het beleid van de gemeente Eemsdelta met betrekking tot gedeelde e-mailaccounts?",
       "multipleChoiceOptions": [
-        { "answerText": "1. Team Communicatie", "isCorrect": false },
-        { "answerText": "2. Team Online", "isCorrect": true },
-        { "answerText": "3. Team D&P", "isCorrect": false },
-        { "answerText": "4. Informatie Adviseur", "isCorrect": false }
+        {
+          "answerText": "Verplicht voor extern",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Standaard manier van werken",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Na 3 maanden verwijderd",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Gebruik zoveel mogelijk verminderen",
+          "isCorrect": true
+        }
       ],
       "correctTrueFalseAnswer": false,
       "checkmarkLabel": "I have completed this task",
       "correctCheckmarkState": true,
-      "explanationWhenWrong": "Team Online is verantwoordelijk voor het intranet en helpt je om berichten op het juiste moment binnen de organisatie te publiceren.",
-      "explanationWhenRight": "Juist! Team Online is de beheerder van het intranet en regelt al onze interne communicatie.",
+      "explanationWhenWrong": "De gemeente wil het gebruik van gedeelde e-mailaccounts zoveel mogelijk verminderen. Zoek naar een oplossing in ONEGOV.",
+      "explanationWhenRight": "Correct. We werken liever via het zaaksysteem (ONEGOV) om samen te werken en overzicht te houden.",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
@@ -146,26 +1194,999 @@
       "checkmarkLabel": "I have completed this task",
       "correctCheckmarkState": true,
       "explanationWhenWrong": "OneDrive en Outlook zijn persoonlijk. Alleen met expliciete toestemming van het management mag toegang worden verleend tot andermans bestanden.",
-      "explanationWhenRight": "Helemaal waar. Bestanden zijn strikt persoonlijk. Alleen in extreme gevallen, mét goedkeuring van het management, mag er in andermans OneDrive gekeken worden.",
+      "explanationWhenRight": "Helemaal waar. Alleen in extreme gevallen en met goedkeuring van het management mag er in persoonlijke bestanden gekeken worden.",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
     },
     {
       "questionType": 0,
-      "title": "Gedeelde Mailboxen",
-      "questionText": "Wat is het beleid van de gemeente Eemsdelta met betrekking tot gedeelde e-mailaccounts?",
+      "title": "Nieuwe Software Nodig",
+      "questionText": "Je komt erachter dat je voor je werk een nieuwe digitale oplossing nodig hebt die de huidige systemen niet bieden. Wat is de eerste stap?",
       "multipleChoiceOptions": [
-        { "answerText": "1. Standaard manier van werken", "isCorrect": false },
-        { "answerText": "2. Gebruik zoveel mogelijk verminderen", "isCorrect": true },
-        { "answerText": "3. Na 3 maanden verwijderd", "isCorrect": false },
-        { "answerText": "4. Verplicht voor extern", "isCorrect": false }
+        {
+          "answerText": "Eigen Excel maken",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Team Communicatie vragen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Zelf licentie kopen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Contact opnemen met informatie adviseur",
+          "isCorrect": true
+        }
       ],
       "correctTrueFalseAnswer": false,
       "checkmarkLabel": "I have completed this task",
       "correctCheckmarkState": true,
-      "explanationWhenWrong": "De gemeente wil het gebruik van gedeelde e-mailaccounts zoveel mogelijk verminderen. Zoek naar een oplossing in ONEGOV.",
-      "explanationWhenRight": "Heel scherp. We werken veel liever via het zaaksysteem (ONEGOV) om overzicht te houden en effectiever samen te werken.",
+      "explanationWhenWrong": "Je mag geen losse administraties of eigen Excelbestanden aanleggen. Neem altijd contact op met de informatie adviseur.",
+      "explanationWhenRight": "Klopt! De informatie adviseur kijkt of we al zoiets hebben en helpt met privacy, architectuur en veiligheid.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Interne Communicatie",
+      "questionText": "Je wilt een algemeen bericht of informatie delen met de hele organisatie via het intranet. Aan wie vraag je hulp?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Team Communicatie",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Team Online",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Informatie Adviseur",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Team D&P",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Team Online is verantwoordelijk voor het intranet en helpt je om berichten op het juiste moment binnen de organisatie te publiceren.",
+      "explanationWhenRight": "Juist! Team Online beheert het intranet voor al onze interne communicatie.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Wat betekent ‘need-to-know’?",
+      "questionText": "Wat betekent ‘need-to-know’?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Je bekijkt alleen informatie die nodig is voor je werk",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Je mag alles bekijken",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Je kijkt als collega het ook ziet",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Je kijkt later wel",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Je bekijkt alleen informatie die nodig is voor je werk\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Je bekijkt alleen informatie die nodig is voor je werk\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Wat betekent ‘één organisatie,",
+      "questionText": "Wat betekent ‘één organisatie, één verhaal’?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Geen ruimte voor verschillen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen communicatie-afdeling",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Iedereen communiceert hetzelfde",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Afstemming en consistent handelen",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Afstemming en consistent handelen\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Afstemming en consistent handelen\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Vastleggen Afspraken",
+      "questionText": "Waarom is vastleggen van afspraken belangrijk?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Voor archief",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Voor overdraagbaarheid en transparantie",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Omdat het moet",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Voor controle alleen",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Voor overdraagbaarheid en transparantie\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Voor overdraagbaarheid en transparantie\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Organisatiewaarden",
+      "questionText": "Waarom zijn organisatiewaarden belangrijk?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Voor rapportages",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Ze geven richting aan gedrag en keuzes",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Voor externe controle",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen voor imago",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Ze geven richting aan gedrag en keuzes\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Ze geven richting aan gedrag en keuzes\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Samenwerken Uitgangspunt",
+      "questionText": "Wat is een belangrijk uitgangspunt bij samenwerken binnen de organisatie?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Duidelijke werkafspraken en rolduidelijkheid",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Alles informeel houden",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Geen vastlegging",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Iedereen werkt individueel",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Duidelijke werkafspraken en rolduidelijkheid\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Duidelijke werkafspraken en rolduidelijkheid\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Doel Jaarplannen",
+      "questionText": "Wat is het doel van jaarplannen?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Verantwoording achteraf",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Controle door de provincie",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Persoonlijke planning",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Vertalen van bestuurlijke doelen naar uitvoering",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Vertalen van bestuurlijke doelen naar uitvoering\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Vertalen van bestuurlijke doelen naar uitvoering\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Primaire Opdrachtgever",
+      "questionText": "Voor wie werkt de ambtelijke organisatie primair?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Voor de gemeenteraad",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Voor de provincie",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Voor het college van B&W",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Voor de griffie",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Voor het college van B&W\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Voor het college van B&W\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Wat wordt bedoeld met ‘dienstv",
+      "questionText": "Wat wordt bedoeld met ‘dienstverlening’ binnen de gemeente?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Alle contacten en diensten voor inwoners en bedrijven",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Alleen communicatie",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen vergunningverlening",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen digitale loketten",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Alle contacten en diensten voor inwoners en bedrijven\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Alle contacten en diensten voor inwoners en bedrijven\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Teams: Privékanaal",
+      "questionText": "Wanneer gebruik je een privékanaal?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Bij volledig vertrouwelijke info",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Altijd",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Nooit",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Bij informatie voor beperkte groep binnen een Team",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Bij informatie voor beperkte groep binnen een Team\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Bij informatie voor beperkte groep binnen een Team\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Taak Gemeente",
+      "questionText": "Wat is de primaire taak van een gemeentelijke organisatie?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Alleen beleid schrijven",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Uitvoeren van wettelijke taken en dienstverlening aan inwoners",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Politieke beslissingen nemen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Winst maken",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Uitvoeren van wettelijke taken en dienstverlening aan inwoners\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Uitvoeren van wettelijke taken en dienstverlening aan inwoners\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Wat betekent ‘steller heeft re",
+      "questionText": "Wat betekent ‘steller heeft regie’?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Archiveert niet",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Schrijft alleen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Bewaakt voortgang en routing",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Mag alles beslissen",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Bewaakt voortgang en routing\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Bewaakt voortgang en routing\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Vastleggen in ONEGOV",
+      "questionText": "Wanneer leg je info vast in ONEGOV?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Bij controle",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Zodra informatie relevant is",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Alleen aan het eind",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Na besluit",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Zodra informatie relevant is\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Zodra informatie relevant is\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Samenwerken & Afspraken",
+      "questionText": "Wat is samenwerken volgens werkafspraken?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Iedereen eigen werkwijze",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Afspraken volgen en juiste tools gebruiken",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Zo min mogelijk vastleggen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen managers maken afspraken",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Afspraken volgen en juiste tools gebruiken\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Afspraken volgen en juiste tools gebruiken\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Wat betekent het begrip ‘polit",
+      "questionText": "Wat betekent het begrip ‘politieke sensitiviteit’ voor ambtenaren?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Alleen uitvoeren wat is opgedragen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Bewust zijn van politieke context en gevolgen van handelen",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Altijd politiek bedrijven",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Politieke voorkeur uitspreken",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Bewust zijn van politieke context en gevolgen van handelen\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Bewust zijn van politieke context en gevolgen van handelen\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Mandatering",
+      "questionText": "Wat is mandatering binnen de organisatie?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Besluiten nemen zonder verantwoordelijkheid",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Besluiten laten nemen door de raad",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Taken uitbesteden",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Bevoegdheden laag in de organisatie leggen",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Bevoegdheden laag in de organisatie leggen\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Bevoegdheden laag in de organisatie leggen\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Onderzoek Voorwaarden",
+      "questionText": "Wanneer kan onderzoek plaatsvinden?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Op verzoek collega",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Bij vermoeden en onder strikte voorwaarden",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Nooit",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Altijd",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Bij vermoeden en onder strikte voorwaarden\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Bij vermoeden en onder strikte voorwaarden\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Voortgang Voorstel",
+      "questionText": "Wie bewaakt de voortgang van een voorstel in OneGov?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "De griffie",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Team Online",
+          "isCorrect": false
+        },
+        {
+          "answerText": "De steller",
+          "isCorrect": true
+        },
+        {
+          "answerText": "ICT",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"De steller\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"De steller\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Zaakgericht Werken Doel",
+      "questionText": "Wat is het belangrijkste doel van zaakgericht werken in ONEGOV?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Sneller e-mailen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Een compleet, vindbaar en overdraagbaar dossier",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Minder Teams gebruiken",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Zo min mogelijk administratie",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Een compleet, vindbaar en overdraagbaar dossier\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Een compleet, vindbaar en overdraagbaar dossier\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Vraag bij Persoonsgegevens",
+      "questionText": "Welke vraag stel je bij persoonsgegevens?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Is dit echt nodig?",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Kan het handig zijn?",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Wie kan dit zien?",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Is het interessant?",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Is dit echt nodig?\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Is dit echt nodig?\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Netwerkactiviteit Gevolg",
+      "questionText": "Wat kan gebeuren bij opvallende netwerkactiviteit?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Niets",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Openbaarmaking",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Account tijdelijk geblokkeerd",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Ontslag",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Account tijdelijk geblokkeerd\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Account tijdelijk geblokkeerd\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Informatiebeveiliging",
+      "questionText": "Belangrijke veiligheidsregel?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Wachtwoord mag je delen delen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "USB gebruik",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Privé laptop is toegestaan",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Werk met eigen account",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Werk met eigen account\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Werk met eigen account\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Gegevens Extern",
+      "questionText": "Wanneer verstrek je gegevens aan externe partijen?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Nooit",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen rechtmatig en goedgekeurd",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Altijd",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Bij spoed",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Alleen rechtmatig en goedgekeurd\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Alleen rechtmatig en goedgekeurd\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Contactmoment ONEGOV",
+      "questionText": "Wanneer voeg je een contactmoment met een inwoner toe aan ONEGOV?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Bij relevante contacten die horen bij een zaak",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Alleen als de inwoner dat vraagt",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen bij klachten",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen bij formele besluiten",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Bij relevante contacten die horen bij een zaak\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Bij relevante contacten die horen bij een zaak\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Belang Archiveren",
+      "questionText": "Waarom is archiveren belangrijk?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Minder mail",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Opslag besparen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen wet",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Woo, verantwoording, privacy",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Woo, verantwoording, privacy\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Woo, verantwoording, privacy\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Archiveren Vraag",
+      "questionText": "Welke vraag hoort bij archiveren?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Wie heeft dit gemaakt?",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Moet ik dit mailen?",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Waar vind ik dit later terug?",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Is dit oud?",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Waar vind ik dit later terug?\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Waar vind ik dit later terug?\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Aanvragen per Mail",
+      "questionText": "Wat doe je met aanvragen per mail?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Doorsturen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Printen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Laten staan",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Melden bij D&P voor ONEGOV",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Melden bij D&P voor ONEGOV\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Melden bij D&P voor ONEGOV\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Projectvoortgang Locatie",
+      "questionText": "Waar bespreek je projectvoortgang?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "E-mail",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Teams-kanaal kanaalberichten",
+          "isCorrect": true
+        },
+        {
+          "answerText": "WhatsApp",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Persoonlijk document",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Teams-kanaal kanaalberichten\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Teams-kanaal kanaalberichten\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Formele Documenten",
+      "questionText": "Wat doe je met formeel relevante documenten uit samenwerkingen?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Printen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "In persoonlijke OneDrive",
+          "isCorrect": false
+        },
+        {
+          "answerText": "In Teams laten staan",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Toevoegen aan zaakdossier in ONEGOV",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Toevoegen aan zaakdossier in ONEGOV\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Toevoegen aan zaakdossier in ONEGOV\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "ONEGOV Gebruik",
+      "questionText": "Waarvoor gebruik je ONEGOV?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Intranet",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Chat",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Vragen/verzoeken/zaakdossiers",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Uren registreren",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Vragen/verzoeken/zaakdossiers\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Vragen/verzoeken/zaakdossiers\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "ONEGOV Registratie",
+      "questionText": "Wat registreert ONEGOV?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Dossier- en raadplegingen",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Alleen login",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Documentnamen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "E-mail",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Dossier- en raadplegingen\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Dossier- en raadplegingen\" is het juiste antwoord.",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
@@ -177,16 +2198,28 @@
       "title": "Collegevoorstellen",
       "questionText": "Wie is er verantwoordelijk voor dat een collegevoorstel op tijd door de juiste personen wordt behandeld?",
       "multipleChoiceOptions": [
-        { "answerText": "1. Het college van B&W", "isCorrect": false },
-        { "answerText": "2. De griffie", "isCorrect": false },
-        { "answerText": "3. Team D&P", "isCorrect": false },
-        { "answerText": "4. De steller van het voorstel", "isCorrect": true }
+        {
+          "answerText": "Team D&P",
+          "isCorrect": false
+        },
+        {
+          "answerText": "De griffie",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Het college van B&W",
+          "isCorrect": false
+        },
+        {
+          "answerText": "De steller van het voorstel",
+          "isCorrect": true
+        }
       ],
       "correctTrueFalseAnswer": false,
       "checkmarkLabel": "I have completed this task",
       "correctCheckmarkState": true,
       "explanationWhenWrong": "De steller van het voorstel heeft de regie en is verantwoordelijk voor een tijdige behandeling. Je moet het proces volgen in ONEGOV.",
-      "explanationWhenRight": "Precies! Als steller ben jíj de regisseur. Jij zorgt ervoor dat het voorstel tijdig door het hele proces wordt geloodst.",
+      "explanationWhenRight": "Precies! Als steller heb jij de regie om het voorstel tijdig door het hele proces te loodsen.",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
@@ -200,7 +2233,7 @@
       "checkmarkLabel": "I have completed this task",
       "correctCheckmarkState": true,
       "explanationWhenWrong": "Hoewel er back-ups worden gemaakt, telt dit niet als formeel archiveren. Je bent zelf verantwoordelijk om informatie actief over te zetten.",
-      "explanationWhenRight": "Spot on. Een back-up is zeker geen archief. Je moet belangrijke stukken altijd zelf actief overzetten naar ONEGOV of een vakapplicatie.",
+      "explanationWhenRight": "Heel goed. Een back-up is geen archief. Belangrijke documenten moet je actief naar ONEGOV of een vakapplicatie overzetten.",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
@@ -210,16 +2243,270 @@
       "title": "Fysieke Inkomende Post",
       "questionText": "Wat gebeurt er met meldingen en verzoeken van inwoners die nog via de ouderwetse fysieke post binnenkomen?",
       "multipleChoiceOptions": [
-        { "answerText": "1. Naar bureau behandelaar", "isCorrect": false },
-        { "answerText": "2. Gescand, in ONEGOV gezet, na 3 maanden vernietigd", "isCorrect": true },
-        { "answerText": "3. Niet in behandeling genomen", "isCorrect": false },
-        { "answerText": "4. Origineel in kluis", "isCorrect": false }
+        {
+          "answerText": "Gescand, in ONEGOV gezet, na 3 maanden vernietigd",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Niet in behandeling genomen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Naar bureau behandelaar",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Origineel in kluis",
+          "isCorrect": false
+        }
       ],
       "correctTrueFalseAnswer": false,
       "checkmarkLabel": "I have completed this task",
       "correctCheckmarkState": true,
       "explanationWhenWrong": "Alle inkomende post wordt gescand en digitaal via ONEGOV aangeboden. Het originele papier wordt na 3 maanden vernietigd.",
-      "explanationWhenRight": "Juist! Alles wordt keurig gescand en gaat digitaal de organisatie in via ONEGOV, waarna het papier veilig wordt vernietigd.",
+      "explanationWhenRight": "Juist. Na het scannen gaat het digitaal de organisatie in via ONEGOV en wordt het papier vernietigd.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Integraal Samenwerken",
+      "questionText": "Wat is integraal samenwerken?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Samenwerken over teams en disciplines heen",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Samenwerken binnen één team",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen samenwerken met externe partners",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Informeel overleg",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Samenwerken over teams en disciplines heen\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Samenwerken over teams en disciplines heen\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Archiveren by Design",
+      "questionText": "Wat betekent archiveren by design?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Archivering meenemen bij ontwerp van processen",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Achteraf Archiveren",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen DIV Archiveert",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen papieren archief",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Archivering meenemen bij ontwerp van processen\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Archivering meenemen bij ontwerp van processen\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Woo Vereisten",
+      "questionText": "Wat vraagt Woo van ons?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Meer mail",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Niets",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Goede informatiehuishouding",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Alleen papier",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Goede informatiehuishouding\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Goede informatiehuishouding\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Duurzame Toegankelijkheid",
+      "questionText": "Wat betekent duurzaam toegankelijk?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Alleen veilig",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen vindbaar",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Vindbaar, leesbaar, betrouwbaar",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Alleen digitaal",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Vindbaar, leesbaar, betrouwbaar\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Vindbaar, leesbaar, betrouwbaar\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "AVG Twijfel",
+      "questionText": "Wat doe je bij AVG-twijfel?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Melden bij leidinggevende/PO/FG",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Zelf oplossen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Verwijderen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Niets",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Melden bij leidinggevende/PO/FG\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Melden bij leidinggevende/PO/FG\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Integraal Samenwerken",
+      "questionText": "Integraal samenwerken draagt bij aan betere oplossingen.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit klopt wel. Lees de regels over digitaal werken nog eens door.",
+      "explanationWhenRight": "Helemaal goed! Je hebt dit correct beantwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Rollen & Samenwerking",
+      "questionText": "Goede samenwerking vraagt om duidelijke rollen en verantwoordelijkheden.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit klopt wel. Lees de regels over digitaal werken nog eens door.",
+      "explanationWhenRight": "Helemaal goed! Je hebt dit correct beantwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Mandaatbesluiten",
+      "questionText": "Mandaatbesluiten worden altijd door het college genomen.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is juist niet de juiste werkwijze. Lees de regels nog eens door.",
+      "explanationWhenRight": "Goed gedaan! Je weet dat dit niet de juiste werkwijze is.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "AVG & Archieven",
+      "questionText": "Persoonsgegevens in archieven moeten te verantwoorden zijn.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. AVG verplicht dit.",
+      "explanationWhenRight": "Correct! AVG verplicht dit.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "De Route van Raadsvoorstellen",
+      "questionText": "Hoe verloopt de procedure in ONEGOV als je een voorstel hebt dat door de gemeenteraad besproken moet worden?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Mailen als PDF",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Eerst een collegevoorstel maken",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Op intranet plaatsen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Naar de griffie sturen",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Het college doet formeel een voorstel aan de gemeenteraad. Je moet dus altijd eerst een collegevoorstel maken.",
+      "explanationWhenRight": "Helemaal goed. Eerst het college, daarna via een nieuwe zaak naar de raad.",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
@@ -233,26 +2520,266 @@
       "checkmarkLabel": "Ik begrijp dat ik Xential sjablonen in ONEGOV moet gebruiken.",
       "correctCheckmarkState": true,
       "explanationWhenWrong": "Door de Xential sjablonen in ONEGOV te gebruiken, weet je zeker dat de huisstijl klopt en de brief veilig is opgeslagen.",
-      "explanationWhenRight": "Mooi werk! Xential garandeert namelijk dat alles automatisch in de correcte huisstijl wordt opgemaakt én veilig bewaard blijft.",
+      "explanationWhenRight": "Mooi! Xential zorgt ervoor dat alles automatisch in de juiste huisstijl is en veilig bewaard wordt.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "AVG Naleving",
+      "questionText": "De gemeente volgt de AVG.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. Privacy is wettelijk verplicht.",
+      "explanationWhenRight": "Correct! Privacy is wettelijk verplicht.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Archiveren & Verantwoordelijkheid",
+      "questionText": "Archiveren is ieders verantwoordelijkheid.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. Niet alleen van D&P. Iedereen is archivaris, alle informatie van aanvraag tot resultaat kan van belang zijn voor verantwoording",
+      "explanationWhenRight": "Correct! Niet alleen van D&P. Iedereen is archivaris, alle informatie van aanvraag tot resultaat kan van belang zijn voor verantwoording",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Archiefwet Vernietigen",
+      "questionText": "De Archiefwet verplicht ook tot vernietigen.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit is wel degelijk zo. Privacybescherming. Het is belangrijk de bewaartermijnen in acht te nemen en  ook om de te vernietigen informatie te vernietigen .",
+      "explanationWhenRight": "Correct! Privacybescherming. Het is belangrijk de bewaartermijnen in acht te nemen en  ook om de te vernietigen informatie te vernietigen .",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
     },
     {
       "questionType": 0,
-      "title": "De Route van Raadsvoorstellen",
-      "questionText": "Hoe verloopt de procedure in ONEGOV als je een voorstel hebt dat door de gemeenteraad besproken moet worden?",
+      "title": "Privacybeleid Vastgesteld",
+      "questionText": "Wie stelde privacybeleid vast?",
       "multipleChoiceOptions": [
-        { "answerText": "1. Naar de griffie sturen", "isCorrect": false },
-        { "answerText": "2. Eerst een collegevoorstel maken", "isCorrect": true },
-        { "answerText": "3. Op intranet plaatsen", "isCorrect": false },
-        { "answerText": "4. Mailen als PDF", "isCorrect": false }
+        {
+          "answerText": "College van B&W",
+          "isCorrect": true
+        },
+        {
+          "answerText": "FG",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Provincie",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Team Online",
+          "isCorrect": false
+        }
       ],
       "correctTrueFalseAnswer": false,
       "checkmarkLabel": "I have completed this task",
       "correctCheckmarkState": true,
-      "explanationWhenWrong": "Het college doet formeel een voorstel aan de gemeenteraad. Je moet dus altijd eerst een collegevoorstel maken.",
-      "explanationWhenRight": "Helemaal goed. Het loopt altijd eerst via het college, en stroomt daarna via een nieuwe zaak soepel door naar de raad.",
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"College van B&W\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"College van B&W\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "AVG Bewaarregels",
+      "questionText": "Welke AVG-regel is leidend voor bewaren van privacy gevoelige informatie?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Onbeperkt bewaren",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Vrij delen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alles verzamelen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen noodzakelijke gegevens",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Alleen noodzakelijke gegevens\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Alleen noodzakelijke gegevens\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Eindverantwoordelijkheid",
+      "questionText": "Wie is eindverantwoordelijk voor de ambtelijke organisatie?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "De griffier",
+          "isCorrect": false
+        },
+        {
+          "answerText": "De burgemeester",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Het college van B&W",
+          "isCorrect": false
+        },
+        {
+          "answerText": "De gemeentesecretaris",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"De gemeentesecretaris\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"De gemeentesecretaris\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Rol Teamleider",
+      "questionText": "Wat is een clustermanager of teamleider primair verantwoordelijk voor?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Aansturing en resultaten van het team",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Begroting vaststellen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Politieke besluiten",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Raadsvoorstellen",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Aansturing en resultaten van het team\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Aansturing en resultaten van het team\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Dagelijks Bestuur",
+      "questionText": "Wie is formeel verantwoordelijk voor het dagelijks bestuur van de gemeente?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "De gemeentesecretaris",
+          "isCorrect": false
+        },
+        {
+          "answerText": "De gemeenteraad",
+          "isCorrect": false
+        },
+        {
+          "answerText": "De griffie",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Het college van B&W",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Het college van B&W\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Het college van B&W\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Budgethouderschap",
+      "questionText": "Wat is budgethouderschap?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Recht om belasting te heffen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Controle door de raad",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Bevoegdheid om begroting vast te stellen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Verantwoordelijkheid voor het beheren van een toegekend budget",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Verantwoordelijkheid voor het beheren van een toegekend budget\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Verantwoordelijkheid voor het beheren van een toegekend budget\" is het juiste antwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Verantwoordelijkheid Dossier",
+      "questionText": "Wie is verantwoordelijk voor compleet zaakdossier?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "ICT",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Behandelend medewerker/team",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Inwoner",
+          "isCorrect": false
+        },
+        {
+          "answerText": "D&P",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Behandelend medewerker/team\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Behandelend medewerker/team\" is het juiste antwoord.",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
@@ -264,49 +2791,28 @@
       "title": "De AVG en Gegevens Minimalisatie",
       "questionText": "Wat is de hoofdregel volgens de AVG bij het uitvragen van persoonsgegevens bij inwoners?",
       "multipleChoiceOptions": [
-        { "answerText": "1. Zoveel mogelijk gegevens vragen", "isCorrect": false },
-        { "answerText": "2. Alleen wat noodzakelijk is", "isCorrect": true },
-        { "answerText": "3. Onbeperkt bewaren op netwerk", "isCorrect": false },
-        { "answerText": "4. Altijd voor andere doelen gebruiken", "isCorrect": false }
+        {
+          "answerText": "Zoveel mogelijk gegevens vragen",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Altijd voor andere doelen gebruiken",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Alleen wat noodzakelijk is",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Onbeperkt bewaren op netwerk",
+          "isCorrect": false
+        }
       ],
       "correctTrueFalseAnswer": false,
       "checkmarkLabel": "I have completed this task",
       "correctCheckmarkState": true,
       "explanationWhenWrong": "We moeten ons altijd afvragen of het echt noodzakelijk is. Als we ons werk ook kunnen doen zonder (of met minder) persoonsgegevens, heeft dat de voorkeur. In Goodhabitz is ook een hele mooie cursus over AVG!",
-      "explanationWhenRight": "Top geantwoord. We noemen dit 'dataminimalisatie': we vragen echt nóóit meer dan strikt noodzakelijk. Goed bezig!",
-      "isCompleted": false,
-      "isFailed": false,
-      "assignedDate": ""
-    },
-    {
-      "questionType": 1,
-      "title": "Eigen Apparaten (Informatiebeveiliging)",
-      "questionText": "Als je de laptop van de gemeente bent vergeten, is het toegestaan om tijdelijk in te loggen en te werken op je eigen privé-laptop thuis.",
-      "multipleChoiceOptions": [],
-      "correctTrueFalseAnswer": false,
-      "checkmarkLabel": "I have completed this task",
-      "correctCheckmarkState": true,
-      "explanationWhenWrong": "Dit is streng verboden volgens het beveiligingsbeleid. Je moet altijd en uitsluitend de apparaten gebruiken die door de gemeente zijn geleverd.",
-      "explanationWhenRight": "Heel goed! Privé-apparatuur kan onzichtbare veiligheidsrisico's met zich meebrengen. Gebruik dus altijd uitsluitend de hardware van de gemeente.",
-      "isCompleted": false,
-      "isFailed": false,
-      "assignedDate": ""
-    },
-    {
-      "questionType": 0,
-      "title": "De Noodzaak van Archiveren",
-      "questionText": "Waarom zijn we als gemeente wettelijk verplicht om documenten en besluiten goed te archiveren?",
-      "multipleChoiceOptions": [
-        { "answerText": "1. Zodat burgemeester overzicht heeft", "isCorrect": false },
-        { "answerText": "2. Voor Woo-verzoeken, verantwoording en privacybescherming", "isCorrect": true },
-        { "answerText": "3. Opslag Teams is 1 jaar", "isCorrect": false },
-        { "answerText": "4. Zodat je nooit iets verwijdert", "isCorrect": false }
-      ],
-      "correctTrueFalseAnswer": false,
-      "checkmarkLabel": "I have completed this task",
-      "correctCheckmarkState": true,
-      "explanationWhenWrong": "Archiveren is essentieel voor de Wet open overheid (Woo), de Archiefwet, en de AVG.",
-      "explanationWhenRight": "Exact! Correct archiveren is de basis voor de Wet open overheid (Woo), transparante verantwoording én onze privacyregels (AVG).",
+      "explanationWhenRight": "Correct. Dit noemen we 'dataminimalisatie'. Vraag nooit meer dan strikt noodzakelijk. In Goodhabitz is ook een hele mooie cursus over AVG!",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
@@ -320,7 +2826,97 @@
       "checkmarkLabel": "I have completed this task",
       "correctCheckmarkState": true,
       "explanationWhenWrong": "Na afsluiting blijft een Team nog wel raadpleegbaar. Aan de hand van de selectielijst wordt later bepaald wat vernietigd of bewaard wordt.",
-      "explanationWhenRight": "Klopt. MS Teams omgevingen blijven in eerste instantie bewaard, zodat we achteraf volgens de archiefwet kunnen bepalen wat er permanent gearchiveerd moet worden.",
+      "explanationWhenRight": "Klopt. MS Teams blijft na het afronden van een project in eerste instantie bewaard voor archiveringsdoeleinden.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Eigen Apparaten (Informatiebeveiliging)",
+      "questionText": "Als je de laptop van de gemeente bent vergeten, is het toegestaan om tijdelijk in te loggen en te werken op je eigen privé-laptop thuis.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Dit is streng verboden volgens het beveiligingsbeleid. Je moet altijd en uitsluitend de apparaten gebruiken die door de gemeente zijn geleverd.",
+      "explanationWhenRight": "Heel goed. Privé-apparatuur kan veiligheidsrisico's met zich meebrengen.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 1,
+      "title": "Budgethouderschap",
+      "questionText": "Budgethouderschap brengt ook verantwoordelijkheid met zich mee.",
+      "multipleChoiceOptions": [],
+      "correctTrueFalseAnswer": true,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Fout. Dit klopt wel. Lees de regels over digitaal werken nog eens door.",
+      "explanationWhenRight": "Helemaal goed! Je hebt dit correct beantwoord.",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "De Noodzaak van Archiveren",
+      "questionText": "Waarom zijn we als gemeente wettelijk verplicht om documenten en besluiten goed te archiveren?",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Voor Woo-verzoeken, verantwoording en privacybescherming",
+          "isCorrect": true
+        },
+        {
+          "answerText": "Zodat burgemeester overzicht heeft",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Opslag Teams is 1 jaar",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Zodat je nooit iets verwijdert",
+          "isCorrect": false
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Archiveren is essentieel voor de Wet open overheid (Woo), de Archiefwet, en de AVG.",
+      "explanationWhenRight": "Precies! Archiveren gaat hand in hand met de Wet open overheid (Woo), verantwoording en privacy (AVG).",
+      "isCompleted": false,
+      "isFailed": false,
+      "assignedDate": ""
+    },
+    {
+      "questionType": 0,
+      "title": "Bestuurlijke Besluitvorming",
+      "questionText": "Hoe lopen college- en raadsvoorstellen? (bestuurlijke Besluitvorming)",
+      "multipleChoiceOptions": [
+        {
+          "answerText": "Papier",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Mail",
+          "isCorrect": false
+        },
+        {
+          "answerText": "OneDrive",
+          "isCorrect": false
+        },
+        {
+          "answerText": "Digitaal via ONEGOV",
+          "isCorrect": true
+        }
+      ],
+      "correctTrueFalseAnswer": false,
+      "checkmarkLabel": "I have completed this task",
+      "correctCheckmarkState": true,
+      "explanationWhenWrong": "Niet correct. Het juiste antwoord is: \"Digitaal via ONEGOV\". Denk nog eens na over de regels binnen Eemsdelta.",
+      "explanationWhenRight": "Correct! \"Digitaal via ONEGOV\" is het juiste antwoord.",
       "isCompleted": false,
       "isFailed": false,
       "assignedDate": ""
