@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TopDesk.unity
     guid: 8bed13f2d024b1d4eadc6789c0a2f72b
+  - enabled: 1
+    path: Assets/Scenes/Organisatiekennis.unity
+    guid: 9652a860042bb6e4b8b630b8223a8868
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
