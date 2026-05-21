@@ -109,7 +109,7 @@ public class AssignmentManager : MonoBehaviour
         new GeneralReportPrompt { category = GeneralCategory.GemeentelijkGebouw, description = "De lamp in de gang op de begane grond is kapot." },
         new GeneralReportPrompt { category = GeneralCategory.POZaken, description = "Ik wil graag mijn ouderschapsverlof aanvragen, waar kan ik dat doen?" },
         new GeneralReportPrompt { category = GeneralCategory.EHerkenning, description = "Mijn E-Herkenning token werkt niet meer bij het inloggen." },
-        new GeneralReportPrompt { category = GeneralCategory.Overig, description = "Ik heb een vraag over de kerstpakketten van dit year." }
+        new GeneralReportPrompt { category = GeneralCategory.Overig, description = "Ik heb een vraag over de kerstpakketten van dit jaar." }
     };
 
     [HideInInspector]
@@ -200,12 +200,11 @@ public class AssignmentManager : MonoBehaviour
         bool canDoQuestions = compBookings.Count > 0;
         bool canDoBookingAction = bookingMgr != null && bookingMgr.rooms.Count > 0 && bookingMgr.weekDates != null && bookingMgr.weekDates.Length > 0;
 
-        // --- NIEUW: VERPLICHTE DEBUG LOGS ---
         Debug.Log($"[Generator] Rol: {categoryRoll}. Vragen Mogelijk: {canDoQuestions}, Zelf Boeken Mogelijk: {canDoBookingAction}");
 
         if (categoryRoll == 0 && !canDoQuestions && !canDoBookingAction)
         {
-            Debug.LogWarning("[Generator Fallback] Kamerboeking gerold, maar je BookingManager heeft geen Kamers, Datums óf gegenereerde computer reserveringen! Reroll gedwongen naar Security/Datalek/Algemeen.");
+            Debug.LogWarning("[Generator Fallback] Reroll gedwongen naar Security/Datalek/Algemeen.");
             categoryRoll = Random.Range(1, 4); 
         }
 
@@ -222,7 +221,6 @@ public class AssignmentManager : MonoBehaviour
                 newTask.title = "Systeem Controle (Naam)";
                 newTask.description = $"Kijk in het reserveringssysteem: Wie heeft {target.roomName} geboekt op {target.date} om {target.startHour}:00 uur? (Typ de naam exact over)";
                 newTask.correctTextAnswer = target.bookerName;
-                Debug.Log("🎲 Generator: Succesvol een Kamer-invulvraag (Naam) aangemaakt.");
             }
             else if (bookingSubRoll == 1) 
             {
@@ -231,28 +229,79 @@ public class AssignmentManager : MonoBehaviour
                 newTask.title = "Systeem Controle (Aantal)";
                 newTask.description = $"Kijk in het reserveringssysteem: Voor hoeveel personen is {target.roomName} geboekt op {target.date} om {target.startHour}:00 uur? (Vul alleen een getal in)";
                 newTask.correctNumberAnswer = target.amountOfPeople;
-                Debug.Log("🎲 Generator: Succesvol een Kamer-invulvraag (Aantal) aangemaakt.");
             }
             else 
             {
-                int maxAvailableCapacity = bookingMgr.rooms.Max(r => r.capacity);
-                int rPeople = Random.Range(2, maxAvailableCapacity + 1);
-                
-                string rDate = bookingMgr.weekDates[Random.Range(0, bookingMgr.weekDates.Length)];
-                int rStart = Random.Range(9, 15); 
-                int rDuration = Random.Range(1, 3); 
-                int rEnd = rStart + rDuration;
+                // DE FIX: Check daadwerkelijke beschikbaarheid voordat de taak wordt gemaakt
+                bool foundValidSlot = false;
+                string rDate = "";
+                int rStart = 0;
+                int rEnd = 0;
+                int rPeople = 0;
+                int loopCount = 0;
 
-                newTask.type = AssignmentType.RoomBooking;
-                newTask.title = "Nieuwe Kamerreservering";
-                newTask.description = $"Actie vereist: Boek een geschikte kamer voor {rPeople} personen op {rDate} van {rStart}:00 tot {rEnd}:00 uur.";
-                
-                newTask.targetCategory = ""; 
-                newTask.targetDate = rDate;
-                newTask.targetStartHour = rStart;
-                newTask.targetEndHour = rEnd;
-                newTask.targetPeople = rPeople;
-                Debug.Log("🎲 Generator: Succesvol een 'Zelf Boeken' opdracht aangemaakt.");
+                while (!foundValidSlot && loopCount < 50)
+                {
+                    rDate = bookingMgr.weekDates[Random.Range(0, bookingMgr.weekDates.Length)];
+                    rStart = Random.Range(9, 15);
+                    int rDuration = Random.Range(1, 3);
+                    rEnd = rStart + rDuration;
+
+                    // Controleer welke kamers er VRIJ zijn op dit willekeurige moment
+                    List<RoomData> freeRooms = new List<RoomData>();
+                    foreach (var room in bookingMgr.rooms)
+                    {
+                        bool isFree = true;
+                        foreach (var res in compBookings)
+                        {
+                            if (res.roomName.Trim().ToLower() == room.roomName.Trim().ToLower() && 
+                                res.date.Trim().ToLower() == rDate.Trim().ToLower())
+                            {
+                                // Overlap check
+                                if (rStart < res.endHour && rEnd > res.startHour)
+                                {
+                                    isFree = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (isFree) freeRooms.Add(room);
+                    }
+
+                    // Als er vrije kamers zijn, bepaal dan het aantal mensen op basis van de GROOTSTE VRIJE kamer
+                    if (freeRooms.Count > 0)
+                    {
+                        int maxFreeCapacity = freeRooms.Max(r => r.capacity);
+                        rPeople = Random.Range(2, maxFreeCapacity + 1);
+                        foundValidSlot = true;
+                    }
+
+                    loopCount++;
+                }
+
+                if (foundValidSlot)
+                {
+                    newTask.type = AssignmentType.RoomBooking;
+                    newTask.title = "Nieuwe Kamerreservering";
+                    newTask.description = $"Actie vereist: Boek een geschikte kamer voor {rPeople} personen op {rDate} van {rStart}:00 tot {rEnd}:00 uur.";
+                    newTask.targetCategory = ""; 
+                    newTask.targetDate = rDate;
+                    newTask.targetStartHour = rStart;
+                    newTask.targetEndHour = rEnd;
+                    newTask.targetPeople = rPeople;
+                    Debug.Log("🎲 Generator: 'Zelf Boeken' opdracht gemaakt (Gegarandeerd dat er een vrije kamer is).");
+                }
+                else 
+                {
+                    // Fallback: Als het rooster echt 100% vol is, wordt het een algemene melding
+                    GeneralReportPrompt prompt = generalReportPrompts[Random.Range(0, generalReportPrompts.Count)];
+                    newTask.title = "Algemene Melding";
+                    string requiredCat = GetGeneralString(prompt.category);
+                    newTask.description = $"Situatie:\n\"{prompt.description}\"\n\nMaak een ticket aan en kies de juiste categorie: {requiredCat}.";
+                    newTask.type = AssignmentType.GeneralReport;
+                    newTask.targetCategory = requiredCat; 
+                    Debug.LogWarning("🎲 Generator: Rooster was te vol. Fallback opdracht aangemaakt.");
+                }
             }
         }
         // --- 1/4 KANS: BEVEILIGINGSINCIDENTEN ---
@@ -264,7 +313,6 @@ public class AssignmentManager : MonoBehaviour
             string requiredCat = GetSecurityString(prompt.category);
             newTask.description = $"Situatie:\n\"{prompt.description}\"\n\nRegistreer dit incident onder de juiste categorie: {requiredCat}.";
             newTask.targetCategory = requiredCat; 
-            Debug.Log("🎲 Generator: Succesvol een Security opdracht aangemaakt.");
         }
         // --- 1/4 KANS: DATALEKKEN ---
         else if (categoryRoll == 2 && dataBreachPrompts.Count > 0)
@@ -280,7 +328,6 @@ public class AssignmentManager : MonoBehaviour
             newTask.title = "Datalek Melden (AVG)";
             newTask.description = $"Situatie:\n\"{prompt}\"\n\nDatum van inbreuk: {rDate}\n\nMeld dit direct in het Datalek formulier.";
             newTask.targetCategory = ""; 
-            Debug.Log("🎲 Generator: Succesvol een Datalek opdracht aangemaakt.");
         }
         // --- 1/4 KANS: ALGEMENE MELDINGEN ---
         else if (categoryRoll == 3 && generalReportPrompts.Count > 0)
@@ -291,7 +338,6 @@ public class AssignmentManager : MonoBehaviour
             newTask.description = $"Situatie:\n\"{prompt.description}\"\n\nMaak een ticket aan en kies de juiste categorie: {requiredCat}.";
             newTask.type = AssignmentType.GeneralReport;
             newTask.targetCategory = requiredCat; 
-            Debug.Log("🎲 Generator: Succesvol een Algemene melding opdracht aangemaakt.");
         }
 
         assignments.Add(newTask);
@@ -342,6 +388,10 @@ public class AssignmentManager : MonoBehaviour
                     task.isCompleted = true;
                     hasChanged = true;
                     Debug.Log($"🎉 KAMER SUCCESVOL GEBOEKT EN VRIJ: {task.title}");
+                }
+                else if (!isRoomFree && dateMatch && startMatch && endMatch)
+                {
+                    Debug.LogWarning($"⚠️ Opdracht afgewezen: Kamer '{roomName}' is al bezet door een computerboeking op dit tijdstip.");
                 }
             }
         }
