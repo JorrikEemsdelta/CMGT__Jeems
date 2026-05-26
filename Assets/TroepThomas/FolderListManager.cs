@@ -145,12 +145,10 @@ public class FolderListManager : MonoBehaviour
 
 
     [Header("Overig")]
-
     public PasteMenuManager pasteMenu; // Sleep je nieuwe plak-prefab hierheen
-
     public CategoryColorManager colorManager;
-
     public MetadataMenuManager metadataMenu;
+    public MeldBijITManager meldBijITMenu;
 
 
 
@@ -361,51 +359,49 @@ public class FolderListManager : MonoBehaviour
 
 
     private void OnPointerClick(PointerEventData eventData, FolderData data, GameObject itemVisual, FolderContainer container)
-
     {
-
         if (eventData.button == PointerEventData.InputButton.Right)
-
         {
-
-            // Rechtsklik op een BESTAND (Context Menu: Verwijderen, Hernoemen, Knippen)
-
-            if (data.type == ItemType.Bestand && contextMenu != null)
-
+            // Rechtsklik op een BESTAND
+            if (data.type == ItemType.Bestand)
             {
+                // TIJDELIJKE TEST: Wat ziet Unity als je klikt?
+                Debug.Log($"[RECHTSKLIK] Bestand: {data.itemName} | IsVirus vinkje staat op: {data.isVirus}");
 
-                contextMenu.Show(itemVisual, data, container);
+                // We controleren NU heel streng op het vinkje
+                if (data.isVirus)
+                {
+                    if (meldBijITMenu != null)
+                    {
+                        // Sluit het normale menu als dat stiekem nog openstond
+                        if (contextMenu != null) contextMenu.Hide();
 
+                        // Toon de IT knop
+                        meldBijITMenu.Show(data, container, this);
+                        return; // Stop de functie direct zodat het normale menu NIET kan openen!
+                    }
+                }
+
+                // Als we hier komen, was het GEEN virus (of het IT menu is niet gekoppeld)
+                if (contextMenu != null)
+                {
+                    if (meldBijITMenu != null) meldBijITMenu.Hide();
+                    contextMenu.Show(itemVisual, data, container);
+                }
             }
-
-            // NIEUW: Rechtsklik op een FOLDER (Metadata Menu: Categorie aanpassen)
-
+            // Rechtsklik op een FOLDER
             else if (data.type == ItemType.Folder && metadataMenu != null)
-
             {
-
                 metadataMenu.Show(data, this);
-
             }
-
         }
-
         else if (eventData.button == PointerEventData.InputButton.Left)
-
         {
-
-            // Linksklik op een FOLDER (Map openen)
-
             if (data.type == ItemType.Folder)
-
             {
-
                 OpenNieuweLijst(data.targetContainer);
-
             }
-
         }
-
     }
 
 

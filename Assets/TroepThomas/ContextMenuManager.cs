@@ -43,6 +43,11 @@ public class ContextMenuManager : MonoBehaviour
             {
                 questManager.CheckOfNaamInLijstStaat(dataToRemove.itemName);
             }
+            // Fallback als questManager op de ListManager gelinkt staat
+            else if (listManager != null && listManager.questManager != null)
+            {
+                listManager.questManager.CheckOfNaamInLijstStaat(dataToRemove.itemName);
+            }
 
             // 2. De standaard verwijder-logica
             if (sourceContainer != null)
@@ -78,6 +83,7 @@ public class ContextMenuManager : MonoBehaviour
         }
         Hide();
     }
+
     public void HernoemActie()
     {
         // Check eerst of het bestand hernoemd mag worden
@@ -88,7 +94,6 @@ public class ContextMenuManager : MonoBehaviour
             return; // Stop de functie hier
         }
 
-        // De rest van je bestaande code voor het hernoemen...
         if (visualToDestroy != null)
         {
             TMPro.TMP_InputField inputField = visualToDestroy.GetComponentInChildren<TMPro.TMP_InputField>(true);
@@ -113,7 +118,7 @@ public class ContextMenuManager : MonoBehaviour
 
     private void BevestigHernoemen(string nieuweNaam, TMPro.TMP_InputField input, TMPro.TextMeshProUGUI tekst)
     {
-        if (!string.IsNullOrEmpty(nieuweNaam))
+        if (!string.IsNullOrEmpty(nieuweNaam) && dataToRemove != null)
         {
             // 1. Onthoud de oude naam voor de check
             string oudeNaam = dataToRemove.itemName;
@@ -126,6 +131,10 @@ public class ContextMenuManager : MonoBehaviour
             if (questManager != null)
             {
                 questManager.CheckHernoemOpdracht(oudeNaam, nieuweNaam);
+            }
+            else if (listManager != null && listManager.questManager != null)
+            {
+                listManager.questManager.CheckHernoemOpdracht(oudeNaam, nieuweNaam);
             }
 
             Debug.Log("Naam gewijzigd van " + oudeNaam + " naar " + nieuweNaam);

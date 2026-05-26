@@ -1,8 +1,16 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 public class QuestManager : MonoBehaviour
 {
+    [System.Serializable]
+    public class VerwijderOpdracht
+    {
+        public string doelwitNaam;
+        public bool isVoltooid = false;
+    }
+
     [System.Serializable]
     public class PlakOpdracht
     {
@@ -16,6 +24,7 @@ public class QuestManager : MonoBehaviour
     {
         public string oudeNaam;
         public string nieuweNaam;
+        public bool isVoltooid = false;
     }
 
     [System.Serializable]
@@ -23,28 +32,41 @@ public class QuestManager : MonoBehaviour
     {
         public string oudeCategorie;
         public string nieuweCategorie;
+        public bool isVoltooid = false;
     }
 
     [Header("Instellingen")]
     public FolderListManager listManager;
 
-    [Header("Verwijder Opdrachten")]
-    public List<string> doelwitNamen;
+    [Header("UI Referenties")]
+    public Transform questContentParent; // De 'Content' van je rechter Scroll View
+    public GameObject questTekstPrefab;   // Een simpele prefab met een TextMeshProUGUI component
 
-    [Header("Knip en Plak Opdrachten")]
+    [Header("Opdrachten Lijsten")]
+    public List<VerwijderOpdracht> verwijderOpdrachten;
     public List<PlakOpdracht> plakOpdrachten;
-
-    [Header("Naam Wijzigen Opdrachten")]
     public List<HernoemOpdracht> hernoemOpdrachten;
-
-    [Header("Metadata Opdrachten")]
     public List<MetadataOpdracht> metadataOpdrachten;
+
+    void Start()
+    {
+        CheckOpdrachtConfiguratie();
+        UpdateQuestUI(); // Bouw de lijst op bij het opstarten
+    }
+
+    // --- REPARATIE & LOGICA CHECKS ---
 
     public void CheckOfNaamInLijstStaat(string verwijderdeNaam)
     {
-        if (doelwitNamen.Contains(verwijderdeNaam))
+        foreach (var opdracht in verwijderOpdrachten)
         {
-            Debug.Log("Een verwijder opdracht is voltooid!");
+            if (!opdracht.isVoltooid && opdracht.doelwitNaam == verwijderdeNaam)
+            {
+                opdracht.isVoltooid = true;
+                Debug.Log($"Een verwijder opdracht is voltooid! ({verwijderdeNaam})");
+                UpdateQuestUI();
+                return;
+            }
         }
     }
 
@@ -52,53 +74,95 @@ public class QuestManager : MonoBehaviour
     {
         foreach (var opdracht in hernoemOpdrachten)
         {
-            // We controleren of de oude naam klopt EN of de nieuwe naam klopt
-            if (opdracht.oudeNaam == oudeNaam && opdracht.nieuweNaam == nieuweNaam)
+            if (!opdracht.isVoltooid && opdracht.oudeNaam == oudeNaam && opdracht.nieuweNaam == nieuweNaam)
             {
-                Debug.Log("Een naam wijzigen opdracht is zojuist voltooid!");
-                // Optioneel: Je zou hier ook een 'isVoltooid' bool kunnen toevoegen 
-                // aan HernoemOpdracht als je wilt dat het maar één keer telt.
+                opdracht.isVoltooid = true;
+                Debug.Log($"Een naam wijzigen opdracht is zojuist voltooid! ({oudeNaam} -> {nieuweNaam})");
+                UpdateQuestUI();
+                return;
             }
         }
     }
 
     public void CheckPlakOpdracht(string geplakteNaam, string huidigeFolderNaam)
     {
-        // TIJDELIJKE DEBUG: Wat ziet de computer?
-        Debug.Log("CheckPlakOpdracht gestart! Ik plak nu: " + geplakteNaam + " in map: " + huidigeFolderNaam);
-
         foreach (var opdracht in plakOpdrachten)
         {
-            if (!opdracht.isVoltooid)
+            if (!opdracht.isVoltooid && opdracht.bestandsNaam == geplakteNaam && opdracht.doelFolderNaam == huidigeFolderNaam)
             {
-                // Laat per opdracht zien wat de eisen zijn
-                Debug.Log("Check tegen opdracht: " + opdracht.bestandsNaam + " in " + opdracht.doelFolderNaam);
-
-                if (opdracht.bestandsNaam == geplakteNaam && opdracht.doelFolderNaam == huidigeFolderNaam)
-                {
-                    opdracht.isVoltooid = true;
-                    Debug.Log("Een knip en plak opdracht is zojuist behaald!");
-                }
+                opdracht.isVoltooid = true;
+                Debug.Log($"Een knip en plak opdracht is zojuist behaald! ({geplakteNaam} naar {huidigeFolderNaam})");
+                UpdateQuestUI();
+                return;
             }
         }
     }
 
-    void Start()
+    public void CheckMetadataOpdracht(string oudeCat, string nieuweCat)
     {
-        // Voer de scan uit zodra het spel begint
-        CheckOpdrachtConfiguratie();
+        foreach (var opdracht in metadataOpdrachten)
+        {
+            if (!opdracht.isVoltooid && opdracht.oudeCategorie == oudeCat && opdracht.nieuweCategorie == nieuweCat)
+            {
+                opdracht.isVoltooid = true;
+                Debug.Log($"Een metadata opdracht is voltooid! ({oudeCat} -> {nieuweCat})");
+                UpdateQuestUI();
+                return;
+            }
+        }
     }
+
+    // --- UI GENERATOR ---
+
+    public void UpdateQuestUI()
+    {
+        if (questContentParent == null || questTekstPrefab == null) return;
+
+        // Maak de huidige UI lijst leeg
+        foreach (Transform child in questContentParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // 1. Verwijder Opdrachten tonen
+        foreach (var o in verwijderOpdrachten)
+        {
+            if (!o.isVoltooid) MaakQuestTekstObject($"Verwijder {o.doelwitNaam}");
+        }
+
+        // 2. Knip en Plak Opdrachten tonen
+        foreach (var o in plakOpdrachten)
+        {
+            if (!o.isVoltooid) MaakQuestTekstObject($"Knip en plak {o.bestandsNaam} naar {o.doelFolderNaam}");
+        }
+
+        // 3. Naam Wijzigen Opdrachten tonen
+        foreach (var o in hernoemOpdrachten)
+        {
+            if (!o.isVoltooid) MaakQuestTekstObject($"Wijzig naam van {o.oudeNaam} naar {o.nieuweNaam}");
+        }
+    }
+
+    private void MaakQuestTekstObject(string tekst)
+    {
+        GameObject nieuwTekstObj = Instantiate(questTekstPrefab, questContentParent);
+        TextMeshProUGUI tmp = nieuwTekstObj.GetComponentInChildren<TextMeshProUGUI>();
+        if (tmp != null)
+        {
+            tmp.text = tekst;
+        }
+    }
+
+    // --- GEVAREN SCANNER ---
 
     public void CheckOpdrachtConfiguratie()
     {
         if (listManager == null || listManager.mainList == null) return;
 
-        // Maak een lijst van alle namen die in opdrachten voorkomen
         List<string> kritiekeNamen = new List<string>();
         foreach (var p in plakOpdrachten) kritiekeNamen.Add(p.bestandsNaam);
         foreach (var h in hernoemOpdrachten) kritiekeNamen.Add(h.oudeNaam);
 
-        // Scan alle mappen (we beginnen bij de mainList)
         ScanMappenVoorGevaar(listManager.mainList, kritiekeNamen);
     }
 
@@ -106,40 +170,29 @@ public class QuestManager : MonoBehaviour
     {
         foreach (var item in container.items)
         {
-            // 1. Check voor Verwijderen (Geldt voor ALLE opdrachten)
             if (kritiekeNamen.Contains(item.itemName) && item.kanVerwijderen)
             {
-                Debug.LogWarning($"<color=yellow>LET OP:</color> Het bestand <b>'{item.itemName}'</b> is essentieel voor een opdracht, maar de speler kan het verwijderen. Dit kan de voortgang blokkeren!");
+                Debug.LogWarning($"<color=yellow>LET OP:</color> Het bestand <b>'{item.itemName}'</b> is essentieel voor een opdracht, maar de speler kan het verwijderen.");
             }
 
-            // 2. Check voor Hernoemen
             if (kritiekeNamen.Contains(item.itemName) && item.kanHernoemen)
             {
-                // We kijken specifiek of dit item in de HERNOEM-lijst staat
                 bool isHernoemOpdracht = false;
                 foreach (var h in hernoemOpdrachten)
                 {
-                    if (h.oudeNaam == item.itemName)
-                    {
-                        isHernoemOpdracht = true;
-                        break;
-                    }
+                    if (h.oudeNaam == item.itemName) { isHernoemOpdracht = true; break; }
                 }
 
-                // Alleen waarschuwen als het een PLAK-bestand is dat hernoemd mag worden.
-                // Als het een hernoem-opdracht is, negeren we de waarschuwing (want dat MOET hernoemd worden).
                 if (!isHernoemOpdracht)
                 {
-                    Debug.LogWarning($"<color=orange>LOGISCHE FOUT:</color> De naam van <b>'{item.itemName}'</b> is vereist voor een toekomstige opdracht (zoals plakken), maar mag nu gewijzigd worden. Dit maakt de opdracht onuitvoerbaar!");
+                    Debug.LogWarning($"<color=orange>LOGISCHE FOUT:</color> De naam van <b>'{item.itemName}'</b> is vereist voor een toekomstige opdracht, maar mag nu gewijzigd worden.");
                 }
             }
 
-            // Recursie voor submappen
             if (item.type == FolderListManager.ItemType.Folder && item.targetContainer != null)
             {
                 ScanMappenVoorGevaar(item.targetContainer, kritiekeNamen);
             }
         }
     }
-
 }
