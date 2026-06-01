@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic; // Nodig voor List
+using System.Collections.Generic; 
 
 public class ContextMenuManager : MonoBehaviour
 {
@@ -18,7 +18,6 @@ public class ContextMenuManager : MonoBehaviour
         }
     }
 
-    // We voegen de data en de container toe aan de Show functie
     public void Show(GameObject visual, FolderListManager.FolderData data, FolderListManager.FolderContainer container)
     {
         visualToDestroy = visual;
@@ -34,22 +33,22 @@ public class ContextMenuManager : MonoBehaviour
         }
     }
 
-    public void VerwijderItem()
+    public void VerwijderItem() //This is the method that deletes an item
     {
         if (dataToRemove != null && dataToRemove.kanVerwijderen)
         {
-            // 1. Stuur de naam van het bestand naar de QuestManager
+            //Sends the name to the Quest Manager script to check
             if (questManager != null)
             {
                 questManager.CheckOfNaamInLijstStaat(dataToRemove.itemName);
             }
-            // Fallback als questManager op de ListManager gelinkt staat
+            //Fallback check, sends it to the list to check
             else if (listManager != null && listManager.questManager != null)
             {
                 listManager.questManager.CheckOfNaamInLijstStaat(dataToRemove.itemName);
             }
 
-            // 2. De standaard verwijder-logica
+            //This here is the deletion process
             if (sourceContainer != null)
             {
                 sourceContainer.items.Remove(dataToRemove);
@@ -64,6 +63,7 @@ public class ContextMenuManager : MonoBehaviour
         }
         else
         {
+            //Translation of debug log: "This is an important file! You'll need this later!
             Debug.Log("Dit is een belangrijk bestand die je later nodig hebt!");
             Hide();
         }
@@ -71,6 +71,7 @@ public class ContextMenuManager : MonoBehaviour
 
     public void Hide()
     {
+        //hides the prefab whenever an action is done or a click outside the prefab area is done
         gameObject.SetActive(false);
     }
 
@@ -78,7 +79,7 @@ public class ContextMenuManager : MonoBehaviour
     {
         if (dataToRemove != null && listManager != null)
         {
-            // Geef de data door aan de manager
+            //Removes item from the List in ListManager
             listManager.KnipItem(dataToRemove, sourceContainer, visualToDestroy);
         }
         Hide();
@@ -86,14 +87,16 @@ public class ContextMenuManager : MonoBehaviour
 
     public void HernoemActie()
     {
-        // Check eerst of het bestand hernoemd mag worden
+        // Quick check if the file is allowed to be renamed
         if (dataToRemove != null && !dataToRemove.kanHernoemen)
         {
+            //Translation of debug log: "The name of this file cannot be changed!"
             Debug.Log("De naam van dit bestand kan niet verandert worden!");
-            Hide(); // Sluit alleen het menu
-            return; // Stop de functie hier
+            Hide(); 
+            return;
         }
 
+        //Summon the renaming prefab and Input Field to rename files
         if (visualToDestroy != null)
         {
             TMPro.TMP_InputField inputField = visualToDestroy.GetComponentInChildren<TMPro.TMP_InputField>(true);
@@ -116,6 +119,7 @@ public class ContextMenuManager : MonoBehaviour
         }
     }
 
+    //confirms renaming the file
     private void BevestigHernoemen(string nieuweNaam, TMPro.TMP_InputField input, TMPro.TextMeshProUGUI tekst)
     {
         if (!string.IsNullOrEmpty(nieuweNaam) && dataToRemove != null)
@@ -137,6 +141,7 @@ public class ContextMenuManager : MonoBehaviour
                 listManager.questManager.CheckHernoemOpdracht(oudeNaam, nieuweNaam);
             }
 
+            //Debug log translation: "Name changed from + oudeNaam, nieuweNaam);
             Debug.Log("Naam gewijzigd van " + oudeNaam + " naar " + nieuweNaam);
         }
 

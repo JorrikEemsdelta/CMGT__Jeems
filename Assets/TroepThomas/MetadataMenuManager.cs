@@ -15,7 +15,7 @@ public class MetadataMenuManager : MonoBehaviour
         gameObject.SetActive(true);
         transform.position = Input.mousePosition;
 
-        // Vul het tekstveld alvast met de huidige metadata (categorie)
+        // Fill in the text field with current metadata
         if (categorieInput != null)
         {
             categorieInput.text = data.categorieNaam;
@@ -28,7 +28,7 @@ public class MetadataMenuManager : MonoBehaviour
         {
             gekozenFolder.categorieNaam = categorieInput.text;
 
-            // Ververs de lijst zodat de nieuwe metadata direct zichtbaar is
+            // Refreshes the list
             listManager.DisplayCurrentList();
         }
         Hide();

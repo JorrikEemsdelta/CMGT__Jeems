@@ -9,7 +9,8 @@ public class BackgroundRightClick : MonoBehaviour, IPointerClickHandler
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            // Vertel de hoofdmanager dat er op de achtergrond is geklikt
+            // Vertel de FolderListManager dat er op de achtergrond is geklikt
+            // Tells the FolderListManager that the background has been clicked on
             manager.OpenPlakMenu();
         }
     }

@@ -14,14 +14,14 @@ public class MeldBijITManager : MonoBehaviour
 
         gameObject.SetActive(true);
 
-        // Haal de muispositie op de juiste manier op voor het New Input System
+        // Find the mouse position (so it summons the specific "melden bij IT" prefab and not the regular Context Menu Manager)
         Vector2 muisPositie = Vector2.zero;
         if (UnityEngine.InputSystem.Mouse.current != null)
         {
             muisPositie = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
         }
 
-        // Zet de knop op de opgevraagde muispositie
+        // Set the button to the specific place of where the mouse is
         RectTransform rectTransform = GetComponent<RectTransform>();
         if (rectTransform != null)
         {
@@ -38,12 +38,13 @@ public class MeldBijITManager : MonoBehaviour
     {
         if (gekozenVirusData != null && huidigeContainer != null && listManager != null)
         {
-            // Verwijder het virusbestand definitief uit de mappenstructuur
+            // Remove the file
             huidigeContainer.items.Remove(gekozenVirusData);
+            
+            //Debug.Log translation: Debug.Log [Specific Virus has been deleted and IT has been notified]
+            Debug.Log($"{gekozenVirusData.itemName} is succesvol gemeld bij IT en verwijderd!");
 
-            Debug.Log($"[ANTIVIRUS] {gekozenVirusData.itemName} is succesvol gemeld bij IT en verwijderd!");
-
-            // Ververs de lijst direct zodat het virus verdwijnt en de effecten stoppen
+            // Refresh so the virus effect stops
             listManager.DisplayCurrentList();
         }
         Hide();

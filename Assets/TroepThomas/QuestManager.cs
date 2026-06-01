@@ -39,8 +39,8 @@ public class QuestManager : MonoBehaviour
     public FolderListManager listManager;
 
     [Header("UI Referenties")]
-    public Transform questContentParent; // De 'Content' van je rechter Scroll View
-    public GameObject questTekstPrefab;   // Een simpele prefab met een TextMeshProUGUI component
+    public Transform questContentParent; 
+    public GameObject questTekstPrefab;  
 
     [Header("Opdrachten Lijsten")]
     public List<VerwijderOpdracht> verwijderOpdrachten;
@@ -50,12 +50,24 @@ public class QuestManager : MonoBehaviour
 
     void Start()
     {
+        // Als we vergeten zijn de listManager te slepen, zoekt de computer hem nu zelf!
+        if (listManager == null)
+        {
+            listManager = FindFirstObjectByType<FolderListManager>();
+        }
+
+        // Zorg dat de listManager DIRECT weet wie deze QuestManager is
+        if (listManager != null)
+        {
+            listManager.questManager = this;
+        }
+
         CheckOpdrachtConfiguratie();
-        UpdateQuestUI(); // Bouw de lijst op bij het opstarten
+        UpdateQuestUI();
     }
 
-    // --- REPARATIE & LOGICA CHECKS ---
 
+    //All of these three are very similar, as they check the assignments, whether they are done or not
     public void CheckOfNaamInLijstStaat(string verwijderdeNaam)
     {
         foreach (var opdracht in verwijderOpdrachten)
@@ -63,6 +75,7 @@ public class QuestManager : MonoBehaviour
             if (!opdracht.isVoltooid && opdracht.doelwitNaam == verwijderdeNaam)
             {
                 opdracht.isVoltooid = true;
+                //Debug.Log trnaslation: a deletion exercise has been completed! (Specific File)
                 Debug.Log($"Een verwijder opdracht is voltooid! ({verwijderdeNaam})");
                 UpdateQuestUI();
                 return;
@@ -77,6 +90,7 @@ public class QuestManager : MonoBehaviour
             if (!opdracht.isVoltooid && opdracht.oudeNaam == oudeNaam && opdracht.nieuweNaam == nieuweNaam)
             {
                 opdracht.isVoltooid = true;
+                //Debug.Log translation: a name change exercise has been completed! (Old name -> New Name)
                 Debug.Log($"Een naam wijzigen opdracht is zojuist voltooid! ({oudeNaam} -> {nieuweNaam})");
                 UpdateQuestUI();
                 return;
@@ -91,6 +105,7 @@ public class QuestManager : MonoBehaviour
             if (!opdracht.isVoltooid && opdracht.bestandsNaam == geplakteNaam && opdracht.doelFolderNaam == huidigeFolderNaam)
             {
                 opdracht.isVoltooid = true;
+                //Debug.Log translation: a copy and pasta exercise has been completed! (Old name -> New Name)
                 Debug.Log($"Een knip en plak opdracht is zojuist behaald! ({geplakteNaam} naar {huidigeFolderNaam})");
                 UpdateQuestUI();
                 return;
@@ -115,10 +130,11 @@ public class QuestManager : MonoBehaviour
     // --- UI GENERATOR ---
 
     public void UpdateQuestUI()
+        //this method here is for updating the text in the scrollrect.
+        //all text here is automatically written Dutch that gives you basic instructions.
     {
         if (questContentParent == null || questTekstPrefab == null) return;
 
-        // Maak de huidige UI lijst leeg
         foreach (Transform child in questContentParent)
         {
             Destroy(child.gameObject);
@@ -153,7 +169,8 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    // --- GEVAREN SCANNER ---
+  //This section of the code checks for possible problems. If an exercise is created where you can
+  //delete a file that you need for later, the game will notify you.
 
     public void CheckOpdrachtConfiguratie()
     {
@@ -173,6 +190,7 @@ public class QuestManager : MonoBehaviour
             if (kritiekeNamen.Contains(item.itemName) && item.kanVerwijderen)
             {
                 Debug.LogWarning($"<color=yellow>LET OP:</color> Het bestand <b>'{item.itemName}'</b> is essentieel voor een opdracht, maar de speler kan het verwijderen.");
+                //warns you that the name can be deleted but is needed in a later assignemnt
             }
 
             if (kritiekeNamen.Contains(item.itemName) && item.kanHernoemen)
@@ -186,6 +204,7 @@ public class QuestManager : MonoBehaviour
                 if (!isHernoemOpdracht)
                 {
                     Debug.LogWarning($"<color=orange>LOGISCHE FOUT:</color> De naam van <b>'{item.itemName}'</b> is vereist voor een toekomstige opdracht, maar mag nu gewijzigd worden.");
+                    //warns you that the name can be changed but the name is needed in a later assignment
                 }
             }
 

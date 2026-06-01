@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI; // NODIG VOOR DE SCROLLRECT
 using TMPro;
 
-public class VirusAchtergrondEffect : MonoBehaviour
+public class VirusManager : MonoBehaviour
 {
     public FolderListManager listManager;
 
@@ -14,8 +14,8 @@ public class VirusAchtergrondEffect : MonoBehaviour
     public float glitchInterval = 0.1f;
 
     [Header("Scroll Manipulator Instellingen")]
-    public ScrollRect doelwitScrollRect; // Sleep hier je ScrollView / ScrollRect naartoe
-    public float schokInterval = 2f;     // Om de hoeveel seconden hij schokt
+    public ScrollRect doelwitScrollRect; 
+    public float schokInterval = 2f;   
 
     private string origineleTekst;
     private float glitchTimer;
@@ -36,9 +36,7 @@ public class VirusAchtergrondEffect : MonoBehaviour
     {
         if (listManager == null) return;
 
-        // ==========================================
-        // EFFECT 1: DRAAIEN VAN DE ACHTERGROND
-        // ==========================================
+       //this update method deals with the spinning background virus
         if (listManager.IsVirusTypeActief(FolderListManager.VirusType.DraaiAchtergrond))
         {
             transform.Rotate(0, 0, draaiSnelheid * Time.deltaTime);
@@ -48,9 +46,8 @@ public class VirusAchtergrondEffect : MonoBehaviour
             transform.rotation = Quaternion.identity;
         }
 
-        // ==========================================
-        // EFFECT 2: TEKST GLITCH
-        // ==========================================
+
+        //this update method deals with the scrambled text virus
         if (doelwitTekst != null)
         {
             bool isGlitchVirusActief = listManager.IsVirusTypeActief(FolderListManager.VirusType.GlitchTekst);
@@ -80,9 +77,7 @@ public class VirusAchtergrondEffect : MonoBehaviour
             }
         }
 
-        // ==========================================
-        // EFFECT 3: SCROLL MANIPULATOR (NIEUW!)
-        // ==========================================
+        //This part deals with the scroll manipulator virus
         if (doelwitScrollRect != null)
         {
             if (listManager.IsVirusTypeActief(FolderListManager.VirusType.ScrollManipulator))
@@ -90,24 +85,23 @@ public class VirusAchtergrondEffect : MonoBehaviour
                 scrollTimer += Time.deltaTime;
                 if (scrollTimer >= schokInterval)
                 {
-                    // Kies een compleet willekeurige scroll-positie tussen 0 (onderaan) en 1 (bovenaan)
+                    //Chooses the positions for the fake scrolling
                     float randomScrollPositie = Random.value;
 
-                    // Geef de schok aan de lijst
+                    //Makes the list twitch, to simulate someone else controlling your pc
                     doelwitScrollRect.verticalNormalizedPosition = randomScrollPositie;
 
-                    // Reset de timer
                     scrollTimer = 0f;
                 }
             }
             else
             {
-                // Als het virus niet actief is, resetten we de timer netjes naar 0
                 scrollTimer = 0f;
             }
         }
     }
 
+    //glitchy text string
     private string GenereerGlitchTekst(int lengte)
     {
         char[] resultaat = new char[lengte];

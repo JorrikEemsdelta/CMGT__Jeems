@@ -10,21 +10,20 @@ public class PasteMenuManager : MonoBehaviour
 
     void Awake()
     {
-        // Koppel de knop aan de functie
+        // Set the function to the button
         if (plakKnop != null)
         {
             plakKnop.onClick.AddListener(PlakActie);
         }
-        Hide(); // Begin onzichtbaar
+        Hide(); //Begin invisible
     }
 
     void Update()
     {
-        // Als het menu aan staat en je klikt met links...
+        // uses wasPressedThisFrame
         if (gameObject.activeSelf && Pointer.current != null && Pointer.current.press.wasPressedThisFrame)
         {
-            // ...dan verdwijnt hij. 
-            // De delay voorkomt dat hij sluit door de klik die hem opent.
+            //create a small delay so you can't open up another menu at the same time or create errors
             Invoke("Hide", 0.1f);
         }
     }
@@ -35,7 +34,7 @@ public class PasteMenuManager : MonoBehaviour
         plakKnop.interactable = true;
         if (Pointer.current != null)
         {
-            // Zet het menu op de muispositie
+            // Spawn the prefab at the mouse's position
             Vector2 mousePos = Pointer.current.position.ReadValue();
             transform.position = mousePos;
         }
@@ -48,7 +47,7 @@ public class PasteMenuManager : MonoBehaviour
             listManager.PlakItem();
         }
         Hide();
-        // Voeg dit toe om dubbelklikken te voorkomen:
+        // Add this to prevent double-clicking
         plakKnop.interactable = false;
     }
 
