@@ -21,6 +21,7 @@ public class GeneralReportManager : MonoBehaviour
 
     public List<GeneralReport> reportedItems = new List<GeneralReport>();
 
+    // This runs when the script is loaded. It configures the Singleton Instance and loads previously submitted general ticket reports.
     void Awake()
     {
         if (Instance == null) Instance = this;
@@ -29,6 +30,7 @@ public class GeneralReportManager : MonoBehaviour
         LoadData();
     }
 
+    // This creates and logs a new general ticket report, checks with the AssignmentManager to complete any active task goals, and saves progress.
     public void SubmitReport(string category, string description)
     {
         GeneralReport newReport = new GeneralReport
@@ -52,6 +54,7 @@ public class GeneralReportManager : MonoBehaviour
     // ==========================================
     // THE SAVE SYSTEM
     // ==========================================
+    // This serializes the general reports database into JSON and stores it in player preferences.
     public void SaveData()
     {
         GeneralSaveData data = new GeneralSaveData();
@@ -62,6 +65,7 @@ public class GeneralReportManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    // This loads the submitted general reports from JSON format inside player preferences.
     public void LoadData()
     {
         if (PlayerPrefs.HasKey("GeneralSaveData"))
@@ -73,6 +77,7 @@ public class GeneralReportManager : MonoBehaviour
         }
     }
 
+    // This clears the active reports list and deletes the general report save key from preferences.
     public void ClearSaveData()
     {
         reportedItems.Clear();

@@ -8,12 +8,14 @@ public class MyBookingsManager : MonoBehaviour
     public GameObject bookingEntryPrefab; 
     public Transform contentContainer; 
 
+    // This runs when the panel becomes active. It automatically refreshes the visual bookings list.
     void OnEnable()
     {
         // Refresh the list automatically when this screen is opened
         RefreshList();
     }
 
+    // This completely redraws the player bookings list. It destroys all old entries, walks through the global reservations database, instantiates a UI card prefab for each of the player's bookings, configures the texts, and hooks up the delete button listener.
     public void RefreshList()
     {
         // 1. Clear out the old list so we don't get duplicates

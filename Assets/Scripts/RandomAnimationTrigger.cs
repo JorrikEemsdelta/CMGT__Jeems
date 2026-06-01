@@ -17,12 +17,14 @@ public class RandomAnimationTrigger : MonoBehaviour
     
     private float nextActionTime;
 
+    // This runs when the script starts. It gets the Animator component and calculates when the first random animation should play.
     void Start()
     {
         animator = GetComponent<Animator>();
         ResetTimer();
     }
 
+    // This runs every frame. If the character is fully in their idle state (not transitioning), it checks if enough time has passed to trigger a random animation. Otherwise, it resets the idle timer.
     void Update()
     {
         // 1. Check if we are in the Idle state AND not currently transitioning between states
@@ -45,6 +47,7 @@ public class RandomAnimationTrigger : MonoBehaviour
         }
     }
 
+    // This triggers a random animation (either waving or looking around, 50% chance each) and resets the timer for the next action.
     void TriggerRandomAnimation()
     {
         // Generate a random number between 0 and 100
@@ -63,6 +66,7 @@ public class RandomAnimationTrigger : MonoBehaviour
         ResetTimer();
     }
 
+    // This calculates a random point in the future (between minIdleTime and maxIdleTime) to determine when the next idle animation should trigger.
     void ResetTimer()
     {
         // Calculates a random point in the future based on your min/max settings.

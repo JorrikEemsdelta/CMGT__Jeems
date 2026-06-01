@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // Nodig om van scene te wisselen
+using UnityEngine.SceneManagement; // Needed to switch scenes
 
 public class MenuController : MonoBehaviour
 {
@@ -23,6 +23,7 @@ public class MenuController : MonoBehaviour
     [Header("My Requests Overview")]
     public GameObject panelMyRequests;
 
+    // This disables all the UI panels in the Topdesk interface so we can show a clean canvas.
     private void HideAll()
     {
         if(panelHome) panelHome.SetActive(false); 
@@ -41,22 +42,41 @@ public class MenuController : MonoBehaviour
     }
 
     // --- Bestaande Navigatie ---
+    // This hides all active menus and navigates directly to the Home dashboard panel.
     public void GoToHome() { HideAll(); panelHome.SetActive(true); }
+
+    // This hides all active menus and navigates directly to the Facilitair Management submenu panel.
     public void GoToFacilitaire() { HideAll(); panelFacilitaire.SetActive(true); }
+
+    // This hides all active menus and navigates directly to the Room Schedule panel.
     public void GoToSchedule() { HideAll(); panelSchedule.SetActive(true); } 
+
+    // This hides all active menus and navigates directly to the Booking Confirmation panel.
     public void GoToConfirm() { HideAll(); panelConfirm.SetActive(true); } 
+
+    // This hides all active menus and navigates directly to the My Bookings panel.
     public void GoToMyBookings() { HideAll(); panelMyBookings.SetActive(true); }
 
+    // This hides all active menus and navigates directly to the Security Management submenu panel.
     public void GoToSecuritySubMenu() { HideAll(); panelSecuritySubMenu.SetActive(true); }
+
+    // This hides all active menus and navigates directly to the Incident Form panel.
     public void GoToIncidentForm() { HideAll(); panelIncidentForm.SetActive(true); }
+
+    // This hides all active menus and navigates directly to the Data Breach Form panel.
     public void GoToDataBreachForm() { HideAll(); panelDataBreachForm.SetActive(true); }
+
+    // This hides all active menus and navigates directly to the General Report form panel.
     public void GoToGeneralReport() { HideAll(); panelGeneralReport.SetActive(true); }
+
+    // This hides all active menus and navigates directly to the My Requests list panel.
     public void GoToMyRequests() { HideAll(); panelMyRequests.SetActive(true); }
 
-    // --- NIEUWE FUNCTIE: Terug naar StartMenu scene ---
+    // --- NEW FUNCTION: Return to StartMenu scene ---
+    // This loads the StartMenu scene, returning the player to the main menu.
     public void GoToMainMenu()
     {
-        // Laadt de scene genaamd StartMenu
+        // Loads the scene named StartMenu
         SceneManager.LoadScene("StartMenu"); 
     }
 }

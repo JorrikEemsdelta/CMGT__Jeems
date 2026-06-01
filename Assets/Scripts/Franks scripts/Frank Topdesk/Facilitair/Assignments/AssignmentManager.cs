@@ -115,12 +115,14 @@ public class AssignmentManager : MonoBehaviour
     [HideInInspector]
     public List<Assignment> assignments = new List<Assignment>();
 
+    // This runs in the Unity Editor when fields are validated. It sorts the prompt collections by category for clean organization.
     void OnValidate()
     {
         if (securityPrompts != null) securityPrompts = securityPrompts.OrderBy(p => p.category).ToList();
         if (generalReportPrompts != null) generalReportPrompts = generalReportPrompts.OrderBy(p => p.category).ToList();
     }
 
+    // This runs when the script starts. It configures the Singleton Instance and loads saved assignments.
     void Awake()
     {
         if (Instance == null) Instance = this;
@@ -129,17 +131,20 @@ public class AssignmentManager : MonoBehaviour
         LoadData();
     }
 
+    // This runs on the first frame and fills the assignment list up to the active task limit.
     void Start()
     {
         CheckAndGenerateEndlessTasks();
     }
 
+    // This finds the active UI controller in the scene and tells it to redraw the tasks list.
     private void ForceUIRefresh()
     {
         AssignmentUIController uiController = FindFirstObjectByType<AssignmentUIController>();
         if (uiController != null) uiController.RefreshAssignments();
     }
 
+    // This monitors active tasks and generates randomized tasks if they fall below the active task limit, updating the UI.
     public void CheckAndGenerateEndlessTasks()
     {
         int activeCount = assignments.Count(a => !a.isCompleted);
@@ -155,6 +160,7 @@ public class AssignmentManager : MonoBehaviour
         if (generatedNew) ForceUIRefresh();
     }
 
+    // This maps a Security Category enum to its Dutch label text string.
     private string GetSecurityString(SecurityCategory category)
     {
         switch (category)
@@ -167,6 +173,7 @@ public class AssignmentManager : MonoBehaviour
         }
     }
 
+    // This maps a General Category enum to its Dutch label text string.
     private string GetGeneralString(GeneralCategory category)
     {
         switch (category)
@@ -183,6 +190,7 @@ public class AssignmentManager : MonoBehaviour
         }
     }
 
+    // This generates a randomized assignment of a chosen type (RoomBooking, ManualQuestion, Incident, DataBreach, GeneralReport), ensuring that bookable slots are free before giving booking tasks.
     private void GenerateRandomTask()
     {
         Assignment newTask = new Assignment();
@@ -232,7 +240,7 @@ public class AssignmentManager : MonoBehaviour
             }
             else 
             {
-                // DE FIX: Check daadwerkelijke beschikbaarheid voordat de taak wordt gemaakt
+                // THE FIX: Check actual availability before creating the task
                 bool foundValidSlot = false;
                 string rDate = "";
                 int rStart = 0;
@@ -247,7 +255,7 @@ public class AssignmentManager : MonoBehaviour
                     int rDuration = Random.Range(1, 3);
                     rEnd = rStart + rDuration;
 
-                    // Controleer welke kamers er VRIJ zijn op dit willekeurige moment
+                    // Check which rooms are FREE at this random moment
                     List<RoomData> freeRooms = new List<RoomData>();
                     foreach (var room in bookingMgr.rooms)
                     {
@@ -268,7 +276,7 @@ public class AssignmentManager : MonoBehaviour
                         if (isFree) freeRooms.Add(room);
                     }
 
-                    // Als er vrije kamers zijn, bepaal dan het aantal mensen op basis van de GROOTSTE VRIJE kamer
+                    // If there are free rooms, determine the number of people based on the LARGEST FREE room
                     if (freeRooms.Count > 0)
                     {
                         int maxFreeCapacity = freeRooms.Max(r => r.capacity);
@@ -293,7 +301,7 @@ public class AssignmentManager : MonoBehaviour
                 }
                 else 
                 {
-                    // Fallback: Als het rooster echt 100% vol is, wordt het een algemene melding
+                    // Fallback: If the schedule is 100% full, it becomes a general report
                     GeneralReportPrompt prompt = generalReportPrompts[Random.Range(0, generalReportPrompts.Count)];
                     newTask.title = "Algemene Melding";
                     string requiredCat = GetGeneralString(prompt.category);
@@ -329,7 +337,7 @@ public class AssignmentManager : MonoBehaviour
             newTask.description = $"Situatie:\n\"{prompt}\"\n\nDatum van inbreuk: {rDate}\n\nMeld dit direct in het Datalek formulier.";
             newTask.targetCategory = ""; 
         }
-        // --- 1/4 KANS: ALGEMENE MELDINGEN ---
+        // --- 1/4 CHANCE: GENERAL REPORTS ---
         else if (categoryRoll == 3 && generalReportPrompts.Count > 0)
         {
             GeneralReportPrompt prompt = generalReportPrompts[Random.Range(0, generalReportPrompts.Count)];
@@ -344,6 +352,7 @@ public class AssignmentManager : MonoBehaviour
         SaveData();
     }
 
+    // This checks if a newly created room booking satisfies any active RoomBooking assignment, marking it completed if matches are found.
     public void CheckActionBooking(string roomName, string date, int start, int end, int people) 
     { 
         bool hasChanged = false;
@@ -403,10 +412,16 @@ public class AssignmentManager : MonoBehaviour
         }
     }
     
+    // This completes tasks of the SecurityIncident type with a matching category.
     public void CheckActionSecurityIncident(string category) { CompleteTasksOfType(AssignmentType.SecurityIncident, category); }
+
+    // This completes tasks of the DataBreach type.
     public void CheckActionDataBreach() { CompleteTasksOfType(AssignmentType.DataBreach, ""); }
+
+    // This completes tasks of the GeneralReport type with a matching category.
     public void CheckActionGeneralReport(string category) { CompleteTasksOfType(AssignmentType.GeneralReport, category); }
 
+    // This helper searches through the active assignments and completes those of the specified task type and category.
     private void CompleteTasksOfType(AssignmentType actionType, string actionCategory)
     {
         bool hasChanged = false;
@@ -430,25 +445,27 @@ public class AssignmentManager : MonoBehaviour
         }
     }
 
-   public bool CheckStringAnswer(Assignment task, string playerAnswer)
-{
-    if (task.type == AssignmentType.ManualQuestionText)
+    // This validates a text answer for a manual question task (case-insensitive and space-insensitive), completing the task if correct.
+    public bool CheckStringAnswer(Assignment task, string playerAnswer)
     {
-        // Haal alle spaties weg en maak alles kleine letters voor de ultieme vergevingsgezinde check
-        string cleanCorrectAnswer = task.correctTextAnswer.Replace(" ", "").ToLower();
-        string cleanPlayerAnswer = playerAnswer.Replace(" ", "").ToLower();
-
-        if (cleanCorrectAnswer == cleanPlayerAnswer)
+        if (task.type == AssignmentType.ManualQuestionText)
         {
-            task.isCompleted = true;
-            SaveData();
-            CheckAndGenerateEndlessTasks();
-            return true;
-        }
-    }
-    return false;
-}
+            // Remove all spaces and make everything lowercase for the ultimate forgiving check
+            string cleanCorrectAnswer = task.correctTextAnswer.Replace(" ", "").ToLower();
+            string cleanPlayerAnswer = playerAnswer.Replace(" ", "").ToLower();
 
+            if (cleanCorrectAnswer == cleanPlayerAnswer)
+            {
+                task.isCompleted = true;
+                SaveData();
+                CheckAndGenerateEndlessTasks();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // This validates a numeric answer for a manual question task, completing the task if correct.
     public bool CheckIntAnswer(Assignment task, int playerAnswer)
     {
         if (task.type == AssignmentType.ManualQuestionNumber && task.correctNumberAnswer == playerAnswer)
@@ -461,6 +478,7 @@ public class AssignmentManager : MonoBehaviour
         return false;
     }
 
+    // This discards a specific task from the active assignments list.
     public void DismissTask(Assignment task)
     {
         if (assignments.Contains(task))
@@ -471,6 +489,7 @@ public class AssignmentManager : MonoBehaviour
         }
     }
 
+    // This serializes the assignments list to JSON and saves it in player preferences.
     public void SaveData()
     {
         AssignmentSaveData data = new AssignmentSaveData();
@@ -480,6 +499,7 @@ public class AssignmentManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    // This loads the assignments list from local player preferences storage.
     public void LoadData()
     {
         if (PlayerPrefs.HasKey("AssignmentSaveData"))
@@ -493,6 +513,7 @@ public class AssignmentManager : MonoBehaviour
         }
     }
 
+    // This erases the assignments save key from preferences, empties the list, and triggers a fresh task generation cycle.
     public void ClearSaveData()
     {
         PlayerPrefs.DeleteKey("AssignmentSaveData");

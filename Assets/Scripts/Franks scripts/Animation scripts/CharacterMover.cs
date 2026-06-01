@@ -31,7 +31,7 @@ public class CharacterMover : MonoBehaviour
     [Tooltip("Create multiple routes here. Button 1 will call Route 0, Button 2 calls Route 1, etc.")]
     public WalkRoute[] availableRoutes;
 
-    // UI Buttons will call this function and pass a number (0, 1, 2, etc.)
+    // This stops any currently running route movement and starts moving the character along a new route defined by the routeIndex.
     public void StartWalkingRoute(int routeIndex)
     {
         // Safety check to make sure the route actually exists
@@ -46,6 +46,7 @@ public class CharacterMover : MonoBehaviour
         StartCoroutine(FollowRouteRoutine(availableRoutes[routeIndex]));
     }
 
+    // This is a coroutine that handles walking the character waypoint-by-waypoint, turning them smoothly to look at their target, snapping to each position, and finally turning them to face the final waypoint direction if specified.
     private IEnumerator FollowRouteRoutine(WalkRoute route)
     {
         // Don't do anything if there are no points in the route

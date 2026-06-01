@@ -43,6 +43,7 @@ public class ScheduleGridManager : MonoBehaviour
     private Image lastSelectedImage;
     private bool dropdownInitialized = false;
 
+    // This runs when the script instance is initialized. It registers listeners on the dropdowns and text inputs so the schedule grid updates immediately when filters are changed.
     void Awake()
     {
         if (dateDropdown != null) 
@@ -55,6 +56,7 @@ public class ScheduleGridManager : MonoBehaviour
             endTimeSearchInput.onEndEdit.AddListener((val) => { RefreshGrid(); });
     }
 
+    // This runs when the schedule panel is enabled. It populates the calendar dates dropdown, configures the default search boundaries (9:00 - 17:00), hides old confirmation details, and draws the grid.
     void OnEnable() 
     { 
         if (dateDropdown != null && !dropdownInitialized)
@@ -75,6 +77,7 @@ public class ScheduleGridManager : MonoBehaviour
         GenerateGrid(); 
     }
 
+    // This runs every frame and forces the booking description tooltip panel to follow the user's cursor position.
     void Update()
     {
         if (tooltipPanel != null && tooltipPanel.activeSelf)
@@ -87,8 +90,10 @@ public class ScheduleGridManager : MonoBehaviour
         }
     }
 
+    // This triggers a complete refresh of the schedule grid.
     public void RefreshGrid() { GenerateGrid(); }
 
+    // This is the core generator logic. It reads filters, draws hour markers on the vertical grid columns, instantiates row panels for each room, queries occupied reservations to render unclickable descriptions (attaching hover tooltips), and instantiates clickable green slots for bookable areas.
     void GenerateGrid()
     {
         string searchDate = dateDropdown.options[dateDropdown.value].text;
@@ -216,6 +221,7 @@ public class ScheduleGridManager : MonoBehaviour
         }
     }
 
+    // This handles selecting a slot. It clears old visual selections, highlights the clicked slot blue, saves the booking boundaries, and notifies the confirmation overlay panel.
     void SelectSlot(string room, string date, int start, int end, Image img)
     {
         if (lastSelectedImage != null) lastSelectedImage.color = Color.white;
@@ -227,11 +233,13 @@ public class ScheduleGridManager : MonoBehaviour
         confirmationScript.SetupConfirmPage(selectedRoom, selectedDate, selectedStart, selectedEnd);
     }
 
+    // This transitions the player directly to the confirmation screen.
     public void ProceedToConfirmation()
     {
         menuController.GoToConfirm();
     }
 
+    // This makes the reservation information tooltip visible and dynamically structures its height and position next to the mouse.
     public void ShowTooltip(string info)
     {
         if (tooltipPanel != null && tooltipText != null)
@@ -244,6 +252,7 @@ public class ScheduleGridManager : MonoBehaviour
         }
     }
 
+    // This hides the reservation information tooltip from the screen.
     public void HideTooltip()
     {
         if (tooltipPanel != null) tooltipPanel.SetActive(false);

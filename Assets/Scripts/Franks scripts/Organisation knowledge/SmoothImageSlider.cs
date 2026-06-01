@@ -15,6 +15,7 @@ public class SmoothImageSlider : MonoBehaviour
     private int totalImages;
     private Vector2 targetPosition;
 
+    // This runs when the script starts. It counts the number of child images in the panel and sets the starting target position to its current coordinate.
     void Start()
     {
         // Automatically count how many images are inside the panel
@@ -24,6 +25,7 @@ public class SmoothImageSlider : MonoBehaviour
         targetPosition = contentPanel.anchoredPosition;
     }
 
+    // This runs every frame and smoothly Lerps (interpolates) the content panel position towards the active target position.
     void Update()
     {
         // Smoothly interpolate the panel's position towards the target
@@ -34,6 +36,7 @@ public class SmoothImageSlider : MonoBehaviour
         );
     }
 
+    // This transitions to the next image in the list if we haven't reached the end, updating the target coordinates.
     public void Next()
     {
         if (currentIndex < totalImages - 1)
@@ -43,6 +46,7 @@ public class SmoothImageSlider : MonoBehaviour
         }
     }
 
+    // This transitions to the previous image in the list if we aren't at the first image, updating the target coordinates.
     public void Previous()
     {
         if (currentIndex > 0)
@@ -52,6 +56,7 @@ public class SmoothImageSlider : MonoBehaviour
         }
     }
 
+    // This calculates the horizontal X coordinate offset for the target position based on the current image index and slide step distance width.
     private void UpdateTarget()
     {
         // Calculate the new X position based on the current index

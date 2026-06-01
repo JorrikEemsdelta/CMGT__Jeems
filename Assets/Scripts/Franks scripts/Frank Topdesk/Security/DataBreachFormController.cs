@@ -13,6 +13,7 @@ public class DataBreachFormController : MonoBehaviour
     [Header("Navigation")]
     public MenuController menuController;
 
+    // This runs when the script starts. It registers a listener on the unknown date toggle to handle input enabling/disabling dynamically.
     void Start()
     {
         // Tell the toggle to listen for clicks. When it's clicked, run the OnUnknownToggleChanged function!
@@ -22,7 +23,7 @@ public class DataBreachFormController : MonoBehaviour
         }
     }
 
-    // This runs instantly whenever the player checks or unchecks the box
+    // This is called when the player clicks the 'Onbekend' (Unknown) checkbox. It enables or disables the date input field and clears typed text if checked.
     public void OnUnknownToggleChanged(bool isUnknown)
     {
         // If it IS unknown, make the input field non-interactable (greyed out)
@@ -35,6 +36,7 @@ public class DataBreachFormController : MonoBehaviour
         }
     }
 
+    // This validates all inputs on submission (mandates descriptions and dates, unless date is checked unknown), registers the breach via SecurityManager, resets the form, and opens the home dashboard.
     public void OnSubmitClicked()
     {
         bool isUnknown = toggleOnbekend.isOn;

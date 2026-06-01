@@ -47,12 +47,14 @@ public class CharacterActionManager : MonoBehaviour
     private Coroutine currentRouteCoroutine;
     private Coroutine faceResetCoroutine;
 
+    // This runs when the script is loaded. It connects to the Animator component and starts the idle timer.
     void Awake()
     {
         if (animator == null) animator = GetComponent<Animator>();
         ResetTimer();
     }
 
+    // This runs every frame. If the character is walking, it resets the idle timer. If idling, it triggers random animations like waving or looking around after a random delay.
     void Update()
     {
         if (animator == null) return;
@@ -86,6 +88,7 @@ public class CharacterActionManager : MonoBehaviour
     // ==========================================
     // TALKING LOGIC (PRIORITY FIX)
     // ==========================================
+    // This interrupts idle animations and forces the animator to immediately play a random talking animation.
     public void TriggerRandomTalking()
     {
         if (animator == null || animator.GetBool("isWalking")) return;
@@ -107,6 +110,7 @@ public class CharacterActionManager : MonoBehaviour
         ResetTimer();
     }
 
+    // This makes the character play a random victory animation and temporarily changes their facial expression to happy.
     public void TriggerRandomVictory()
     {
         if (animator == null || animator.GetBool("isWalking")) return;
@@ -123,6 +127,7 @@ public class CharacterActionManager : MonoBehaviour
         }
     }
 
+    // This makes the character play a random fail animation and temporarily changes their facial expression to sad.
     public void TriggerRandomFail()
     {
         if (animator == null || animator.GetBool("isWalking")) return;
@@ -139,6 +144,7 @@ public class CharacterActionManager : MonoBehaviour
         }
     }
 
+    // This triggers a random idle action (either waving or looking around) and resets the timer for the next idle action.
     private void TriggerRandomIdleAnimation()
     {
         if (animator == null || animator.GetBool("isWalking")) return;
@@ -150,6 +156,7 @@ public class CharacterActionManager : MonoBehaviour
         ResetTimer();
     }
 
+    // This resets all animator triggers to ensure no old button presses or animations get queued up in the animator state machine.
     private void ClearIdleTriggers()
     {
         animator.ResetTrigger("isWaving");
@@ -160,11 +167,13 @@ public class CharacterActionManager : MonoBehaviour
         animator.ResetTrigger("PlayFail");
     }
 
+    // This calculates a random point of time in the future to schedule the next random idle action.
     private void ResetTimer()
     {
         nextActionTime = Time.time + Random.Range(minIdleTime, maxIdleTime);
     }
 
+    // This stops any current walking route and starts a new walking route sequence from the available routes list.
     public void StartWalkingRoute(int routeIndex)
     {
         if (routeIndex < 0 || routeIndex >= availableRoutes.Length) return;
@@ -176,6 +185,7 @@ public class CharacterActionManager : MonoBehaviour
         currentRouteCoroutine = StartCoroutine(FollowRouteRoutine(availableRoutes[routeIndex]));
     }
 
+    // This moves the character step-by-step through a list of waypoints, steering their rotation to look where they are walking, and returns them to idle when complete.
     private IEnumerator FollowRouteRoutine(WalkRoute route)
     {
         if (route.waypoints.Length == 0) yield break;
@@ -221,6 +231,7 @@ public class CharacterActionManager : MonoBehaviour
         currentRouteCoroutine = null;
     }
 
+    // This changes the facial mesh texture immediately by swapping the material on the renderer at the designated index.
     private void ChangeFaceMaterialInstantly(Material newFace)
     {
         if (faceRenderer == null || newFace == null) return;
@@ -232,6 +243,7 @@ public class CharacterActionManager : MonoBehaviour
         }
     }
 
+    // This temporarily displays an emotion face (like happy/sad) and resets it back to normal once the character goes back to their Idle state.
     private IEnumerator EmotionTiedToAnimationRoutine(Material emotionFace)
     {
         ChangeFaceMaterialInstantly(emotionFace);
