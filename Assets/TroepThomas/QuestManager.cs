@@ -143,19 +143,19 @@ public class QuestManager : MonoBehaviour
         // 1. Verwijder Opdrachten tonen
         foreach (var o in verwijderOpdrachten)
         {
-            if (!o.isVoltooid) MaakQuestTekstObject($"Verwijder {o.doelwitNaam}");
+            if (!o.isVoltooid) MaakQuestTekstObject($"<color=white>Verwijder {o.doelwitNaam}</color>");
         }
 
         // 2. Knip en Plak Opdrachten tonen
         foreach (var o in plakOpdrachten)
         {
-            if (!o.isVoltooid) MaakQuestTekstObject($"Knip en plak {o.bestandsNaam} naar {o.doelFolderNaam}");
+            if (!o.isVoltooid) MaakQuestTekstObject($"<color=white>Knip en plak {o.bestandsNaam} naar {o.doelFolderNaam}</color>");
         }
 
         // 3. Naam Wijzigen Opdrachten tonen
         foreach (var o in hernoemOpdrachten)
         {
-            if (!o.isVoltooid) MaakQuestTekstObject($"Wijzig naam van {o.oudeNaam} naar {o.nieuweNaam}");
+            if (!o.isVoltooid) MaakQuestTekstObject($"<color=white>Wijzig naam van {o.oudeNaam} naar {o.nieuweNaam}</color>");
         }
     }
 
