@@ -430,17 +430,24 @@ public class AssignmentManager : MonoBehaviour
         }
     }
 
-    public bool CheckStringAnswer(Assignment task, string playerAnswer)
+   public bool CheckStringAnswer(Assignment task, string playerAnswer)
+{
+    if (task.type == AssignmentType.ManualQuestionText)
     {
-        if (task.type == AssignmentType.ManualQuestionText && task.correctTextAnswer.Trim().ToLower() == playerAnswer.Trim().ToLower())
+        // Haal alle spaties weg en maak alles kleine letters voor de ultieme vergevingsgezinde check
+        string cleanCorrectAnswer = task.correctTextAnswer.Replace(" ", "").ToLower();
+        string cleanPlayerAnswer = playerAnswer.Replace(" ", "").ToLower();
+
+        if (cleanCorrectAnswer == cleanPlayerAnswer)
         {
             task.isCompleted = true;
             SaveData();
             CheckAndGenerateEndlessTasks();
             return true;
         }
-        return false;
     }
+    return false;
+}
 
     public bool CheckIntAnswer(Assignment task, int playerAnswer)
     {
