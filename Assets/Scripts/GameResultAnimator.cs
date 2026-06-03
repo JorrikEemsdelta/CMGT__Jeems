@@ -4,11 +4,13 @@ public class GameResultAnimator : MonoBehaviour
 {
     private Animator animator;
 
+    // This runs automatically when the game object starts. It finds and connects to the Animator component so we can control animations.
     void Start()
     {
         animator = GetComponent<Animator>();
     }
 
+    // This makes the character perform a victory animation. It resets other triggers and picks a random victory animation from 3 options (0, 1, or 2).
     public void TriggerRandomVictory()
     {
         animator.ResetTrigger("PlayFail");
@@ -23,6 +25,7 @@ public class GameResultAnimator : MonoBehaviour
         animator.SetTrigger("PlayVictory");
     }
 
+    // This makes the character perform a fail animation. It resets other triggers and picks a random fail animation from 3 options (0, 1, or 2).
     public void TriggerRandomFail()
     {
         animator.ResetTrigger("PlayVictory");

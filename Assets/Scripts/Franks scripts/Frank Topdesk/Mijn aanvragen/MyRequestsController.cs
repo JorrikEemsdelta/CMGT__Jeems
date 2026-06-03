@@ -8,11 +8,13 @@ public class MyRequestsController : MonoBehaviour
     public Transform contentContainer; 
 
     // This runs automatically every time the player clicks the "Mijn aanvragen" tile
+    // This runs when the UI screen becomes active and automatically refreshes the visual requests list.
     void OnEnable()
     {
         RefreshList();
     }
 
+    // This completely redrafts the requests overview screen. It destroys old list cards, loops through all reported incidents and breaches from SecurityManager, loops through reported general tickets from GeneralReportManager, and registers them onto the screen.
     public void RefreshList()
     {
         // 1. Clear out the old list so we don't get duplicates
@@ -48,7 +50,7 @@ public class MyRequestsController : MonoBehaviour
         }
     }
 
-    // Helper function to actually spawn the UI card and fill in the text
+    // This helper instantiates a card prefab representing a ticket or request, populates its text components with titles/dates/descriptions, and truncates long descriptions to keep the list layout clean.
     private void CreateEntry(string title, string date, string description)
     {
         GameObject newEntry = Instantiate(requestPrefab, contentContainer, false);

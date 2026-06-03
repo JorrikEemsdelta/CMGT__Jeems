@@ -12,6 +12,7 @@ public class SecurityFormController : MonoBehaviour
     [Header("Navigation")]
     public MenuController menuController; 
 
+    // This runs when the submit button is clicked on the security incident form. It reads the fields, validates that the date and short description are entered, submits the incident to the SecurityManager, resets all form inputs, and opens the home dashboard.
     public void OnSubmitClicked()
     {
         // 1. Read all the values from the UI

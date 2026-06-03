@@ -12,6 +12,7 @@ public class GeneralFormController : MonoBehaviour
     [Header("Navigation")]
     public MenuController menuController;
 
+    // This is called when the player clicks the submit button on the general report form. It finds which category toggle is active, extracts its text, validates that a description is filled in, submits the report to the GeneralReportManager, resets the form inputs, and navigates home.
     public void OnSubmitClicked()
     {
         // Safety check

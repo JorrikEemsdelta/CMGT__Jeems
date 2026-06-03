@@ -66,12 +66,14 @@ public class QuizManager : MonoBehaviour
 
     private List<QuizQuestion> todayQuestions = new List<QuizQuestion>();
 
+    // This runs automatically when the script starts. It starts a Coroutine to load quiz data asynchronously so the game doesn't freeze.
     void Start()
     {
         // Must use Coroutine for WebGL to download the JSON from the server
         StartCoroutine(LoadDataAndInitializeRoutine());
     }
 
+    // This downloads the question database (from a local file or web server for WebGL), parses the JSON data, restores the player's saved progress, and kicks off today's quiz.
     private IEnumerator LoadDataAndInitializeRoutine()
     {
         string clientJsonPath = Path.Combine(Application.streamingAssetsPath, "client_questions.json");
@@ -135,6 +137,7 @@ public class QuizManager : MonoBehaviour
         InitializeDailyQuiz();
     }
 
+    // This initializes today's quiz. It checks if the day has changed to reset daily questions, loads progress, updates the UI streak, and draws the questions.
     private void InitializeDailyQuiz()
     {
         string today = DateTime.Now.ToString("yyyy-MM-dd");
@@ -155,6 +158,7 @@ public class QuizManager : MonoBehaviour
         RefreshUISlots();
     }
 
+    // This loads the progress of already assigned questions for today. If none are found, it generates a fresh daily question list.
     private void LoadCurrentDailyProgress(string todayString)
     {
         var allQuestions = GetAllQuestions();
@@ -175,6 +179,7 @@ public class QuizManager : MonoBehaviour
         }
     }
 
+    // This creates a new set of questions for today. It will carry over any questions failed previously so the player can re-try them, and fills the remaining slots up to the daily limit with new, uncompleted questions.
     private void GenerateDailyList(string todayString)
     {
         todayQuestions.Clear();
@@ -206,6 +211,7 @@ public class QuizManager : MonoBehaviour
         SavePlayerProgress();
     }
 
+    // This saves the player's level progress and question completion states into local storage (PlayerPrefs) so they don't lose progress when closing the game.
     private void SavePlayerProgress()
     {
         QuizDataWrapper wrapper = new QuizDataWrapper
@@ -221,6 +227,7 @@ public class QuizManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    // This updates the quiz slots on the screen. It hides completed questions and shows active ones. If all questions for today are done, it triggers the end-of-day sequence.
     private void RefreshUISlots()
     {
         var activeQuestions = todayQuestions.Where(q => !q.isCompleted).ToList();
@@ -246,6 +253,7 @@ public class QuizManager : MonoBehaviour
         }
     }
 
+    // This handles the end-of-day sequence. It increments the streak counter (if not already done today) and activates the end-of-day UI panel to celebrate completion.
     private void HandleEndOfDay()
     {
         string today = DateTime.Now.ToString("yyyy-MM-dd");
@@ -264,6 +272,7 @@ public class QuizManager : MonoBehaviour
         foreach (var slot in uiSlots) slot.gameObject.SetActive(false);
     }
 
+    // This binds a question's data (type, title, answers) to a UI slot and registers click handlers for the option buttons or checkbox toggle based on the question type.
     private void SetupSlot(int slotIndex, QuizQuestion q)
     {
         string[] uiAnswers = null;
@@ -297,6 +306,7 @@ public class QuizManager : MonoBehaviour
         }
     }
 
+    // This checks if the clicked multiple-choice answer is correct, highlights the button, and processes the outcome.
     private void HandleMultipleChoice(int slotIndex, QuizQuestion q, int selectedIndex)
     {
         bool isCorrect = q.multipleChoiceOptions[selectedIndex].isCorrect;
@@ -304,6 +314,7 @@ public class QuizManager : MonoBehaviour
         ProcessAnswer(slotIndex, q, isCorrect);
     }
 
+    // This checks if the selected True/False option is correct, highlights the button, and processes the outcome.
     private void HandleTrueFalse(int slotIndex, QuizQuestion q, bool playerAnswer)
     {
         bool isCorrect = (playerAnswer == q.correctTrueFalseAnswer);
@@ -311,12 +322,14 @@ public class QuizManager : MonoBehaviour
         ProcessAnswer(slotIndex, q, isCorrect);
     }
 
+    // This checks if the checked state of a checkmark question is correct and processes the outcome.
     private void HandleCheckmark(int slotIndex, QuizQuestion q, bool isChecked)
     {
         bool isCorrect = (isChecked == q.correctCheckmarkState);
         ProcessAnswer(slotIndex, q, isCorrect);
     }
 
+    // This processes the answer given by the player. It marks the question completed, saves progress, triggers a victory/fail animation, and shows the corresponding correct/wrong explanation panel.
     private void ProcessAnswer(int slotIndex, QuizQuestion q, bool isCorrect)
     {
         q.isCompleted = true;
@@ -347,6 +360,7 @@ public class QuizManager : MonoBehaviour
         }
     }
 
+    // This aggregates all quiz questions from level 1 to level 5 into one combined flat list for easier filtering and lookups.
     private List<QuizQuestion> GetAllQuestions()
     {
         List<QuizQuestion> combined = new List<QuizQuestion>();
@@ -358,6 +372,7 @@ public class QuizManager : MonoBehaviour
         return combined;
     }
 
+    // This reads the streak counter from player save data and refreshes the streak indicator text on the UI screen.
     private void UpdateStreakUI()
     {
         if (mainStreakDisplay != null)
@@ -367,6 +382,7 @@ public class QuizManager : MonoBehaviour
         }
     }
 
+    // This restores the completion and failure states from a loaded save game list back onto our primary master question list.
     private void ApplySaveState(List<QuizQuestion> masterList, List<QuizQuestion> saveList)
     {
         if (masterList == null || saveList == null) return;
@@ -383,6 +399,7 @@ public class QuizManager : MonoBehaviour
         }
     }
 
+    // This clears all the player's saved data from local storage, resetting their streak, progress, and daily question limits.
     [ContextMenu("Reset Save Data")]
     public void ClearSaveData()
     {

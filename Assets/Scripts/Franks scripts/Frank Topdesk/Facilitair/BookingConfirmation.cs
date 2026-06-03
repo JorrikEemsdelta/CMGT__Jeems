@@ -14,12 +14,14 @@ public class BookingConfirmation : MonoBehaviour
     private int activeStart, activeEnd;
     private int activeCapacity;
 
+    // This clears the confirmation summary text and hides the capacity warning.
     public void ClearSummary()
     {
         if (summaryText != null) summaryText.text = "";
         if (capacityWarningText != null) capacityWarningText.gameObject.SetActive(false);
     }
 
+    // This configures the confirmation page with the selected room, date, and timeslots, fetches room capacity, and resets input fields back to empty defaults.
     public void SetupConfirmPage(string room, string date, int start, int end)
     {
         activeRoom = room; activeDate = date;
@@ -41,6 +43,7 @@ public class BookingConfirmation : MonoBehaviour
         }
     }
 
+    // This validates the input fields, checks if the capacity is exceeded (displaying warnings if so), registers the new booking in the BookingManager, and returns the player to the home screen.
     public void SubmitBooking()
     {
         if (string.IsNullOrWhiteSpace(peopleInput.text)) 
@@ -66,6 +69,7 @@ public class BookingConfirmation : MonoBehaviour
         menuController.GoToHome(); 
     }
 
+    // This cancels the current confirmation and returns the player back to the schedule panel.
     public void GoBackToSchedule()
     {
         ClearSummary();

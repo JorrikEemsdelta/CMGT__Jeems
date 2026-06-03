@@ -48,6 +48,7 @@ public class BookingManager : MonoBehaviour
     private string[] randomNames = { "S. Bakker", "M. Jansen", "J. de Vries", "L. Visser", "P. Smits", "E. Mulder" };
     private string[] randomDescs = { "Overleg", "Meeting", "Project focus", "Interne audit", "Brainstorm", "Koffie break" };
 
+    // This runs when the script is loaded. It sets up the Singleton Instance so other scripts can easily talk to this script, and loads all reservation data.
     void Awake()
     {
         if (Instance == null) Instance = this;
@@ -56,11 +57,13 @@ public class BookingManager : MonoBehaviour
         LoadData(); 
     }
 
+    // This loads the StartMenu scene, returning the player to the main menu.
     public void GoToMainMenu()
     {
         SceneManager.LoadScene("StartMenu");
     }
 
+    // This looks up the maximum capacity (number of people allowed) for a room by its name.
     public int GetRoomCapacity(string roomName)
     {
         foreach (var room in rooms)
@@ -70,6 +73,7 @@ public class BookingManager : MonoBehaviour
         return 0; 
     }
 
+    // This checks if there is any reservation in a specific room at a specific date and hour, returning the reservation if found.
     public Reservation GetBookingStartingAt(string roomName, string date, int hour)
     {
         foreach (var res in allReservations)
@@ -82,6 +86,7 @@ public class BookingManager : MonoBehaviour
         return null;
     }
 
+    // This registers a player reservation, notifies the AssignmentManager to check if any active goals are met, and saves the new data.
     public void AddPlayerBooking(Reservation res)
     {
         res.isPlayerBooking = true;
@@ -95,6 +100,7 @@ public class BookingManager : MonoBehaviour
         SaveData(); 
     }
 
+    // This constructs a new player reservation from parameters, registers it, checks if any assignment goals are complete, and saves data.
     public void AddPlayerBooking(string room, string date, int start, int end, string desc, int people)
     {
         Reservation newRes = new Reservation
@@ -118,6 +124,7 @@ public class BookingManager : MonoBehaviour
         SaveData(); 
     }
 
+    // This deletes a reservation from the list and updates the save file.
     public void DeleteBooking(Reservation res)
     {
         if (allReservations.Contains(res))
@@ -127,6 +134,7 @@ public class BookingManager : MonoBehaviour
         }
     }
 
+    // This checks if a timeslot in a specific room and date is free and doesn't overlap with any existing bookings.
     public bool IsSlotFree(string room, string date, int start, int end)
     {
         foreach (var res in allReservations)
@@ -139,6 +147,7 @@ public class BookingManager : MonoBehaviour
         return true;
     }
 
+    // This saves the list of all current reservations into player preferences in JSON format.
     public void SaveData()
     {
         BookingSaveData data = new BookingSaveData();
@@ -148,6 +157,7 @@ public class BookingManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    // This loads the reservation list from JSON in player preferences.
     public void LoadData()
     {
         if (PlayerPrefs.HasKey("BookingSaveData"))
@@ -158,6 +168,7 @@ public class BookingManager : MonoBehaviour
         }
     }
 
+    // This clears all the player's custom bookings from the list and deletes the save file.
     public void ClearSaveData()
     {
         allReservations.RemoveAll(res => res.isPlayerBooking);
@@ -165,6 +176,7 @@ public class BookingManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    // This generates mock reservation data for non-player characters on the schedule to simulate a realistic busy office environment.
     public void GenerateDummyBookings()
     {
         allReservations.RemoveAll(res => !res.isPlayerBooking);

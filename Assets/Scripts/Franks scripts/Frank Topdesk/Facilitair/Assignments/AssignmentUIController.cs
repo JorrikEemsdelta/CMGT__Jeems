@@ -8,11 +8,13 @@ public class AssignmentUIController : MonoBehaviour
     public GameObject assignmentPrefab;
     public Transform contentContainer;
 
+    // This runs when the UI screen becomes active and automatically triggers the assignment list redraw.
     void OnEnable()
     {
         RefreshAssignments();
     }
 
+    // This completely redrafts the task card checklist. It clears old card gameobjects, fetches assignments, generates a card prefab for each task, styles the status text based on completion (green/red), toggles answer inputs, and attaches event listeners to submit inputs and dismiss tasks.
     public void RefreshAssignments()
     {
         foreach (Transform child in contentContainer)
@@ -34,13 +36,13 @@ public class AssignmentUIController : MonoBehaviour
             Transform inputObj = newCard.transform.Find("InputField_Answer");
             Transform btnObj = newCard.transform.Find("Button_Submit");
             
-            // --- NIEUW: De Verwijder Knop ---
+            // --- NEW: The Remove Button ---
             Transform removeBtnObj = newCard.transform.Find("Button_Remove");
 
             if (titleObj != null) titleObj.GetComponent<TextMeshProUGUI>().text = task.title;
             if (descObj != null) descObj.GetComponent<TextMeshProUGUI>().text = task.description;
 
-            Assignment currentTask = task; // Voorkomt de closure bug
+            Assignment currentTask = task; // Prevents closure bug
 
             if (task.isCompleted)
             {
@@ -51,11 +53,11 @@ public class AssignmentUIController : MonoBehaviour
                     statusText.color = new Color(0.1f, 0.6f, 0.1f);
                 }
                 
-                // Verberg invulvelden als het af is
+                // Hide input fields when completed
                 if (inputObj != null) inputObj.gameObject.SetActive(false);
                 if (btnObj != null) btnObj.gameObject.SetActive(false);
 
-                // Toon de verwijder knop en koppel de klik eraan
+                // Show the remove button and hook up click event
                 if (removeBtnObj != null)
                 {
                     removeBtnObj.gameObject.SetActive(true);
@@ -76,7 +78,7 @@ public class AssignmentUIController : MonoBehaviour
                     statusText.color = new Color(0.8f, 0.2f, 0.2f);
                 }
 
-                // Verberg de verwijder knop zolang de opdracht nog actief is
+                // Hide the remove button as long as the task is active
                 if (removeBtnObj != null) removeBtnObj.gameObject.SetActive(false);
 
                 bool isManual = task.type == AssignmentType.ManualQuestionText || task.type == AssignmentType.ManualQuestionNumber;

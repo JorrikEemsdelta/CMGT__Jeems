@@ -64,6 +64,7 @@ public class QuestionUIController : MonoBehaviour
     private Image _trueButtonImage;
     private Image _falseButtonImage;
 
+    // This runs before Start. It caches/saves references to the Image components on the buttons so we don't have to keep searching for them during the game (which makes the game run faster).
     private void Awake()
     {
         if (multipleChoiceButtons != null)
@@ -82,6 +83,7 @@ public class QuestionUIController : MonoBehaviour
         if (falseButton != null) _falseButtonImage = falseButton.GetComponent<Image>();
     }
 
+    // This sets up a new question on the screen. It updates the title and question texts, enables only the panel for the specific question type (Multiple Choice, True/False, or Checkmark), hides explanation overlays, and fills in the answer choices.
     public void SetupQuestion(QuestionType type, string title, string question, string[] answers = null)
     {
         if (titleText != null) titleText.text = title;
@@ -127,6 +129,7 @@ public class QuestionUIController : MonoBehaviour
         }
     }
 
+    // This resets all the button colors back to their default white color so they look fresh for the next question.
     public void ResetColors()
     {
         if (_multipleChoiceImages != null)
@@ -140,6 +143,7 @@ public class QuestionUIController : MonoBehaviour
         if (_falseButtonImage != null) _falseButtonImage.color = Color.white;
     }
 
+    // This colors a specific multiple-choice button green if the chosen answer was correct, or red if it was wrong.
     public void SetMultipleChoiceColor(int buttonIndex, bool isCorrect)
     {
         if (_multipleChoiceImages != null && buttonIndex >= 0 && buttonIndex < _multipleChoiceImages.Length)
@@ -149,6 +153,7 @@ public class QuestionUIController : MonoBehaviour
         }
     }
 
+    // This colors the True or False buttons green if the answer is correct, or red if the answer is wrong.
     public void SetTrueFalseColor(bool isTrueButton, bool isCorrect)
     {
         if (isTrueButton && _trueButtonImage != null) 
@@ -158,6 +163,7 @@ public class QuestionUIController : MonoBehaviour
     }
     
     // --- WRONG ANSWER EXPLANATION METHODS ---
+    // This shows an overlay explaining why the selected answer was wrong, and attaches a function to the continue button to proceed when clicked.
     public void ShowExplanation(string explanation, UnityEngine.Events.UnityAction onContinueClicked)
     {
         if (explanationPanel != null) explanationPanel.SetActive(true);
@@ -170,12 +176,14 @@ public class QuestionUIController : MonoBehaviour
         }
     }
 
+    // This hides the wrong answer explanation overlay from the screen.
     public void HideExplanation()
     {
         if (explanationPanel != null) explanationPanel.SetActive(false);
     }
 
     // --- RIGHT ANSWER EXPLANATION METHODS ---
+    // This shows an overlay explaining more details about the correct answer, and attaches a function to the close button to proceed when clicked.
     public void ShowRightExplanation(string explanation, UnityEngine.Events.UnityAction onContinueClicked)
     {
         if (rightExplanationPanel != null) rightExplanationPanel.SetActive(true);
@@ -188,6 +196,7 @@ public class QuestionUIController : MonoBehaviour
         }
     }
 
+    // This hides the correct answer explanation overlay from the screen.
     public void HideRightExplanation()
     {
         if (rightExplanationPanel != null) rightExplanationPanel.SetActive(false);

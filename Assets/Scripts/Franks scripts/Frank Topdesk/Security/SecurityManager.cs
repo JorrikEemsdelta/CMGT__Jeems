@@ -36,6 +36,7 @@ public class SecurityManager : MonoBehaviour
     public List<SecurityIncident> reportedIncidents = new List<SecurityIncident>();
     public List<DataBreachReport> reportedBreaches = new List<DataBreachReport>(); 
 
+    // This runs when the script is loaded. It configures the Singleton Instance and loads previously submitted incident and breach database records.
     void Awake()
     {
         if (Instance == null) Instance = this;
@@ -44,6 +45,7 @@ public class SecurityManager : MonoBehaviour
         LoadData(); 
     }
 
+    // This creates and logs a new security incident record, checks with the AssignmentManager to complete any active task goals, and saves progress.
     public void SubmitIncident(string date, string category, string shortDesc, string longDesc)
     {
         SecurityIncident newIncident = new SecurityIncident
@@ -66,6 +68,7 @@ public class SecurityManager : MonoBehaviour
         SaveData();
     }
 
+    // This creates and logs a new dataleak report, checks with the AssignmentManager to complete any active task goals, and saves progress.
     public void SubmitDataBreach(bool isUnknown, string breachDate, string discoveredDate, string description)
     {
         DataBreachReport newBreach = new DataBreachReport
@@ -93,6 +96,7 @@ public class SecurityManager : MonoBehaviour
     // ==========================================
     // THE SAVE SYSTEM
     // ==========================================
+    // This serializes the reported incidents and breaches lists into JSON and stores it in player preferences.
     public void SaveData()
     {
         SecuritySaveData data = new SecuritySaveData();
@@ -104,6 +108,7 @@ public class SecurityManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    // This loads the submitted incidents and breaches database from JSON format inside player preferences.
     public void LoadData()
     {
         if (PlayerPrefs.HasKey("SecuritySaveData"))
@@ -116,6 +121,7 @@ public class SecurityManager : MonoBehaviour
         }
     }
 
+    // This clears the active incidents and breaches lists, and deletes the security data save key from preferences.
     public void ClearSaveData()
     {
         reportedIncidents.Clear();

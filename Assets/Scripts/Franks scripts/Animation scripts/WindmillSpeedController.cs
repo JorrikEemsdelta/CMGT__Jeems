@@ -16,6 +16,7 @@ public class WindmillSpeedController : MonoBehaviour
     private static float sharedBaseSpeed;
     private static bool hasGeneratedBase = false;
 
+    // This runs when the windmill object starts. It gets the Animator component, establishes a shared base speed across all windmills (only done once), adds a small individual speed variance, rounds the speed, sets the animator's speed, and plays the animation at a random starting frame to look natural.
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -46,7 +47,7 @@ public class WindmillSpeedController : MonoBehaviour
         }
     }
 
-    // Optional: Reset the base speed if you leave the scene or restart
+    // This runs when the windmill object is destroyed. It resets the shared base speed generation flag so new base speeds can be generated when the scene reloads.
     private void OnDestroy()
     {
         hasGeneratedBase = false;
